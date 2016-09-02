@@ -1,0 +1,35 @@
+<header>
+  <nav class="top-nav  blue ">
+    <div class="container" ><a  materialize="sideNav"  data-activates="slide-out" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a>
+      <bc-breadcrumb></bc-breadcrumb>
+    </div>
+  </nav>
+  <ul  id="slide-out" class="side-nav fixed">
+    <li> <div class="userView" style="padding: 0 !important;">
+      <img class="background" src="assets/images/material_design-wallpaper-960x600.jpg">
+      <img class="circle" src="assets/images/icon-user-default.png"  style="margin-left: 20px;margin-top: 20px">
+      <a><span class="white-text name">{{firstName}} {{lastName}}</span></a>
+      <ul  materialize="collapsible" class="collapsible" data-collapsible="accordion">
+        <li>
+          <div class="collapsible-header"><span class="white-text email" style="padding-top: 15px;">{{email}}<i class="material-icons right">arrow_drop_down</i></span> </div>
+          <div class="collapsible-body">
+            <ul>
+              <li>
+                <a class="waves-effect waves-teal" (click)="logout()">Log out</a>
+              </li>
+              <li><div class="divider"></div></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+    </li><!-- Dropdown Structure -->
+
+    <li><a [routerLink]="['/']" [routerLinkActive]="['active']" class="waves-effect waves-teal" [routerLinkActiveOptions]="{exact:true}"><i class="material-icons">description</i>Feature Requests</a></li>
+    <li><a [routerLink]="['about']"  [routerLinkActive]="['active']" class="waves-effect waves-teal" [routerLinkActiveOptions]="{exact:true}">ABOUT</a></li>
+    <li><div class="divider"></div></li>
+    <!--<li><a class="subheader">Subheader</a></li>-->
+    <!--<li><a class="waves-effect" href="#!">Third Link With Waves</a></li>-->
+  </ul>
+</header>

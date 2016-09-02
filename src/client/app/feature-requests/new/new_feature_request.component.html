@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs"  materialize="tabs">
+        <li class="tab col s3"><a href="#test1">Test 1</a></li>
+        <li class="tab col s3"><a class="active" href="#test2">Test 2</a></li>
+        <li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>
+        <li class="tab col s3"><a href="#test4">Test 4</a></li>
+      </ul>
+    </div>
+    <div id="test1" class="col s12">Test 1</div>
+    <div id="test2" class="col s12">Test 2</div>
+    <div id="test3" class="col s12">Test 3</div>
+    <div id="test4" class="col s12">Test 4</div>
+  </div>
+  <div class="row">
+
+    <div class="col s12 m12 l12">
+
+      <div class='col s6'>
+        <ul class="collection" [dragula]='"first-bag"'>
+          <li class="collection-item avatar"  *ngFor="let item of test">
+            <i class="material-icons circle">folder</i>
+            <span class="title">{{item.name}}</span>
+            <p>First Line <br>
+              Second Line
+            </p>
+            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+          </li>
+        </ul>
+      </div>
+      <div class='col s6' style="background-color: red">
+        <ul class="collection" [dragula]='"first-bag"'></ul>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<!--<div class="row">-->
+
+<!--</div>-->

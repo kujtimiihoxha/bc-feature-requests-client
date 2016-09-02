@@ -1,0 +1,15 @@
+nav .button-collapse i {
+  font-size: 2rem;
+}
+header {
+  padding-left: 300px
+}
+.container {
+  width: 90%;
+  max-width: none;
+}
+@media only screen and (max-width: 992px) {
+  header {
+    padding-left: 0
+  }
+}
