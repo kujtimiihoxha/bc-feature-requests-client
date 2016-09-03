@@ -1,43 +1,118 @@
-<div class="container">
-  <div class="row">
+<div class="col s12">
+  <div class="card no-box-shadow ">
+    <div class="card-image">
+      <div class="blue darken-1">
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+      </div>
+      <span class="card-title">{{getHeader()}}</span>
+    </div>
     <div class="col s12">
-      <ul class="tabs"  materialize="tabs">
-        <li class="tab col s3"><a href="#test1">Test 1</a></li>
-        <li class="tab col s3"><a class="active" href="#test2">Test 2</a></li>
-        <li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>
-        <li class="tab col s3"><a href="#test4">Test 4</a></li>
+      <ul class="blue-text tabs">
+        <li class="tab col s3" [ngClass]="isDisabled(1)"><a [ngClass]="getClass(1)">Details</a></li>
+        <li class="tab col s3" [ngClass]="isDisabled(2)"><a [ngClass]="getClass(2)">Clients</a></li>
+        <li class="tab col s3" [ngClass]="isDisabled(3)"><a [ngClass]="getClass(3)">Finish</a></li>
       </ul>
     </div>
-    <div id="test1" class="col s12">Test 1</div>
-    <div id="test2" class="col s12">Test 2</div>
-    <div id="test3" class="col s12">Test 3</div>
-    <div id="test4" class="col s12">Test 4</div>
-  </div>
-  <div class="row">
+    <div class="card-content">
+      <div class="container">
+        <div class="row">
+          <div id="test1" class="col s12" [ngStyle]="isMyTab(1)">
+            <div class="container" style="width: 95%">
+              <div class="row">
+                <form materialize class="col s12" (ngSubmit)="next()" #detailsForm="ngForm">
+                  <div class="row">
+                    <div class="input-field col s12 m6 l8">
+                      <input placeholder="Title" id="title"  [(ngModel)]="details.title" name="title" required type="text" class="validate">
+                      <label for="title">Title</label>
+                    </div>
+                    <div class="input-field col s12 m6 l4">
+                      <label for="date">Target Date</label>
+                      <input id="date"
+                             required
+                             [(ngModel)]="details.target_date" name="target_date"
+                             materialize="pickadate"
+                             [materializeParams]="[{closeOnSelect: true,selectMonths: true, selectYears: 16, min:mindate}]"
+                             type="text"/>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <textarea id="description" [(ngModel)]="details.description" name="description" required class="materialize-textarea"></textarea>
+                      <label for="description">Description</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12 m6 l8">
+                      <input placeholder="Url" id="url" [(ngModel)]="details.url" name="url" required type="text" class="validate">
+                      <label for="url">Ticket Url</label>
+                    </div>
+                    <div class="input-field col s12 m6 l4">
+                      <input placeholder="Product area" [(ngModel)]="details.product_area_id" name="product_area_id" required id="product_are" type="text" class="validate">
+                      <label for="product_are">Product Area</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <button type="submit" class="waves-effect waves-light btn-large right" [disabled]="!detailsForm.form.valid"> Next <i class="material-icons right">arrow_forward</i></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div id="test2" class="col s12" [ngStyle]="isMyTab(2)">
+            <div class="row">
 
-    <div class="col s12 m12 l12">
+              <div class="col s12 m12 l12">
 
-      <div class='col s6'>
-        <ul class="collection" [dragula]='"first-bag"'>
-          <li class="collection-item avatar"  *ngFor="let item of test">
-            <i class="material-icons circle">folder</i>
-            <span class="title">{{item.name}}</span>
-            <p>First Line <br>
-              Second Line
-            </p>
-            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-          </li>
-        </ul>
+                <div class='col s6'>
+                  <nav>
+                    <div class="nav-wrapper blue">
+                      <form materialize>
+                        <div class="input-field">
+                          <input id="search" type="search" name="search" [(ngModel)]="nameSearch" required>
+                          <label for="search"><i class="material-icons">search</i></label>
+                          <i class="material-icons">close</i>
+                        </div>
+                      </form>
+                    </div>
+                  </nav>
+                 <div class="card">
+                   <ul class="collection" style="min-height:50px" [dragula]='"first-bag"'>
+                     <li class="collection-item avatar" *ngFor="let item of test | byClientName:nameSearch">
+                       <i class="material-icons circle">folder</i>
+                       <span class="title">{{item.name}}</span>
+                       <p>First Line <br>
+                         Second Line
+                       </p>
+                       <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                     </li>
+                   </ul>
+                 </div>
+                </div>
+                <div class='col s6'>
+                  <ul class="collection" [dragula]='"first-bag"'
+                      style="min-height:50px; border: 1px dashed #0D47A1;"></ul>
+                </div>
+
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <button type="button" class="waves-effect waves-light btn-large right" (click)="next()"> Next <i class="material-icons right">arrow_forward</i></button>
+                <button type="button" class="waves-effect waves-light btn-large left" (click)="previous()"> Back <i class="material-icons left">arrow_back</i></button>
+              </div>
+            </div>
+          </div>
+          <div id="test3" class="col s12" [ngStyle]="isMyTab(3)">
+            <button type="button" class="waves-effect waves-light btn-large right" (click)="submit()"> Submit <i class="material-icons right">arrow_forward</i></button>
+            <button type="button" class="waves-effect waves-light btn-large left" (click)="previous()"> Back <i class="material-icons left">arrow_back</i></button>
+          </div>
+        </div>
       </div>
-      <div class='col s6' style="background-color: red">
-        <ul class="collection" [dragula]='"first-bag"'></ul>
-      </div>
-
-
     </div>
   </div>
 </div>
-
-<!--<div class="row">-->
-
-<!--</div>-->
