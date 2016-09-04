@@ -11,6 +11,7 @@ import {LayoutComponent} from "./layout/index";
 import {AuthGuard} from "./guard/index";
 import {ActionButton} from "./action-button/index";
 import {Dragula, DragulaService} from "ng2-dragula/ng2-dragula";
+import {FilterPipe} from "./pipes/filter.pipe";
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -23,10 +24,11 @@ import {Dragula, DragulaService} from "ng2-dragula/ng2-dragula";
     BreadcrumbComponent,
     LayoutComponent,
     ActionButton,
-    Dragula
+    Dragula,
+    FilterPipe
   ],
   exports: [SideNavComponent, Dragula,BreadcrumbComponent, LayoutComponent,
-    CommonModule, FormsModule, RouterModule, MaterializeDirective]
+    CommonModule, FormsModule, RouterModule, MaterializeDirective,FilterPipe]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

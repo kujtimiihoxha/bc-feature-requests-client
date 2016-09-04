@@ -77,18 +77,3 @@ export class NewFeatureRequestComponent {
     this.currentTab--
   }
 }
-
-
-//TODO test remove
-
-@Pipe({
-  name: 'byClientName',
-  pure: false
-})
-@Injectable()
-export class MyFilterPipe implements PipeTransform {
-  transform(items: any[], name:string): any {
-    // filter items array, items which match and return true will be kept, false will be filtered out
-    return items.filter(item => item.title === name);
-  }
-}
