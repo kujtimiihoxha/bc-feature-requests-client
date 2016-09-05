@@ -21,9 +21,9 @@
           <ul data-container="parent" class="collection" style="min-height:50px" [dragula]='"first-bag"'
               [dragulaModel]="clientsTmp">
             <li class="collection-item avatar" [attr.data-uuid]="client.id" *ngFor="let client of clientsTmp">
-              <i class="material-icons circle">folder</i>
+              <i class="material-icons circle hide-on-small-and-down">folder</i>
               <span class="title">{{client.name}}</span>
-              <p>{{client.description}}</p>
+              <p class="hide-on-small-and-down">{{client.description}}</p>
             </li>
           </ul>
           <div class="row center"><a
@@ -36,9 +36,9 @@
             style="min-height:50px; border: 1px dashed #0D47A1;">
           <li class="collection-item avatar" [attr.data-uuid]="client.id"
               *ngFor="let client of clientsSelected">
-            <i class="material-icons circle">folder</i>
+            <i class="material-icons circle hide-on-small-and-down">folder</i>
             <span class="title">{{client.name}}</span>
-            <p>{{client.description}}</p>
+            <p class="hide-on-small-and-down">{{client.description}}</p>
           </li>
         </ul>
       </div>

@@ -7,6 +7,7 @@ export class FeatureRequestModel{
     target_date: string
     ticket_url: string
     product_area_id: string
+    product_area_name: string
     clients:{
       name : string,
       client_id : string,
