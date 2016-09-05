@@ -1,0 +1,3 @@
+ul.tabs>li>a.active{
+  border-bottom:2px solid #F44336;
+}

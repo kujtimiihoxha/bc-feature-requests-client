@@ -10,8 +10,9 @@ export class FilterPipe implements PipeTransform {
       return value;
     }
     let resultArray:any=[];
-    console.log(value)
+    console.log(args,value)
     for (let item of value){
+      console.log(item,item[args[0]],args[0])
       if ( item[args[0]].match('^.*' + args[1] + '.*$')){
         resultArray.push(item);
       }

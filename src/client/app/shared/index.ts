@@ -7,5 +7,5 @@ export * from './breadcrumb/index';
 export * from './layout/index';
 export * from './config/env.config';
 export * from './guard/index'
-export * from './resource/base.service'
+export * from './resource/index'
 export * from './model/index'

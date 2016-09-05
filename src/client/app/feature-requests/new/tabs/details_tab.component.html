@@ -1,0 +1,50 @@
+<div  class="col s12">
+  <div class="container" style="width: 95%">
+    <div class="row">
+      <form materialize class="col s12" (ngSubmit)="next()" #detailsForm="ngForm">
+        <div class="row">
+          <div class="input-field col s12 m6 l8">
+            <input placeholder="Title" id="title" [(ngModel)]="details.title" name="title" required
+                   type="text" class="validate">
+            <label for="title">Title</label>
+          </div>
+          <div class="input-field col s12 m6 l4">
+            <label for="date">Target Date</label>
+            <input id="date"
+                   required
+                   [(ngModel)]="details.target_date" name="target_date"
+                   materialize="pickadate"
+                   [materializeParams]="[{closeOnSelect: true,selectMonths: true, selectYears: 16, min:mindate}]"
+                   type="text"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+                      <textarea id="description" [(ngModel)]="details.description" name="description" required
+                                class="materialize-textarea"></textarea>
+            <label for="description">Description</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 m6 l8">
+            <input placeholder="Url" id="url" [(ngModel)]="details.ticket_url" name="url" required type="text"
+                   class="validate">
+            <label for="url">Ticket Url</label>
+          </div>
+          <div class="input-field col s12 m6 l4">
+            <input placeholder="Product area" [(ngModel)]="details.product_area_id" name="product_area_id"
+                   required id="product_are" type="text" class="validate">
+            <label for="product_are">Product Area</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <button type="submit" class="waves-effect waves-light blue btn-large right"
+                    [disabled]="!detailsForm.form.valid"> Next <i
+              class="material-icons right">arrow_forward</i></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -12,6 +12,8 @@ import {AuthGuard} from "./guard/index";
 import {ActionButton} from "./action-button/index";
 import {Dragula, DragulaService} from "ng2-dragula/ng2-dragula";
 import {FilterPipe} from "./pipes/filter.pipe";
+import {ClientService} from "./resource/index";
+import {DateComponent} from "./widgets/date/date.component";
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -25,16 +27,17 @@ import {FilterPipe} from "./pipes/filter.pipe";
     LayoutComponent,
     ActionButton,
     Dragula,
-    FilterPipe
+    FilterPipe,
+    DateComponent
   ],
   exports: [SideNavComponent, Dragula,BreadcrumbComponent, LayoutComponent,
-    CommonModule, FormsModule, RouterModule, MaterializeDirective,FilterPipe]
+    CommonModule, FormsModule, RouterModule, MaterializeDirective,FilterPipe,DateComponent]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [NameListService, DragulaService, BreadcrumbService, AuthGuard]
+      providers: [NameListService, DragulaService, BreadcrumbService, AuthGuard,ClientService]
     };
   }
 }
