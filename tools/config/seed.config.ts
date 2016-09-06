@@ -326,7 +326,7 @@ export class SeedConfig {
       'angular2-jwt/*': `node_modules/angular2-jwt/*`,
       'dragula': 'node_modules/dragula/dist/dragula.js',
       'ng2-dragula': 'node_modules/ng2-dragula',
-      'angular2-moment': 'node_modules/angular2-moment',
+      // 'angular2-moment': 'node_modules/angular2-moment',
       'rxjs/*': `node_modules/rxjs/*`,
       'app/*': `/app/*`,
       '*': `node_modules/*`
@@ -400,9 +400,9 @@ export class SeedConfig {
       'angular2-jwt': {
         defaultExtension: 'js'
       },
-      'angular2-moment': {
-        defaultExtension: 'js'
-      },
+      // 'angular2-moment': {
+      //   defaultExtension: 'js'
+      // },
       'angular2-materialize': {
         "main": "dist/index",
         "defaultExtension": "js"

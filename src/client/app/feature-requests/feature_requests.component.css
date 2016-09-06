@@ -1,5 +1,19 @@
 
 .collection li.collection-item:not(.active):hover {
   background-color: #ddd;
-  cursor: pointer; cursor: hand;
+  cursor: pointer;
+  cursor: hand;
 }
+
+.chip .priority {
+  float: left;
+  margin: 0 8px 0 -12px;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+}
+
+.dropdown-content li {
+  min-height: 0;
+}
+

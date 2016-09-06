@@ -1,74 +1,135 @@
 <div class="row">
-  <div class="col s12"  style="margin-top: 10px">
+  <div class="col s12" style="margin-top: 10px">
     <nav>
       <div class="blue nav-wrapper">
         <ul id="nav-mobile" class="left">
-          <li [ngClass]="isActive(2)"><a (click)="openFilter()"><i class="material-icons left">info_outline</i> Open</a></li>
-          <li  [ngClass]="isActive(1)"><a (click)="closedFilter()"><i class="material-icons left">highlight_off</i> Closed</a></li>
+          <li [ngClass]="isActive(2)"><a (click)="openFilter()"><i class="material-icons hide-on-small-and-down left">info_outline</i>
+            Open</a>
+          </li>
+          <li [ngClass]="isActive(1)"><a (click)="closedFilter()"><i class="material-icons hide-on-small-and-down left">highlight_off</i>
+            Closed</a></li>
         </ul>
         <ul id="nav-mobile-right" class="right">
-          <li>
-            <select name="selectedOption" materialize="material_select" >
-              <option value="" selected>Employ</option>
-              <option value="" >Test</option>
-            </select>
+          <li><a (click)="showFilterNav = !showFilterNav"><i class="material-icons hide-on-small-and-down left">filter_list</i>Filter</a>
           </li>
+          <li><a (click)="sort()"><i class="material-icons hide-on-small-and-down left">sort</i>Sort</a></li>
         </ul>
       </div>
     </nav>
-    <ul id="userSearch" class="dropdown-content">
-      <!--<nav>-->
-        <!--<div class="blue nav-wrapper">-->
-          <!--<form>-->
-            <!--<div class="input-field">-->
-              <!--<input id="search" type="search" required>-->
-              <!--<label for="search"><i class="material-icons">search</i></label>-->
-              <!--<i class="material-icons">close</i>-->
-            <!--</div>-->
-          <!--</form>-->
-        <!--</div>-->
-      <!--</nav>-->
-      <li><a href="#!">one</a></li>
-      <li><a href="#!">two</a></li>
-      <li class="divider"></li>
-      <li><a href="#!">three</a></li>
-    </ul>
+    <nav [ngStyle]="isFilterHidden()">
+      <div class="blue darken-1 nav-wrapper">
+        <ul id="nav-mobile-clear" class="left">
+          <li><a (click)="clearFilter()"><i class="material-icons right hide-on-small-and-down">close</i>Clear</a></li>
+        </ul>
+        <ul id="nav-mobile-filter" class="right">
+          <li><a class='dropdown-button filter-employ' materialize="dropdown"  data-beloworigin="true" data-constrainwidth="false" data-activates='filter_employ'><i class="material-icons right hide-on-small-and-down">arrow_drop_down</i>Employ</a></li>
+          <li><a class='dropdown-button filter-product-area'  materialize="dropdown"  data-beloworigin="true" data-constrainwidth="false" data-activates='filter_productArea'><i class="material-icons right hide-on-small-and-down">arrow_drop_down</i>Product Area</a></li>
+          <li><a class='dropdown-button filter-client'  materialize="dropdown"  data-beloworigin="true" data-constrainwidth="false" data-activates='filter_client'><i class="material-icons right hide-on-small-and-down">arrow_drop_down</i>Client</a></li>
+          <li><a class='dropdown-button filter-priority' [ngStyle]="showPriorityFilter()"  materialize="dropdown"  data-beloworigin="true" data-constrainwidth="false" data-activates='filter_priority'><i class="material-icons right hide-on-small-and-down">arrow_drop_down</i>Priority</a></li>
+          <!-- Dropdown Structure -->
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="col s12">
+    <p><i style="font-size: small;"  [innerHTML]="getFilterSummary()"></i></p>
+  </div>
+ <div class="center">
+   <div id='filter_employ' class='dropdown-content'  style="width: 100%;">
+     <div class="row">
+       <div class="col black-text s12">
+         <form materialize>
+           <div class="input-field" style="width: 300px">
+             <i class="material-icons prefix">search</i>
+             <input id="icon_prefix" type="text" class="validate" name="search" [(ngModel)]="employSearch" placeholder="Search employ">
+             <!--<label for="icon_prefix">First Name</label>-->
+           </div>
+         </form>
+       </div>
+     </div>
+     <div class="row">
+       <ul class="collection with-header">
+         <li class="collection-header"><h5>Employees</h5></li>
+         <li class="collection-item" (click)="filterByUser(user.id)" [ngClass]="{'active':filter.employ === user.id}" *ngFor="let user of users |filter:['username',employSearch]"><div>{{user.username}}</div></li>
+       </ul>
+     </div>
+   </div>
+   <div id='filter_productArea' class='dropdown-content'  style="width:  100%;">
+     <div class="row">
+       <div class="col black-text s12">
+         <form materialize>
+           <div class="input-field" style="width: 300px">
+             <i class="material-icons prefix">search</i>
+             <input  type="text" class="validate" name="search" [(ngModel)]="productAreaSearch" placeholder="Search product area">
+             <!--<label for="icon_prefix">First Name</label>-->
+           </div>
+         </form>
+       </div>
+     </div>
+     <div class="row">
+       <ul class="collection with-header">
+         <li class="collection-header"><h5>Product Areas</h5></li>
+         <li class="collection-item" (click)="filterByProductArea(pa.id)" [ngClass]="{'active':filter.product_area === pa.id}" *ngFor="let pa of productAreas |filter:['name',productAreaSearch]"><div>{{pa.name}}</div></li>
+       </ul>
+     </div>
+   </div>
+   <div id='filter_priority' class='dropdown-content'  style="width:  100%;">
+     <div class="row">
+       <ul class="collection with-header">
+         <li class="collection-header"><h5>Product Areas</h5></li>
+         <li class="collection-item" (click)="filterClientPriority('asc')" [ngClass]="{'active':filter.priority_dir === 'asc'}"><div>Ascending</div></li>
+         <li class="collection-item" (click)="filterClientPriority('desc')" [ngClass]="{'active':filter.priority_dir === 'desc'}"><div>Descending</div></li>
+       </ul>
+     </div>
+   </div>
+   <div id='filter_client' class='dropdown-content'  style="width: 100%;">
+     <div class="row">
+       <div class="col black-text s12">
+         <form materialize>
+           <div class="input-field" style="width: 300px">
+             <i class="material-icons prefix">search</i>
+             <input  type="text" class="validate" name="search" [(ngModel)]="clientSearch" placeholder="Search client">
+             <!--<label for="icon_prefix">First Name</label>-->
+           </div>
+         </form>
+       </div>
+     </div>
+     <div class="row">
+       <ul class="collection with-header">
+         <li class="collection-header"><h5>Clients</h5></li>
+         <li class="collection-item" (click)="filterByClient(c.id)" [ngClass]="{'active':filter.client === c.id}" *ngFor="let c of clients |filter:['name',clientSearch]"><div>{{c.name}}</div></li>
+       </ul>
+     </div>
+   </div>
+ </div>
+  <div class="col s12">
     <ul class="collection">
       <li class="collection-item avatar " (click)="details()" *ngFor="let request of featureRequests">
         <i class="material-icons circle green lighten-2" *ngIf="!request.closed">info_outline</i>
         <i class="material-icons circle red lighten-2" *ngIf="request.closed">highlight_off</i>
-        <span class="title">{{request.title}}</span>
+        <span class="title">{{request.title}}</span><br/>
         <p><a [href]="request.ticket_url"> {{request.ticket_url}}</a></p>
-        <p><i><small>Opened {{request.created_at | amCalendar}}</small></i></p>
-        <blockquote class="secondary-content" *ngIf="!request.closed">
-          Due: {{getDate(request.target_date)}}
-        </blockquote>
-        <blockquote class="secondary-content" *ngIf="request.closed">
-          Closed: {{request.updated_at | amCalendar}}
-        </blockquote>
+        <p><i>
+          <small>Opened {{getDate(request.created_at) }}</small>
+        </i></p>
+        <div class="chip" *ngFor="let cl of request.clients">
+          <div class="priority red lighten-1  center white-text">{{cl.priority}}</div>
+          {{getClientName(cl.client_id)}}
+        </div>
+        <div class="secondary-content">
+          <blockquote class="hide-on-small-and-down" *ngIf="!request.closed">
+            Due: {{getDate(request.target_date)}}
+          </blockquote>
+          <blockquote class="hide-on-small-and-down" *ngIf="request.closed">
+            Closed: {{getDate(request.updated_at)}}
+          </blockquote>
+
+        </div>
+
         <!--TODO add clients here-->
         <!--<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>-->
         <!--todo add coments here-->
       </li>
     </ul>
-    <!--<table class="bordered responsive-table">-->
-      <!--<thead>-->
-      <!--<tr>-->
-        <!--<th data-field="id">Title</th>-->
-        <!--<th data-field="name">Ticket Url</th>-->
-        <!--<th data-field="price">Product Area</th>-->
-        <!--<th data-field="price">Target date</th>-->
-      <!--</tr>-->
-      <!--</thead>-->
-
-      <!--<tbody>-->
-      <!--<tr *ngFor="let request of featureRequests">-->
-        <!--<td>{{request.title}}</td>-->
-        <!--<td>{{request.ticket_url}}</td>-->
-        <!--<td>{{getProductAreaName(request.product_area_id)}}</td>-->
-        <!--<td>{{getDate(request.target_date)}}</td>-->
-      <!--</tr>-->
-      <!--</tbody>-->
-    <!--</table>-->
   </div>
 </div>

@@ -11,11 +11,12 @@ import {
   FinishTabComponent
 } from "./new/index";
 import {MomentModule} from "angular2-moment";
+import {UsersResolver} from "./resolver/users.resolver";
 
 @NgModule({
-  imports: [CommonModule, SharedModule,MomentModule],
+  imports: [CommonModule, SharedModule],
   declarations: [FeatureRequestsComponent,NewFeatureRequestComponent,HeaderComponent,DetailsTabComponent,ClientsTabComponent,FinishTabComponent],
   exports: [FeatureRequestsComponent,NewFeatureRequestComponent],
-  providers: [ClientsResolver,ProductAreasResolver, FeatureRequestsResolver]
+  providers: [ClientsResolver,ProductAreasResolver, FeatureRequestsResolver,UsersResolver]
 })
 export class FeatureRequestsModule { }

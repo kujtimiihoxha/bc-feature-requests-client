@@ -6,6 +6,7 @@ export class FeatureRequestFilter {
   client: string
   closed: number
   product_area: string
+  priority_dir: string
   field: string
   dir: string
   skip: number
@@ -15,6 +16,7 @@ export class FeatureRequestFilter {
   getDefaultFilter(){
     let df = new FeatureRequestFilter()
     df.get = 15
+    df.priority_dir = 'desc'
     df.field ='created_at'
     df.dir = 'desc'
     return df
