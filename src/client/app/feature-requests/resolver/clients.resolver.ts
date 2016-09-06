@@ -13,7 +13,7 @@ export class ClientsResolver implements Resolve<Client[]> {
     private clientService: ClientService
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+  resolve(route: ActivatedRouteSnapshot): Observable<Client[]> {
     return this.clientService.get()
   }
 }

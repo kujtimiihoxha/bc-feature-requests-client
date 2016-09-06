@@ -9,3 +9,4 @@ export * from './config/env.config';
 export * from './guard/index'
 export * from './resource/index'
 export * from './model/index'
+export * from './loading/loading.service'

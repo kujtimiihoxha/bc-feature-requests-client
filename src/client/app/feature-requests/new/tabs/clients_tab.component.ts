@@ -1,5 +1,5 @@
-import {Component, Input, EventEmitter, Output, OnInit} from "@angular/core";
-import {FeatureRequestModel} from "../../../shared/model/feature_request.model";
+import {Component, Input, EventEmitter, Output, OnInit, OnDestroy} from "@angular/core";
+import {FeatureRequest} from "../../../shared/model/feature_request.model";
 import {Client} from "../../../shared/model/client.model";
 import {DragulaService} from "ng2-dragula/src/app/providers/dragula.provider";
 declare const $: any;
@@ -12,9 +12,10 @@ declare const $: any;
   templateUrl: 'clients_tab.component.html',
   styleUrls: ["clients_tab.component.css"]
 })
-export class ClientsTabComponent implements OnInit {
-  @Input() details: FeatureRequestModel;
-  @Output() detailsChange: EventEmitter<FeatureRequestModel> = new EventEmitter<FeatureRequestModel>();
+export class ClientsTabComponent implements OnInit, OnDestroy {
+
+  @Input() details: FeatureRequest;
+  @Output() detailsChange: EventEmitter<FeatureRequest> = new EventEmitter<FeatureRequest>();
 
   @Output() onNext: EventEmitter<void> = new EventEmitter<void>();
   @Output() onPrevious: EventEmitter<void> = new EventEmitter<void>();
@@ -26,9 +27,9 @@ export class ClientsTabComponent implements OnInit {
   _nameSearch: string = ""
   modalActions = new EventEmitter<string>();
   selectedPriority: number;
-
+  subscription:any
   constructor(private dragulaService: DragulaService) {
-    dragulaService.dropModel.subscribe((value: any) => {
+   this.subscription = dragulaService.dropModel.subscribe((value: any) => {
       let fromContainer = value.splice(3)
       let ToContainer = value.splice(2)
       if ($(fromContainer).attr("data-container") === "parent" && $(ToContainer).attr("data-container") !== "parent") {
@@ -67,7 +68,9 @@ export class ClientsTabComponent implements OnInit {
       this.clientsTmp = this.clients.slice(0, 6)
     }
   }
-
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
   next() {
     this.onNext.emit()
   }

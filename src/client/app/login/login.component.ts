@@ -23,7 +23,7 @@ export class LoginComponent {
       this.loginService.post(this.model).catch((error: any)=>{
         Materialize.toast(JSON.parse(error._body).message,2000)
         this.enabled = true;
-        return Observable.throw('');
+        return Observable.empty();
       }).subscribe((response: TokenResponseModel)=>{
         localStorage.setItem('id_token', response.token);
         let firstname = this.jwtHelper.decodeToken(response.token).firstname;
