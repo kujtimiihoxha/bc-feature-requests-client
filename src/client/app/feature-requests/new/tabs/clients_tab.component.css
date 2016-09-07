@@ -2,7 +2,8 @@
 #search {
   border-bottom: none;
 }
-.gu-mirror{
+
+.gu-mirror {
   list-style: none;
 }
 
@@ -15,6 +16,7 @@
   display: inline-block;
   vertical-align: middle;
 }
+
 .gu-mirror.collection-item.avatar i.circle {
   font-size: 18px;
   line-height: 42px;
@@ -28,6 +30,7 @@
   padding-left: 72px;
   position: relative;
 }
+
 .gu-mirror.collection-item {
   background-color: #fff;
   line-height: 1.5rem;
@@ -35,6 +38,7 @@
   margin: 0;
   border-bottom: 1px solid #e0e0e0;
 }
+
 .gu-mirror .collection-item {
   background-color: #fff;
   line-height: 1.5rem;
@@ -42,9 +46,11 @@
   margin: 0;
   border-bottom: 1px solid #e0e0e0;
 }
+
 .gu-mirror .collection-item.avatar .title {
   font-size: 16px;
 }
+
 .gu-mirror .collection-item {
   background-color: #fff;
   line-height: 1.5rem;
@@ -52,11 +58,13 @@
   margin: 0;
   border-bottom: 1px solid #e0e0e0;
 }
+
 .gu-mirror.collection-item.avatar .secondary-content {
   position: absolute;
   top: 16px;
   right: 16px;
 }
+
 .gu-mirror.collection-item.avatar p {
   margin: 0;
 }

@@ -1,4 +1,4 @@
-<div  class="col s12">
+<div class="col s12">
   <div class="container" style="width: 95%">
     <div class="row">
       <form materialize class="col s12" (ngSubmit)="next()" #detailsForm="ngForm">
@@ -28,11 +28,13 @@
         <div class="row">
           <div class="input-field col s12 m6 l8">
             <input placeholder="Url" id="url" [(ngModel)]="details.ticket_url" name="url" required type="text"
-                   class="validate" pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)">
+                   class="validate"
+                   pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)">
             <label for="url">Ticket Url</label>
           </div>
           <div class="input-field col s12 m6 l4">
-            <select [(ngModel)]="selectedProductArea" name="selectedProductArea" materialize="material_select" [materializeSelectOptions]="productAreas" required>
+            <select [(ngModel)]="selectedProductArea" name="selectedProductArea" materialize="material_select"
+                    [materializeSelectOptions]="productAreas" required>
               <option value="" disabled selected>Choose the product area</option>
               <option *ngFor="let option of productAreas" [value]="option.id">{{option.name}}</option>
             </select>

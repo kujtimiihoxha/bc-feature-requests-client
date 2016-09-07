@@ -1,6 +1,6 @@
 describe('FeatureRequests', () => {
 
-  beforeEach( () => {
+  beforeEach(() => {
     browser.get('/');
   });
 

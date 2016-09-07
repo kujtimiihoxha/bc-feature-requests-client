@@ -12,8 +12,8 @@ import {BreadcrumbService} from "./breadcrumb.service";
   }
 )
 export class BreadcrumbComponent {
-  constructor(private breadcrumb : BreadcrumbService) {
-        console.log("Test")
-        console.log(breadcrumb)
+  constructor(private breadcrumb: BreadcrumbService) {
+    console.log('Test')
+    console.log(breadcrumb)
   }
 }

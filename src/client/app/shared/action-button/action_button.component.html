@@ -3,8 +3,9 @@
     <i class="large material-icons">add</i>
   </a>
   <ul>
-    <li >
-      <a [routerLink]="['/bc/new']" materialize="tooltip" class="tooltipped btn-floating green" data-position="left" data-delay="250"
+    <li>
+      <a [routerLink]="['/bc/new']" materialize="tooltip" class="tooltipped btn-floating green" data-position="left"
+         data-delay="250"
          data-tooltip="New Feature Request">
         <i class="material-icons">description</i></a>
     </li>
@@ -27,9 +28,8 @@
 </div>
 
 
-
-<div class="fixed-action-btn"  style="bottom: 45px; right: 24px;" *ngIf="role == 2">
-  <a [routerLink]="['/bc/new']"  materialize="tooltip"  data-position="left" data-delay="250"
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;" *ngIf="role == 2">
+  <a [routerLink]="['/bc/new']" materialize="tooltip" data-position="left" data-delay="250"
      data-tooltip="New Feature Request" class=" tooltipped btn-floating btn-large red">
     <i class="large material-icons">description</i>
   </a>

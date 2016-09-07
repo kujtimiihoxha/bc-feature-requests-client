@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from "@angular/core";
 
 @Pipe({
   name: 'filter'
@@ -6,14 +6,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    if (value.length === 0){
+    if (value.length === 0) {
       return value;
     }
-    let resultArray:any=[];
-    console.log(args,value)
-    for (let item of value){
-      console.log(item,item[args[0]],args[0])
-      if ( item[args[0]].match('^.*' + args[1] + '.*$')){
+    let resultArray: any = [];
+    for (let item of value) {
+      if (item[args[0]].match(new RegExp('^.*' + args[1] + '.*$', 'ig'))) {
         resultArray.push(item);
       }
     }

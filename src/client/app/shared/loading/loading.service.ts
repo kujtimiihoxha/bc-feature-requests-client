@@ -4,11 +4,13 @@ import {Injectable} from "@angular/core";
  */
 @Injectable()
 export class LoadingService {
-  loading:boolean
-  on(){
+  loading: boolean
+
+  on() {
     this.loading = true;
   }
-  off(){
+
+  off() {
     this.loading = false;
   }
 }

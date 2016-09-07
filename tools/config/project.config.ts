@@ -25,7 +25,6 @@ export class ProjectConfig extends SeedConfig {
       {src: 'hammerjs/hammer.min.js', inject: 'libs'},
       {src: 'materialize-css/dist/css/materialize.min.css', inject: true},
       {src: 'dragula/dist/dragula.css', inject: true},
-      {src: 'materialize-css/dist/js/materialize.min.js', inject: 'libs'},
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
     ];
@@ -33,6 +32,7 @@ export class ProjectConfig extends SeedConfig {
     // Add `local` third-party libraries to be injected/bundled.
     this.APP_ASSETS = [
       ...this.APP_ASSETS,
+      {src: `${this.APP_SRC}/assets/js/materialize-mod.js`, inject: true, vendor: false},
       // {src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
       // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
     ];

@@ -6,21 +6,21 @@ import {Component, Input} from "@angular/core";
   moduleId: module.id,
   selector: 'bc-fr-header',
   templateUrl: 'header.component.html',
-  styleUrls: ["header.component.css"]
+  styleUrls: ['header.component.css']
 })
 export class HeaderComponent {
 
   @Input() main: string;
   @Input() currentTab: number
   headers: any = {
-    "1": "Request Details",
-    "2": "Select Clients",
-    "3": "Submit"
+    '1': 'Request Details',
+    '2': 'Select Clients',
+    '3': 'Submit'
   }
   help: any = {
-    "1": "",
-    "2": "Drag clients to the highlighted area",
-    "3": ""
+    '1': '',
+    '2': 'Drag clients to the highlighted area',
+    '3': ''
   }
 
   getHeader() {
@@ -33,13 +33,13 @@ export class HeaderComponent {
 
   isDisabled(tag: number) {
     return {
-      "disabled": this.currentTab !== tag
+      'disabled': this.currentTab !== tag
     }
   }
 
   getClass(tag: number) {
     return {
-      "active": this.currentTab === tag
+      'active': this.currentTab === tag
     }
   }
 }

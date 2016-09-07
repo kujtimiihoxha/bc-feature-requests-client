@@ -10,7 +10,7 @@ declare const $: any;
   moduleId: module.id,
   selector: 'bc-fr-clients',
   templateUrl: 'clients_tab.component.html',
-  styleUrls: ["clients_tab.component.css"]
+  styleUrls: ['clients_tab.component.css']
 })
 export class ClientsTabComponent implements OnInit, OnDestroy {
 
@@ -24,19 +24,20 @@ export class ClientsTabComponent implements OnInit, OnDestroy {
   currentClient: Client;
   clientsTmp: Array<Client> = null
   clientsSelected: Array<Client> = []
-  _nameSearch: string = ""
+  _nameSearch: string = ''
   modalActions = new EventEmitter<string>();
   selectedPriority: number;
-  subscription:any
+  subscription: any
+
   constructor(private dragulaService: DragulaService) {
-   this.subscription = dragulaService.dropModel.subscribe((value: any) => {
+    this.subscription = dragulaService.dropModel.subscribe((value: any) => {
       let fromContainer = value.splice(3)
       let ToContainer = value.splice(2)
-      if ($(fromContainer).attr("data-container") === "parent" && $(ToContainer).attr("data-container") !== "parent") {
+      if ($(fromContainer).attr('data-container') === 'parent' && $(ToContainer).attr('data-container') !== 'parent') {
         this.handleAdd(value.slice(1))
         this.filterClients(this._nameSearch)
       }
-      else if ($(fromContainer).attr("data-container") !== "parent" &&$(ToContainer).attr("data-container") === "parent") {
+      else if ($(fromContainer).attr('data-container') !== 'parent' && $(ToContainer).attr('data-container') === 'parent') {
         this.handleRemove(value.slice(1))
         this.filterClients(this._nameSearch)
       }
@@ -45,17 +46,17 @@ export class ClientsTabComponent implements OnInit, OnDestroy {
 
   handleAdd(client: any) {
     this.clientsSelected.forEach((cl: Client)=> {
-      if (cl.id === $(client).attr("data-uuid")) {
+      if (cl.id === $(client).attr('data-uuid')) {
         this.currentClient = cl;
       }
     })
-    this.modalActions.emit("openModal")
+    this.modalActions.emit('openModal')
   }
 
   handleRemove(client: any) {
     var toRemove: any;
     this.details.clients.forEach((item: any)=> {
-      if (item.client_id === $(client).attr("data-uuid")) {
+      if (item.client_id === $(client).attr('data-uuid')) {
         toRemove = item;
       }
     })
@@ -68,9 +69,11 @@ export class ClientsTabComponent implements OnInit, OnDestroy {
       this.clientsTmp = this.clients.slice(0, 6)
     }
   }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
   next() {
     this.onNext.emit()
   }
@@ -108,7 +111,7 @@ export class ClientsTabComponent implements OnInit, OnDestroy {
     })
     this.currentClient = null;
     this.selectedPriority = null;
-    this.modalActions.emit("closeModal");
+    this.modalActions.emit('closeModal');
     console.log(this.details)
   }
 }

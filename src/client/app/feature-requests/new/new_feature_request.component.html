@@ -4,11 +4,14 @@
     <div class="card-content">
       <div class="container">
         <div class="row">
-          <bc-fr-details [ngStyle]="isMyTab(1)" [(details)]="details" [productAreas]="productAreas" (onNext)="next()"></bc-fr-details>
-          <bc-fr-clients  [(details)]="details" [clients]="clients" (onNext)="next()" [ngStyle]="isMyTab(2)"  (onPrevious)="previous()" ></bc-fr-clients>
-          <bc-fr-finish  [(details)]="details" (onSubmit)="submit()" [ngStyle]="isMyTab(3)"  (onPrevious)="previous()"></bc-fr-finish>
+          <bc-fr-details [ngStyle]="isMyTab(1)" [(details)]="details" [productAreas]="productAreas"
+                         (onNext)="next()"></bc-fr-details>
+          <bc-fr-clients [(details)]="details" [clients]="clients" (onNext)="next()" [ngStyle]="isMyTab(2)"
+                         (onPrevious)="previous()"></bc-fr-clients>
+          <bc-fr-finish [(details)]="details" (onSubmit)="submit()" [ngStyle]="isMyTab(3)"
+                        (onPrevious)="previous()"></bc-fr-finish>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>

@@ -1,5 +1,4 @@
-import {Routes} from '@angular/router';
-
+import {Routes} from "@angular/router";
 import {LayoutComponent} from "./shared/layout/layout.component";
 import {FeatureRequestsRoutes} from "./feature-requests/feature_requests.routes";
 import {AuthGuard} from "./shared/guard/auth.guard";
@@ -11,7 +10,7 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: "bc",
+    path: 'bc',
     children: [
       ...FeatureRequestsRoutes
     ],

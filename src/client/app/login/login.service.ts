@@ -7,7 +7,7 @@ import {BaseResource} from "../shared/index";
 import {UserLoginModel} from "./user_login.model";
 @Injectable()
 export class LoginService extends BaseResource<UserLoginModel> {
-  constructor(protected http: Http){
-    super(http,"auth/login")
+  constructor(protected http: Http) {
+    super(http, 'auth/login')
   }
 }

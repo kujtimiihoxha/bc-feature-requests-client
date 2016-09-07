@@ -1,0 +1,155 @@
+<div class="col s12 filter">
+  <nav>
+    <div class="blue nav-wrapper">
+      <ul id="nav-mobile" class="left">
+        <li [ngClass]="{'active':filter.closed == 2}"><a (click)="showOnlyOpenRequests()"><i class="material-icons hide-on-small-and-down left">info_outline</i>
+          Open</a>
+        </li>
+        <li [ngClass]="{'active':filter.closed == 1}"><a (click)="showOnlyClosedRequests()"><i class="material-icons hide-on-small-and-down left">highlight_off</i>
+          Closed</a></li>
+      </ul>
+      <ul id="nav-mobile-right" class="right">
+        <li><a (click)="showFilterNav = !showFilterNav"><i class="material-icons hide-on-small-and-down left">filter_list</i>Filter</a>
+        </li>
+        <li><a class='dropdown-button sort' materialize="dropdown" data-beloworigin="true" data-constrainwidth="false"
+               data-activates='sort_dropdown'><i class="material-icons left hide-on-small-and-down">sort</i>Sort</a></li>
+      </ul>
+    </div>
+  </nav>
+  <nav [ngClass]="filterNavCls">
+    <div class="blue darken-1 nav-wrapper">
+      <ul id="nav-mobile-clear" class="left">
+        <li><a (click)="clearFilter()"><i class="material-icons right hide-on-small-and-down">close</i>Clear</a></li>
+      </ul>
+      <ul id="nav-mobile-filter" class="right">
+        <li  *ngFor="let ft of filterOptions" ><a class='dropdown-button font-smaller' materialize="dropdown"
+               data-beloworigin="true" data-constrainwidth="false" [attr.data-activates]='ft.activates' [ngClass]="ft.cls"><i
+          class="material-icons right hide-on-small-and-down">arrow_drop_down</i>{{ft.label}}</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="col s12">
+  <blockquote><i style="font-size: small;" [innerHTML]="getFilterSummary()"></i></blockquote>
+</div>
+<div id='employ_dropdown' class='dropdown-content'>
+  <nav>
+    <div class="white black-text lighten-2  nav-wrapper">
+      <form>
+        <div class="input-field">
+          <input id="search_employees"   type="search" placeholder="Search employees" name="search" [(ngModel)]="employSearch">
+          <label for="search_employees"><i class="material-icons black-text">search</i></label>
+          <i class="material-icons" (click)="employSearch=''">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <ul class="collection with-header">
+    <li class="collection-item" (click)="filterByEmploy(user.id)" [ngClass]="{'active':filter.employ === user.id}"
+        *ngFor="let user of (users |filter:['username',employSearch]).slice(0,6)">
+      <div>{{user.username}}</div>
+    </li>
+  </ul>
+  <div class="black-text center">{{(users |filter:['username',employSearch]).slice(0,6).length}}/{{users.length}}
+  </div>
+
+</div>
+<div id='product_area_dropdown' class='dropdown-content' >
+  <nav>
+    <div class="white black-text  nav-wrapper">
+      <form>
+        <div class="input-field">
+          <input  id="search_product_areas" type="search" placeholder="Search product areas" name="search"
+                 [(ngModel)]="productAreaSearch">
+          <label for="search_product_areas"><i class="material-icons black-text">search</i></label>
+          <i class="material-icons" (click)="productAreaSearch=''">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <ul class="collection with-header">
+    <li class="collection-item" (click)="filterByProductArea(pa.id)"
+        [ngClass]="{'active':filter.product_area === pa.id}"
+        *ngFor="let pa of (productAreas |filter:['name',productAreaSearch]).slice(0,6)">
+      <div>{{pa.name}}</div>
+    </li>
+  </ul>
+  <div class="black-text center">{{(productAreas
+    |filter:['name',productAreaSearch]).slice(0,6).slice(0,6).length}}/{{productAreas.length}}
+  </div>
+
+</div>
+<div id='client_dropdown' class='dropdown-content' >
+  <nav>
+    <div class="white black-text nav-wrapper">
+      <form>
+        <div class="input-field">
+          <input id="search_clients" type="search" placeholder="Search clients" name="search" [(ngModel)]="clientSearch">
+          <label for="search_clients"><i class="material-icons black-text">search</i></label>
+          <i class="material-icons" (click)="clientSearch=''">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <ul class="collection with-header">
+    <li class="collection-item" (click)="filterByClient(c.id)" [ngClass]="{'active':filter.client === c.id}"
+        *ngFor="let c of (clients |filter:['name',clientSearch]).slice(0,6)">
+      <div>{{c.name}}</div>
+    </li>
+  </ul>
+  <div class="black-text center">{{(clients |filter:['name',clientSearch]).slice(0,6).length}}/{{clients.length}}
+  </div>
+
+</div>
+<div id='priority_dropdown' class='dropdown-content' >
+  <div class="row">
+    <ul class="collection with-header">
+      <li class="collection-item" (click)="filterByClientPriority('asc')"
+          [ngClass]="{'active':filter.priority_dir === 'asc'}">
+        <div>Ascending</div>
+      </li>
+      <li class="collection-item" (click)="filterByClientPriority('desc')"
+          [ngClass]="{'active':filter.priority_dir === 'desc'}">
+        <div>Descending</div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div id='sort_dropdown' class='dropdown-content'>
+  <div class="row">
+    <ul class="collection with-header">
+      <li class="collection-item" (click)="sort('updated_at','desc')"
+          [ngClass]="{'active':(filter.field === 'updated_at' && filter.dir === 'desc')}">
+        <div>Recently updated</div>
+      </li>
+      <li class="collection-item" (click)="sort('updated_at','asc')"
+          [ngClass]="{'active':(filter.field === 'updated_at' && filter.dir === 'asc')}">
+        <div>Least recently updated</div>
+      </li>
+      <li class="collection-item" (click)="sort('created_at','desc')"
+          [ngClass]="{'active':(filter.field === 'created_at' && filter.dir === 'desc')}">
+        <div>Newest</div>
+      </li>
+      <li class="collection-item" (click)="sort('created_at','asc')"
+          [ngClass]="{'active':(filter.field === 'created_at' && filter.dir === 'asc')}">
+        <div>Oldest</div>
+      </li>
+      <li class="collection-item" (click)="sort('target_date','desc')"
+          [ngClass]="{'active':(filter.field === 'target_date' && filter.dir === 'desc')}">
+        <div>Target date descending</div>
+      </li>
+      <li class="collection-item" (click)="sort('target_date','asc')"
+          [ngClass]="{'active':(filter.field === 'target_date' && filter.dir === 'asc')}">
+        <div>Target date ascending</div>
+      </li>
+      <li class="collection-item" (click)="sort('title_normalized','asc')"
+          [ngClass]="{'active':(filter.field === 'title_normalized' && filter.dir === 'asc')}">
+        <div>By Title ascending</div>
+      </li>
+      <li class="collection-item" (click)="sort('title_normalized','desc')"
+          [ngClass]="{'active':(filter.field === 'title_normalized' && filter.dir === 'desc')}">
+        <div>By Title descending</div>
+      </li>
+    </ul>
+  </div>
+</div>

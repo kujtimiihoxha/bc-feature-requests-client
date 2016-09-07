@@ -10,7 +10,7 @@ import {BaseResource} from "./base.service";
 import {Client} from "../model/index";
 @Injectable()
 export class ClientService extends BaseResource<Client> {
-  constructor(protected http: Http){
-    super(http,"clients")
+  constructor(protected http: Http) {
+    super(http, 'clients')
   }
 }

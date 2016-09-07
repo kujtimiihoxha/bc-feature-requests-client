@@ -13,11 +13,11 @@ export class FeatureRequestFilter {
   get: number
   [key: string]: any;
 
-  getDefaultFilter(){
+  static getDefaultFilter() {
     let df = new FeatureRequestFilter()
-    df.get = 15
+    df.get = 5
     df.priority_dir = 'desc'
-    df.field ='created_at'
+    df.field = 'created_at'
     df.dir = 'desc'
     return df
   }

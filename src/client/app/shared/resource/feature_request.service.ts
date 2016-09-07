@@ -8,21 +8,23 @@ import {Http, URLSearchParams} from "@angular/http";
 import {Injectable} from "@angular/core";
 import {BaseResource} from "./base.service";
 import {FeatureRequest, FilterResponse, FeatureRequestFilter} from "../model/index";
-import {Observable} from 'rxjs/Rx';
+import {Observable} from "rxjs/Rx";
 @Injectable()
 export class FeatureRequestService extends BaseResource<FeatureRequest> {
-  constructor(protected http: Http){
-    super(http,"feature-requests")
+  constructor(protected http: Http) {
+    super(http, 'feature-requests')
   }
-  getWithFilter(filter: FeatureRequestFilter):Observable<FilterResponse<FeatureRequest>> {
+
+  getWithFilter(filter: FeatureRequestFilter): Observable<FilterResponse<FeatureRequest>> {
+    this.options.headers.set('Authorization', 'Bearer ' + localStorage.getItem('id_token'))
     let params: URLSearchParams = new URLSearchParams();
-    for ( var k in filter){
-        if ( filter[k] != null && typeof filter[k] !== 'function') {
-          params.set(k,filter[k])
-        }
+    for (var k in filter) {
+      if (filter[k] != null && typeof filter[k] !== 'function') {
+        params.set(k, filter[k])
+      }
     }
     this.options.search = params
-    return this.http.get(this.url,this.options)
+    return this.http.get(this.url, this.options)
       .map(this.extractData);
   }
 }

@@ -1,0 +1,16 @@
+.filter {
+  margin-top: 10px
+}
+.font-smaller {
+  font-size: smaller
+}
+.hide {
+  display: none;
+}
+.dropdown-content{
+  width: 100%;
+}
+.dropdown-content li {
+  min-height: 0;
+}
+

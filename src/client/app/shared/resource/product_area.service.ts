@@ -10,7 +10,7 @@ import {BaseResource} from "./base.service";
 import {ProductArea} from "../model/index";
 @Injectable()
 export class ProductAreaService extends BaseResource<ProductArea> {
-  constructor(protected http: Http){
-    super(http,"product-areas")
+  constructor(protected http: Http) {
+    super(http, 'product-areas')
   }
 }

@@ -5,11 +5,13 @@
 import {Injectable} from "@angular/core";
 @Injectable()
 export class BreadcrumbService {
-  items : string[]
-  constructor(){
+  items: string[]
+
+  constructor() {
     this.items = []
   }
-  setItems(its : string[]){
+
+  setItems(its: string[]) {
     this.items = its
   }
 }

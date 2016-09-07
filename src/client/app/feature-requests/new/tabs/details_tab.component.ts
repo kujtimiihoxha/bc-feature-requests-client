@@ -7,17 +7,18 @@ import {FeatureRequest, ProductArea} from "../../../shared/index";
   moduleId: module.id,
   selector: 'bc-fr-details',
   templateUrl: 'details_tab.component.html',
-  styleUrls: ["details_tab.component.css"]
+  styleUrls: ['details_tab.component.css']
 })
 export class DetailsTabComponent {
-  @Input() details: FeatureRequest ;
-  @Input() productAreas: ProductArea[] ;
+  @Input() details: FeatureRequest;
+  @Input() productAreas: ProductArea[];
   @Output() detailsChange: EventEmitter<FeatureRequest> = new EventEmitter<FeatureRequest>();
   @Output() onNext: EventEmitter<void> = new EventEmitter<void>();
   mindate = Date.now();
-  selectedProductArea:string
-  next(){
-    this.productAreas.forEach((p:ProductArea)=>{
+  selectedProductArea: string
+
+  next() {
+    this.productAreas.forEach((p: ProductArea)=> {
       if (p.id === this.selectedProductArea) {
         this.details.product_area_id = p.id
         this.details.product_area_name = p.name

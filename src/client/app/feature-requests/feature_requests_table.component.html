@@ -1,0 +1,38 @@
+<div class="col s12">
+  <h6 *ngIf="featureRequests.length === 0">No feature requests</h6>
+  <ul class="collection">
+    <li class="collection-item avatar " *ngFor="let request of featureRequests">
+      <i class="material-icons circle green lighten-2" (click)="onDetails(request.id)" *ngIf="!request.closed">info_outline</i>
+      <i class="material-icons circle red lighten-2" (click)="onDetails(request.id)" *ngIf="request.closed">highlight_off</i>
+      <span class="title"><a (click)="onDetails(request.id)">{{request.title}}</a></span><br/>
+      <p><a [href]="request.ticket_url" target="_blank"> {{request.ticket_url}}</a></p>
+      <p><i>
+        <small>Opened {{getDate(request.created_at) }} by <b>{{getEmployUsername(request.employ_id)}}</b></small>
+      </i></p>
+      <div class="chip" *ngFor="let cl of request.clients">
+        <div class="priority red lighten-1  center white-text">{{cl.priority}}</div>
+        {{getClientName(cl.client_id)}}
+      </div>
+      <div class="secondary-content">
+        <blockquote class="hide-on-small-and-down" *ngIf="!request.closed">
+          Due: {{getDate(request.target_date)}}
+        </blockquote>
+        <blockquote class="hide-on-small-and-down" *ngIf="request.closed">
+          Closed: {{getDate(request.updated_at)}}
+        </blockquote>
+
+      </div>
+      <!--<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>-->
+      <!--todo add coments here-->
+    </li>
+  </ul>
+  <ul class="pagination" *ngIf="featureRequests.length !== 0">
+    <li class="disabled" [ngClass]="{'disabled':currentPage === 1,'waves-effect':currentPage!== 1}"
+        (click)="goToPage(currentPage-1)"><a><i class="material-icons">chevron_left</i></a></li>
+    <li [ngClass]="{'active':(i+1)===currentPage,'waves-effect':(i+1)!==currentPage}" *ngFor="let i of totalPages()"
+        (click)="goToPage(i+1)"><a> {{i+1}}</a></li>
+    <li
+      [ngClass]="{'disabled':currentPage === totalPages().length,'waves-effect':currentPage !== totalPages().length}"
+      (click)="goToPage(currentPage+1)"><a><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+</div>
