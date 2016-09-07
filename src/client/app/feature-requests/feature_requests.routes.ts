@@ -29,6 +29,9 @@ export const FeatureRequestsRoutes: Route[] = [
     path: 'details/:id',
     component: FeatureRequestDetailsComponent,
     resolve: {
+      users: UsersResolver,
+      clients: ClientsResolver,
+      productAreas: ProductAreasResolver,
       featureRequest: FeatureRequestResolver
     }
   }

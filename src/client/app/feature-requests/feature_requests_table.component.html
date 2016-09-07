@@ -14,13 +14,16 @@
         {{getClientName(cl.client_id)}}
       </div>
       <div class="secondary-content">
-        <blockquote class="hide-on-small-and-down" *ngIf="!request.closed">
+        <blockquote class="hide-on-small-and-down" *ngIf="!request.closed" style="min-width: 250px">
           Due: {{getDate(request.target_date)}}
         </blockquote>
-        <blockquote class="hide-on-small-and-down" *ngIf="request.closed">
+        <blockquote class="hide-on-small-and-down" *ngIf="request.closed" style="min-width: 250px">
           Closed: {{getDate(request.updated_at)}}
         </blockquote>
-
+        <div class="section hide-on-med-and-up"></div>
+        <div class="section hide-on-med-and-up"></div>
+        <div class="section hide-on-med-and-up"></div>
+        <b class="right">{{getProductAreaName(request.product_area_id)}}</b>
       </div>
       <!--<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>-->
       <!--todo add coments here-->

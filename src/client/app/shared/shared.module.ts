@@ -19,7 +19,7 @@ import {LoginGuard} from "./guard/login.guard";
  * Do not specify providers for modules that might be imported by a lazy loaded module.
  */
 @NgModule({
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   declarations: [
     MaterializeDirective,
     SideNavComponent,

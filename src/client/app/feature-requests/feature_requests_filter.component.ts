@@ -94,7 +94,6 @@ export class FeatureRequestsFilterComponent {
    * Contains all the clients.
    * It is used to store clients for filtering,
    *  and other places where clients are needed to be displayed on the table.
-   *  (todo: if the client list gets very long make a search query on the backend not frontend)
    */
   @Input() clients: Client[ ];
 
@@ -103,7 +102,6 @@ export class FeatureRequestsFilterComponent {
    * Contains all the users.
    * It is used to store users for filtering,
    *  and other places where users are needed to be displayed on the table.
-   *  (todo: if the user list gets very long make a search query on the backend not frontend)
    */
   @Input() users: User[ ];
 
@@ -113,7 +111,6 @@ export class FeatureRequestsFilterComponent {
    * Contains all the product areas.
    * It is used to store product areas for filtering,
    *  and other places where product areas are needed to be displayed on the table.
-   *  (todo: if the product area list gets very long make a search query on the backend not frontend)
    */
   @Input() productAreas: ProductArea[ ];
 
