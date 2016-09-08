@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {Router} from "@angular/router";
-import {JwtHelper} from "angular2-jwt/angular2-jwt";
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {JwtHelper} from 'angular2-jwt/angular2-jwt';
 
 /**
  * This class represents the navigation bar component.
@@ -14,10 +14,10 @@ import {JwtHelper} from "angular2-jwt/angular2-jwt";
 
 export class SideNavComponent {
   jwtHelper: JwtHelper = new JwtHelper();
-  firstName: string
-  lastName: string
-  email: string
-  username: string
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
 
   constructor(private router: Router) {
     this.firstName = this.jwtHelper.decodeToken(localStorage.getItem('id_token')).firstname;

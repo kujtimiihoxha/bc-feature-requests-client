@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {JwtHelper} from "angular2-jwt/angular2-jwt";
-import {Router} from "@angular/router";
+import {Component} from '@angular/core';
+import {JwtHelper} from 'angular2-jwt/angular2-jwt';
+import {Router} from '@angular/router';
 /**
  * Created by refresh on 9/1/16.
  */
@@ -9,8 +9,8 @@ import {Router} from "@angular/router";
   selector: 'bc-action-button',
   templateUrl: 'action_button.component.html',
 })
-export class ActionButton {
-  role: number
+export class ActionButtonComponent {
+  role: number;
   jwtHelper: JwtHelper = new JwtHelper();
 
   constructor(private router: Router) {
@@ -18,6 +18,6 @@ export class ActionButton {
   }
 
   newFeatureRequest() {
-    this.router.navigate(['/bc/feature-requests/new'])
+    this.router.navigate(['/bc/feature-requests/new']);
   }
 }

@@ -1,6 +1,6 @@
-import {Component, Input, EventEmitter, Output} from "@angular/core";
-import {FeatureRequest} from "../../../shared/model/feature_request.model";
-import {TimestempHelper} from "../../../shared/helpers/timestemp.helper";
+import {Component, Input, EventEmitter, Output} from '@angular/core';
+import {FeatureRequest} from '../../../shared/model/feature_request.model';
+import {TimestempHelper} from '../../../shared/helpers/timestemp.helper';
 /**
  * Created by refresh on 9/5/16.
  */
@@ -18,10 +18,10 @@ export class FinishTabComponent {
 
   submit() {
     this.details.target_date = new TimestempHelper().ISODateString(new Date(this.details.target_date));
-    this.onSubmit.emit()
+    this.onSubmit.emit();
   }
 
   previous() {
-    this.onPrevious.emit()
+    this.onPrevious.emit();
   }
 }

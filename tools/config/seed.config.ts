@@ -324,7 +324,7 @@ export class SeedConfig {
       '@angular/router': `node_modules/@angular/router/bundles/router.umd.js`,
       'angular2-materialize': `node_modules/angular2-materialize/dist/index.js`,
       'angular2-jwt/*': `node_modules/angular2-jwt/*`,
-      'dragula': 'node_modules/dragula/dist/dragula.js',
+      'dragula': 'node_modules/dragula',
       'ng2-dragula': 'node_modules/ng2-dragula',
       'rxjs/*': `node_modules/rxjs/*`,
       'app/*': `/app/*`,
@@ -400,9 +400,13 @@ export class SeedConfig {
         defaultExtension: 'js'
       },
       'angular2-materialize': {
-        "main": "dist/index",
-        "defaultExtension": "js"
-      }
+        'main': 'dist/index',
+        'defaultExtension': 'js'
+      },
+      'ng2-dragula': {
+        defaultExtension: 'js'
+      },
+      'dragula': { main: 'dist/dragula.min.js', defaultExtension: 'js' }
     }
   };
 

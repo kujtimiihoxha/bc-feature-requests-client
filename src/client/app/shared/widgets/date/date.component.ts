@@ -1,5 +1,5 @@
-import {Component, Input, Output, EventEmitter} from "@angular/core";
-import {DateHelper} from "../../helpers/date.helper";
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {DateHelper} from '../../helpers/date.helper';
 declare const $:any;
 
 /**
@@ -70,7 +70,7 @@ export class DateComponent {
    * Closes modal.
    */
   closeModal() {
-    this.modalActions.emit("closeModal");
+    this.modalActions.emit('closeModal');
   }
 
   /**
@@ -79,7 +79,7 @@ export class DateComponent {
   save() {
     // this.date = this.update_date;
     this.dateChanged.emit(new Date(this.update_date));
-    this.modalActions.emit("closeModal");
+    this.modalActions.emit('closeModal');
   }
 
 

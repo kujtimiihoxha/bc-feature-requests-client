@@ -1,8 +1,8 @@
 /**
  * Created by refresh on 9/1/16.
  */
-import {Component} from "@angular/core";
-import {BreadcrumbService} from "./breadcrumb.service";
+import {Component} from '@angular/core';
+import {BreadcrumbService} from './breadcrumb.service';
 @Component(
   {
     moduleId: module.id,
@@ -12,8 +12,5 @@ import {BreadcrumbService} from "./breadcrumb.service";
   }
 )
 export class BreadcrumbComponent {
-  constructor(private breadcrumb: BreadcrumbService) {
-    console.log('Test')
-    console.log(breadcrumb)
-  }
+  constructor(private breadcrumb: BreadcrumbService) {}
 }

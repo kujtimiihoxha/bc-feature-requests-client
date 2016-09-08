@@ -8,11 +8,11 @@ export class TimestempHelper {
       + this.pad(d.getUTCDate()) + 'T'
       + this.pad(d.getUTCHours()) + ':'
       + this.pad(d.getUTCMinutes()) + ':'
-      + this.pad(d.getUTCSeconds()) + 'Z'
+      + this.pad(d.getUTCSeconds()) + 'Z';
   }
 
   private pad(n: number) {
-    return n < 10 ? '0' + n : n
+    return n < 10 ? '0' + n : n;
   }
 
 }

@@ -1,7 +1,7 @@
-import {Component, Output, EventEmitter, Input, OnInit} from "@angular/core";
-import {Client, User, ProductArea, FeatureRequest} from "../shared/index";
-import {DateHelper} from "../shared/helpers/date.helper";
-import {FeatureRequestFilter} from "../shared/model/feature_request_filter";
+import {Component, Output, EventEmitter, Input, OnInit} from '@angular/core';
+import {Client, User, ProductArea, FeatureRequest} from '../shared/index';
+import {DateHelper} from '../shared/helpers/date.helper';
+import {FeatureRequestFilter} from '../shared/model/feature_request_filter';
 /**
  * This class represents the lazy loaded FeatureRequestsTableComponent.
  */
@@ -11,7 +11,7 @@ import {FeatureRequestFilter} from "../shared/model/feature_request_filter";
   templateUrl: 'feature_requests_table.component.html',
   styleUrls: ['feature_requests_table.component.css'],
 })
-export class FeatureRequestsTableComponent implements OnInit{
+export class FeatureRequestsTableComponent implements OnInit {
 
   /**
    * FeatureRequest list.
@@ -184,7 +184,7 @@ export class FeatureRequestsTableComponent implements OnInit{
     this.pageChanged.emit();
   }
   ngOnInit(): void {
-    this.resetPage.subscribe(()=>{
+    this.resetPage.subscribe(()=> {
       this.currentPage = 1;
     });
   }

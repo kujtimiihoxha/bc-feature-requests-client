@@ -1,8 +1,8 @@
-import {Component, Input, Output, EventEmitter} from "@angular/core";
-import {FeatureRequestFilter} from "../shared/model/feature_request_filter";
-import {Client} from "../shared/model/client.model";
-import {User} from "../shared/model/user.model";
-import {ProductArea} from "../shared/model/product_area.model";
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {FeatureRequestFilter} from '../shared/model/feature_request_filter';
+import {Client} from '../shared/model/client.model';
+import {User} from '../shared/model/user.model';
+import {ProductArea} from '../shared/model/product_area.model';
 declare const $: any;
 /**
  * This class represents the lazy loaded FeatureRequestsTableComponent.
@@ -31,7 +31,7 @@ export class FeatureRequestsFilterComponent {
    * @type {{hide: boolean}}
    */
   filterNavCls:{[key:string]:boolean} = {
-    "hide": ! this.showFilterNav
+    'hide': ! this.showFilterNav
   };
   /**
    * Employ search string.
@@ -55,7 +55,7 @@ export class FeatureRequestsFilterComponent {
    *  Should the filter nav bar be shown
    */
   get showFilterNav():boolean{
-    return this._showFilter
+    return this._showFilter;
   };
 
   /**
@@ -64,7 +64,7 @@ export class FeatureRequestsFilterComponent {
    */
   set showFilterNav(value: boolean) {
     this._showFilter = value;
-    this.filterNavCls["hide"] = !value;
+    this.filterNavCls['hide'] = !value;
   }
 
   /**
@@ -120,24 +120,24 @@ export class FeatureRequestsFilterComponent {
    */
   filterOptions: [{label: string,activates: string,cls: {[key: string]: boolean}}] = [
     {
-      label: "Employ",
-      activates: "employ_dropdown",
-      cls: {"employ-filter-btn": true},
+      label: 'Employ',
+      activates: 'employ_dropdown',
+      cls: {'employ-filter-btn': true},
     },
     {
-      label: "Product Area",
-      activates: "product_area_dropdown",
-      cls: {"product-area-filter-btn": true},
+      label: 'Product Area',
+      activates: 'product_area_dropdown',
+      cls: {'product-area-filter-btn': true},
     },
     {
-      label: "Client",
-      activates: "client_dropdown",
-      cls: {"client-filter-btn": true},
+      label: 'Client',
+      activates: 'client_dropdown',
+      cls: {'client-filter-btn': true},
     },
     {
-      label: "Priority",
-      activates: "priority_dropdown",
-      cls: {"priority-filter-btn": true, "hide": true},
+      label: 'Priority',
+      activates: 'priority_dropdown',
+      cls: {'priority-filter-btn': true, 'hide': true},
     },
   ];
 
@@ -232,7 +232,7 @@ export class FeatureRequestsFilterComponent {
     this.filter.skip = fl.skip;
     this.filter.get = fl.get;
     this.filter.dir = fl.dir;
-    this.filterOptions[3].cls["hide"] = true;
+    this.filterOptions[3].cls['hide'] = true;
     this.showFilterNav = false;
     this.filterChanged.emit();
   }
@@ -254,7 +254,7 @@ export class FeatureRequestsFilterComponent {
    */
   filterByClient(id: string) {
     this.filter.client = id;
-    this.filterOptions[3].cls["hide"] = false;
+    this.filterOptions[3].cls['hide'] = false;
     //noinspection TypeScriptUnresolvedFunction
     $('.client-filter-btn').dropdown('close');
     this.filterChanged.emit();
@@ -289,19 +289,19 @@ export class FeatureRequestsFilterComponent {
    */
   getFilterSummary():string {
     let filterString = '';
-    if (this.filter.employ != null) {
+    if (typeof this.filter.employ !== 'undefined') {
       this.users.forEach((user: User)=> {
         if (user.id === this.filter.employ) {
           filterString += 'Employ:  <b>' + user.username + '</b>, ';
         }
       });
     }
-    if (this.filter.product_area != null) {
+    if (typeof this.filter.product_area !== 'undefined') {
       filterString += 'Product Area: <b>' + this.getProductAreaName(this.filter.product_area) + '</b>, ';
     }
-    if (this.filter.client != null) {
+    if (typeof this.filter.client !== 'undefined') {
       filterString += 'Client: <b>' + this.getClientName(this.filter.client) + '</b>, ';
-      if (this.filter.priority_dir != null) {
+      if (typeof this.filter.priority_dir !== 'undefined') {
         filterString += ' Priority: <b>' + this.filter.priority_dir + '</b>';
       }
     }

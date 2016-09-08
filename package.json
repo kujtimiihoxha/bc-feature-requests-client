@@ -1,9 +1,9 @@
 {
-  "name": "angular2-seed",
-  "version": "0.0.0",
-  "description": "Modular seed project for Angular 2 apps with fast, statically typed build",
+  "name": "bc-feature-requests-client",
+  "version": "0.0.1",
+  "description": "A feature request app for companies",
   "repository": {
-    "url": "https://github.com/mgechev/angular2-seed"
+    "url": "https://github.com/kujtimiihoxha/bc-feature-requests-client"
   },
   "scripts": {
     "build.dev": "gulp build.dev --color --config-env dev",

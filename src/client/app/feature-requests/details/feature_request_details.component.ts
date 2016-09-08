@@ -1,14 +1,14 @@
-import {Component, OnInit, Input, EventEmitter, OnDestroy} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
-import {FeatureRequest, ProductArea, BreadcrumbService, Client, User} from "../../shared/index";
-import {TimestempHelper} from "../../shared/helpers/timestemp.helper";
-import {FeatureRequestService} from "../../shared/resource/feature_request.service";
-import {LoadingService} from "../../shared/loading/loading.service";
-import {Observable} from "rxjs/Rx";
-import {FeatureRequestUpdateDetails, MODIFICATIONS} from "../../shared/model/feature_request.model";
-import {DragulaService} from "ng2-dragula/src/app/providers/dragula.provider";
-import {DateHelper} from "../../shared/helpers/date.helper";
-import {JwtHelper} from "angular2-jwt/angular2-jwt";
+import {Component, OnInit, Input, EventEmitter, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {FeatureRequest, ProductArea, BreadcrumbService, Client, User} from '../../shared/index';
+import {TimestempHelper} from '../../shared/helpers/timestemp.helper';
+import {FeatureRequestService} from '../../shared/resource/feature_request.service';
+import {LoadingService} from '../../shared/loading/loading.service';
+import {Observable} from 'rxjs/Rx';
+import {FeatureRequestUpdateDetails, MODIFICATIONS} from '../../shared/model/feature_request.model';
+import {DragulaService} from 'ng2-dragula/src/app/providers/dragula.provider';
+import {DateHelper} from '../../shared/helpers/date.helper';
+import {JwtHelper} from 'angular2-jwt/angular2-jwt';
 declare const Materialize: any, $: any;
 /**
  * FeatureRequestDetailsComponent.
@@ -28,12 +28,12 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
   /**
    * The feature request.
    */
-  @Input() featureRequest: FeatureRequest
+  @Input() featureRequest: FeatureRequest;
 
   /**
    * The feature request used to temporary store the data for update details.
    */
-  @Input() featureRequestTmp: FeatureRequestUpdateDetails = new FeatureRequestUpdateDetails()
+  @Input() featureRequestTmp: FeatureRequestUpdateDetails = new FeatureRequestUpdateDetails();
 
   /**
    * Client ids to remove from feature request clients list.
@@ -54,7 +54,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
   /**
    * Storage of client search value
    */
-  _nameSearch: string = "";
+  _nameSearch: string = '';
   /**
    * Clients list.
    * Contains all the clients.
@@ -75,12 +75,12 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
   /**
    * Temporary client used for drag and drop list.
    */
-  clientsTmp: Array<Client> = null
+  clientsTmp: Array<Client> = null;
 
   /**
    * List of drag and drop clients that are selected
    */
-  clientsSelected: Array<Client> = []
+  clientsSelected: Array<Client> = [];
 
   /**
    * Users list.
@@ -93,22 +93,22 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
   /**
    * Event emitter used to open and close the details modal.
    */
-  detailsModal: EventEmitter<string> = new EventEmitter<string>()
+  detailsModal: EventEmitter<string> = new EventEmitter<string>();
 
   /**
    * Event emitter used to open and close the add/remove modal.
    */
-  addRemoveClientsModal: EventEmitter<string> = new EventEmitter<string>()
+  addRemoveClientsModal: EventEmitter<string> = new EventEmitter<string>();
 
   /**
    * Event emitter used to open and close the add/remove modal.
    */
-  priorityModal: EventEmitter<string> = new EventEmitter<string>()
+  priorityModal: EventEmitter<string> = new EventEmitter<string>();
 
   /**
    * Temporary priority storage.
    */
-  selectedPriority: number
+  selectedPriority: number;
 
   /**
    * Drag and drop subscription.
@@ -129,13 +129,14 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
               private loading: LoadingService,
               private featureRequestService: FeatureRequestService) {
     this.subscription = dragulaService.dropModel.subscribe((value: any) => {
-      let fromContainer = value.splice(3)
-      let ToContainer = value.splice(2)
-      if ($(fromContainer).attr('data-container') === 'parent' && $(ToContainer).attr('data-container') !== 'parent') {
-        this.handleAddClient(value.slice(1))
-      }
-      else if ($(fromContainer).attr('data-container') !== 'parent' && $(ToContainer).attr('data-container') === 'parent') {
-        this.handleRemoveClient(value.slice(1))
+      let fromContainer = value.splice(3);
+      let ToContainer = value.splice(2);
+      if ($(fromContainer).attr('data-container') === 'parent'
+        && $(ToContainer).attr('data-container') !== 'parent') {
+        this.handleAddClient(value.slice(1));
+      } else if ($(fromContainer).attr('data-container')
+        !== 'parent' && $(ToContainer).attr('data-container') === 'parent') {
+        this.handleRemoveClient(value.slice(1));
       }
     });
   }
@@ -196,11 +197,11 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * Data comes from the resolvers.
    */
   ngOnInit(): void {
-    this.featureRequest = this.route.snapshot.data['featureRequest']
-    this.users = this.route.snapshot.data['users']
-    this.productAreas = this.route.snapshot.data['productAreas']
-    this.clients = this.route.snapshot.data['clients']
-    this.breadcrumb.setItems(['Feature Requests', 'Details'])
+    this.featureRequest = this.route.snapshot.data['featureRequest'];
+    this.users = this.route.snapshot.data['users'];
+    this.productAreas = this.route.snapshot.data['productAreas'];
+    this.clients = this.route.snapshot.data['clients'];
+    this.breadcrumb.setItems(['Feature Requests', 'Details']);
     this.selectedProductArea = this.featureRequest.product_area_id;
   }
 
@@ -216,14 +217,15 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * @param date
    */
   onDateChanged(date: Date) {
-    this.loading.on()
-    this.featureRequestService.updateTargetDate(this.featureRequest.id, new TimestempHelper().ISODateString(date)).catch((error: any)=> {
-      this.loading.off()
-      Materialize.toast(JSON.parse(error._body).message, 2000)
-      return Observable.empty()
+    this.loading.on();
+    this.featureRequestService.updateTargetDate(
+      this.featureRequest.id, new TimestempHelper().ISODateString(date)).catch((error: any)=> {
+      this.loading.off();
+      Materialize.toast(JSON.parse(error._body).message, 2000);
+      return Observable.empty();
     }).subscribe((updated :FeatureRequest)=> {
-      this.loading.off()
-      Materialize.toast('Target date updated', 2000)
+      this.loading.off();
+      Materialize.toast('Target date updated', 2000);
       this.featureRequest.target_date = new TimestempHelper().ISODateString(date);
       this.featureRequest.modifications = updated.modifications;
     });
@@ -266,7 +268,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
       this.loading.off();
       Materialize.toast(JSON.parse(error._body).message, 2000);
       this.detailsModal.emit('closeModal');
-      return Observable.empty()
+      return Observable.empty();
     }).subscribe((updated: FeatureRequest)=> {
       this.loading.off();
       Materialize.toast('Feature request details updated', 2000);
@@ -292,13 +294,13 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
   updateState() {
     var state = 1;
     if (this.featureRequest.closed) {
-      state = 2
+      state = 2;
     }
     this.loading.on();
     this.featureRequestService.updateState(this.featureRequest.id, state).catch((error: any)=> {
       this.loading.off();
       Materialize.toast(JSON.parse(error._body).message, 2000);
-      return Observable.empty()
+      return Observable.empty();
     }).subscribe((updated: FeatureRequest)=> {
       this.loading.off();
       Materialize.toast('Request state updated', 2000);
@@ -311,52 +313,56 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * Add or remove clients
    */
   addRemoveClients() {
-    this.clientsTmp = []
-    this.clientsSelected = []
-    this.clientsToRemove = []
-    this.clientsToAdd = []
+    this.clientsTmp = [];
+    this.clientsSelected = [];
+    this.clientsToRemove = [];
+    this.clientsToAdd = [];
     this.featureRequest.clients.forEach((client: any)=> {
       for (var i = 0; i < this.clients.length; i++) {
         if (this.clients[i].id === client.client_id) {
-          this.clientsSelected.push(this.clients[i])
+          this.clientsSelected.push(this.clients[i]);
           break;
         }
       }
     });
     // automatically filters the client list to default
-    this.nameSearch = ""
+    this.nameSearch = '';
     //
 
-    this.addRemoveClientsModal.emit("openModal")
+    this.addRemoveClientsModal.emit('openModal');
   }
 
   /**
    * Add or remove clients
    */
   closeAddRemoveModal() {
-    this.addRemoveClientsModal.emit("closeModal")
+    this.addRemoveClientsModal.emit('closeModal');
   }
 
   /**
    *  Save add remove modal.
    */
-  saveAddRemove(){
+  saveAddRemove() {
     if(this.featureRequest.clients.length === this.clientsToRemove.length && this.clientsToAdd.length === 0) {
       Materialize.toast('Feature request must have at least one client', 2000);
-      return
+      return;
     }
     this.loading.on();
-    this.featureRequestService.addRemoveClients(this.featureRequest.id,this.clientsToRemove, this.clientsToAdd).catch((error: any)=> {
+    this.featureRequestService.addRemoveClients(
+      this.featureRequest.id,
+      this.clientsToRemove,
+      this.clientsToAdd
+    ).catch((error: any)=> {
       this.loading.off();
       Materialize.toast(JSON.parse(error._body).message, 2000);
-      this.addRemoveClientsModal.emit("closeModal")
-      return Observable.empty()
+      this.addRemoveClientsModal.emit('closeModal');
+      return Observable.empty();
     }).subscribe((updated: FeatureRequest)=> {
       this.loading.off();
       Materialize.toast('Request clients updated', 2000);
       this.featureRequest.clients = updated.clients;
       this.featureRequest.modifications = updated.modifications;
-      this.addRemoveClientsModal.emit("closeModal")
+      this.addRemoveClientsModal.emit('closeModal');
     });
   }
   /**
@@ -366,9 +372,9 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
     this.clientsToAdd.push({
       id: this.currentClient.id,
       priority: this.selectedPriority
-    })
+    });
     this.selectedPriority = null;
-    this.priorityModal.emit("closeModal")
+    this.priorityModal.emit('closeModal');
   }
 
 
@@ -379,26 +385,25 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
         break;
       }
     }
-    this.priorityModal.emit("openModal")
-
+    this.priorityModal.emit('openModal');
   }
 
   handleRemoveClient(client: any) {
     for (var i = 0; i < this.featureRequest.clients.length; i++) {
-      if (this.featureRequest.clients[i].client_id == $(client).attr('data-uuid')) {
-        if (this.clientsToRemove.indexOf(this.featureRequest.clients[i].client_id) == -1) {
-          this.clientsToRemove.push(this.featureRequest.clients[i].client_id)
+      if (this.featureRequest.clients[i].client_id === $(client).attr('data-uuid')) {
+        if (this.clientsToRemove.indexOf(this.featureRequest.clients[i].client_id) === -1) {
+          this.clientsToRemove.push(this.featureRequest.clients[i].client_id);
           return;
         }
       }
     }
     var clientToRemove:any = {};
     for (var i = 0; i < this.clientsToAdd.length; i++) {
-      if (this.clientsToAdd[i].id == $(client).attr('data-uuid')) {
-        clientToRemove = this.clientsToAdd[i]
+      if (this.clientsToAdd[i].id === $(client).attr('data-uuid')) {
+        clientToRemove = this.clientsToAdd[i];
       }
     }
-    this.clientsToAdd.splice(this.clientsToAdd.indexOf(clientToRemove), 1)
+    this.clientsToAdd.splice(this.clientsToAdd.indexOf(clientToRemove), 1);
   }
 
   get nameSearch() {
@@ -406,62 +411,64 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
   }
 
   set nameSearch(value: string) {
-    this.filterClients(value)
-    this._nameSearch = value
+    this.filterClients(value);
+    this._nameSearch = value;
   }
 
   filterClients(value: string) {
-    this.clientsTmp = []
+    this.clientsTmp = [];
     this.clients.forEach((item: Client)=> {
-      let pattern = '^.*' + value + '.*$'
-      if ((item.name.match(new RegExp(pattern, "ig")) || item.description.match(new RegExp(pattern, "ig"))) && this.clientsSelected.indexOf(item) === -1) {
+      let pattern = '^.*' + value + '.*$';
+      if ((item.name.match(new RegExp(pattern, 'ig')) ||
+        item.description.match(new RegExp(pattern, 'ig'))) &&
+        this.clientsSelected.indexOf(item) === -1) {
         this.clientsTmp.push(item);
       }
     });
-    this.clientsTmp = this.clientsTmp.slice(0, 6)
+    this.clientsTmp = this.clientsTmp.slice(0, 6);
   }
 
   /**
    * On Description change
    * @param a new description
    */
-  descriptionChanged(a:string){
-    this.featureRequestTmp.description = a
+  descriptionChanged(a:string) {
+    this.featureRequestTmp.description = a;
   }
 
   /**
    * Finds the modifications of the update.
    */
-  findModifications(){
+  findModifications() {
     if (this.featureRequestTmp.title !== this.featureRequest.title) {
-        this.featureRequestTmp.modifications.push(MODIFICATIONS.TITLE_UPDATE)
+        this.featureRequestTmp.modifications.push(MODIFICATIONS.TITLE_UPDATE);
     }
     if (this.featureRequestTmp.description !== this.featureRequest.description) {
-        this.featureRequestTmp.modifications.push(MODIFICATIONS.DESCRIPTION_UPDATE)
+        this.featureRequestTmp.modifications.push(MODIFICATIONS.DESCRIPTION_UPDATE);
     }
     if (this.selectedProductArea !== this.featureRequest.product_area_id) {
-        this.featureRequestTmp.modifications.push(MODIFICATIONS.PRODUCT_ARE_UPDATE)
+        this.featureRequestTmp.modifications.push(MODIFICATIONS.PRODUCT_ARE_UPDATE);
     }
        if (this.featureRequestTmp.ticket_url !== this.featureRequest.ticket_url) {
-        this.featureRequestTmp.modifications.push(MODIFICATIONS.TICKET_URL_UPDATE)
+        this.featureRequestTmp.modifications.push(MODIFICATIONS.TICKET_URL_UPDATE);
     }
   }
 
   /**
    * Send a new comment/
    */
-  sendComment(){
-    let id = new JwtHelper().decodeToken( localStorage.getItem('id_token')).id
+  sendComment() {
+    let id = new JwtHelper().decodeToken( localStorage.getItem('id_token')).id;
     this.loading.on();
     this.featureRequestService.addComment(this.featureRequest.id,id, this.comment).catch((error: any)=> {
       this.loading.off();
       Materialize.toast(JSON.parse(error._body).message, 2000);
-      return Observable.empty()
+      return Observable.empty();
     }).subscribe((updated: FeatureRequest)=> {
       this.loading.off();
       Materialize.toast('Request clients updated', 2000);
       this.featureRequest.comments = updated.comments;
-      this.comment = null
+      this.comment = null;
     });
   }
 }

@@ -1,5 +1,5 @@
-import {Component, Input, EventEmitter, Output} from "@angular/core";
-import {FeatureRequest, ProductArea} from "../../../shared/index";
+import {Component, Input, EventEmitter, Output} from '@angular/core';
+import {FeatureRequest, ProductArea} from '../../../shared/index';
 /**
  * Created by refresh on 9/5/16.
  */
@@ -15,19 +15,19 @@ export class DetailsTabComponent {
   @Output() detailsChange: EventEmitter<FeatureRequest> = new EventEmitter<FeatureRequest>();
   @Output() onNext: EventEmitter<void> = new EventEmitter<void>();
   mindate = Date.now();
-  selectedProductArea: string
+  selectedProductArea: string;
 
   next() {
     this.productAreas.forEach((p: ProductArea)=> {
       if (p.id === this.selectedProductArea) {
-        this.details.product_area_id = p.id
-        this.details.product_area_name = p.name
+        this.details.product_area_id = p.id;
+        this.details.product_area_name = p.name;
       }
-    })
-    this.onNext.emit()
+    });
+    this.onNext.emit();
   }
 
-  descriptionChanged(a:string){
-    this.details.description = a
+  descriptionChanged(a:string) {
+    this.details.description = a;
   }
 }

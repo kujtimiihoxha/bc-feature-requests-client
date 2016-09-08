@@ -1,6 +1,6 @@
-import {Component, OnInit, EventEmitter} from "@angular/core";
-import {BreadcrumbService} from "../shared/index";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, OnInit, EventEmitter} from '@angular/core';
+import {BreadcrumbService} from '../shared/index';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
   FeatureRequest,
   ProductArea,
@@ -10,8 +10,8 @@ import {
   FilterResponse,
   Client,
   User,
-} from "../shared/index";
-import {Observable} from "rxjs";
+} from '../shared/index';
+import {Observable} from 'rxjs/Rx';
 declare const Materialize: any;
 declare const $: any;
 
@@ -123,10 +123,10 @@ export class FeatureRequestsComponent implements OnInit {
   onDetails(id: string) {
     this.router.navigate([`bc/details/${id}`]);
   }
-  onPageChanged(){
+  onPageChanged() {
     this.sendFilterRequest(true);
   }
-  onFilterChanged(){
+  onFilterChanged() {
     this.sendFilterRequest(false);
   }
 }

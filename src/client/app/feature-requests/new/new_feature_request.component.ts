@@ -1,8 +1,8 @@
-import {Component} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Client, ProductArea, FeatureRequest, BreadcrumbService, FeatureRequestService} from "../../shared/index";
-import {LoadingService} from "../../shared/loading/loading.service";
-import {Observable} from "rxjs";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Client, ProductArea, FeatureRequest, BreadcrumbService, FeatureRequestService} from '../../shared/index';
+import {LoadingService} from '../../shared/loading/loading.service';
+import {Observable} from 'rxjs/Rx';
 declare const Materialize: any;
 /**
  *
@@ -20,20 +20,20 @@ declare const Materialize: any;
   templateUrl: 'new_feature_request.component.html',
   styleUrls: ['new_feature_request.component.css']
 })
-export class NewFeatureRequestComponent {
+export class NewFeatureRequestComponent implements OnInit {
   /**
    * Current tab.
    * Holds the current active tab.
    * @type {number}
    */
-  currentTab:number = 1
+  currentTab:number = 1;
   /**
    * Feature request details to be sent to the server.
    * @type {FeatureRequest}
    */
-  details:FeatureRequest = new FeatureRequest()
-  clients: Array<Client> = []
-  productAreas: Array<ProductArea> = []
+  details:FeatureRequest = new FeatureRequest();
+  clients: Array<Client> = [];
+  productAreas: Array<ProductArea> = [];
 
 
   constructor(
@@ -50,7 +50,7 @@ export class NewFeatureRequestComponent {
    * Set the breadcrumb OnInit
    */
   ngOnInit() {
-    this.breadcrumb.items = ['Feature Requests', 'Create New']
+    this.breadcrumb.items = ['Feature Requests', 'Create New'];
     this.clients = this.route.snapshot.data['clients'];
     this.productAreas = this.route.snapshot.data['productAreas'];
   }
@@ -59,31 +59,31 @@ export class NewFeatureRequestComponent {
     if (this.currentTab === tag) {
       return {
         'display': 'block'
-      }
+      };
     }
     return {
       'display': 'none'
-    }
+    };
   }
 
   next() {
-    this.currentTab++
+    this.currentTab++;
   }
 
   submit() {
-    this.loading.on()
+    this.loading.on();
     this.featureRequestService.post(this.details).catch((error: any)=> {
-      this.loading.off()
-      Materialize.toast(JSON.parse(error._body).message, 2000)
-      return Observable.empty()
+      this.loading.off();
+      Materialize.toast(JSON.parse(error._body).message, 2000);
+      return Observable.empty();
     }).subscribe((response: any)=> {
-      this.loading.off()
-      Materialize.toast('Feature request added', 2000)
-      this.router.navigate(['/'])
+      this.loading.off();
+      Materialize.toast('Feature request added', 2000);
+      this.router.navigate(['/']);
     });
   }
 
   previous() {
-    this.currentTab--
+    this.currentTab--;
   }
 }
