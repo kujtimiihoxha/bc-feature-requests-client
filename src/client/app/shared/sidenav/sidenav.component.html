@@ -13,7 +13,7 @@
     <li>
       <div class="userView" style="padding: 0 !important;">
         <img class="background" src="assets/images/material_design-wallpaper-960x600.jpg">
-        <img class="circle" src="assets/images/icon-user-default.png" style="margin-left: 20px;margin-top: 20px">
+        <img class="circle" [src]="'assets/images/profiles/'+username+'.jpg'" style="margin-left: 20px;margin-top: 20px">
         <a><span class="white-text name">{{firstName}} {{lastName}}</span></a>
         <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
           <li>

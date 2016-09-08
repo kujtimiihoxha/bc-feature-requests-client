@@ -46,11 +46,11 @@
               </div>
             </div>
             <div class="row">
-              <div class="col s12 m12 l10" style="height: 100%">
+              <div class="col s12 m12 l8" style="height: 100%">
                 <h5>Description</h5><br/>
                 <div [innerHtml]="featureRequest.description"></div>
               </div>
-              <div class="col s12 m12 l2">
+              <div class="col s12 m12 l4">
                 <blockquote>
                   <p>Ticket Url: <a [href]="featureRequest.ticket_url" target="_blank"> {{featureRequest.ticket_url}}</a></p>
                 </blockquote>
@@ -66,6 +66,54 @@
               </div>
 
             </div>
+            <div class="row">
+             <div class="col s12 m6 l6">
+               <h5>History</h5>
+               <p *ngIf="featureRequest.modifications == null || featureRequest.modifications.length == 0">
+                 No changes.
+               </p>
+               <blockquote *ngFor="let log of featureRequest.modifications">
+                 <i class="material-icons left">{{log.icon}}</i>
+                  <div [innerHtml]="log.description"></div> <br/>
+                 <b>{{getDate(log.created_at)}}</b>
+               </blockquote>
+             </div>
+              <div class="col s12 m6 l6">
+                <h5>Comments</h5>
+                <ul class="collection" *ngIf="featureRequest.comments != null && featureRequest.comments.length != 0">
+                  <li class="collection-item avatar" *ngFor="let comment of featureRequest.comments">
+                    <!--<i class="material-icons circle">person</i>-->
+                    <img [src]="'assets/images/profiles/'+getEmployUsername(comment.user_id)+'.jpg'" alt="" class="circle">
+                    <span class="title"><b>{{getEmployUsername(comment.user_id)}}</b> </span>
+                    <p class="grey lighten-3" style="padding: 10px; margin-top: 10px; min-height: 80px">
+                      {{comment.comment}}
+                    </p>
+                    <a class="secondary-content" style="margin-top: -5px">
+                      <i style="font-size: smaller">{{getDate(comment.created_at)}}</i>
+                      <!--<i class="material-icons blue-text">comment</i>-->
+                      </a>
+                  </li>
+                </ul>
+                <p *ngIf="featureRequest.comments == null || featureRequest.comments.length == 0">No comments yet!</p>
+                <div class="row">
+                  <div class="col s12">
+                    <form materialize (ngSubmit)="sendComment()">
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <textarea id="textarea1" [(ngModel)]="comment" name="comment" class="materialize-textarea"></textarea>
+                          <label for="textarea1">Write a Comment</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <button class="btn waves-effect waves-light right" type="submit" name="action">Submit
+                          <i class="material-icons right">send</i>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -76,11 +124,11 @@
 <!--
 Details modal
 -->
-<div id="edit_fr" class="modal " materialize [materializeActions]="detailsModal">
+<div id="edit_fr" class="modal modal-fixed-footer " materialize [materializeActions]="detailsModal" [materializeParams]="[{ dismissible: false}]">
   <div class="modal-content">
     <h4>Edit feature request details</h4>
     <div class="row">
-      <form materialize class="col s12" (ngSubmit)="updateDetails()" #detailsForm="ngForm">
+      <form materialize class="col s12"  #detailsForm="ngForm">
         <div class="row">
           <div class="input-field col s12">
             <input placeholder="Title" id="title" [(ngModel)]="featureRequestTmp.title" name="title" required
@@ -117,14 +165,14 @@ Details modal
             <bc-tinymce [mceContent]="featureRequest.description" (contentChanged)="descriptionChanged($event)"></bc-tinymce>
           </div>
         </div>
-        <div class="modal-footer">
-          <button class="modal-action modal-close waves-effect waves-green btn-flat" type="button" (click)="closeEditDetailsModal()">Close</button>
-          <button type="submit" [disabled]="!detailsForm.form.valid"
-                   class="modal-action modal-close waves-effect waves-green btn-flat">Save
-          </button>
-        </div>
       </form>
     </div>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="button" (click)="closeEditDetailsModal()">Close</button>
+    <button (click)="updateDetails()" [disabled]="!detailsForm.form.valid"
+            class="modal-action modal-close waves-effect waves-green btn-flat">Save
+    </button>
   </div>
 </div>
 <!--
@@ -134,7 +182,7 @@ Details modal
 <!--
 Add/Remove modal
 -->
-<div id="add_remove" class="modal " materialize [materializeActions]="addRemoveClientsModal">
+<div id="add_remove" class="modal modal-fixed-footer" materialize [materializeActions]="addRemoveClientsModal" [materializeParams]="[{ dismissible: false}]">
   <div class="modal-content">
     <h4>Add or remove clients</h4>
     <div class="row">
@@ -158,7 +206,8 @@ Add/Remove modal
             <ul data-container="parent" class="collection" style="min-height:50px" [dragula]='"first-bag"'
                 [dragulaModel]="clientsTmp">
               <li class="collection-item avatar" [attr.data-uuid]="client.id" *ngFor="let client of clientsTmp">
-                <i class="material-icons circle hide-on-small-and-down">folder</i>
+                <!--<i class="material-icons circle hide-on-small-and-down">folder</i>-->
+                <img [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
                 <span class="title">{{client.name}}</span>
                 <p class="hide-on-small-and-down">{{client.description}}</p>
               </li>
@@ -173,7 +222,8 @@ Add/Remove modal
               style="min-height:50px; border: 1px dashed #0D47A1;">
             <li class="collection-item avatar" [attr.data-uuid]="client.id"
                 *ngFor="let client of clientsSelected">
-              <i class="material-icons circle hide-on-small-and-down">folder</i>
+              <!--<i class="material-icons circle hide-on-small-and-down">folder</i>-->
+              <img [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
               <span class="title">{{client.name}}</span>
               <p>{{client.description}}</p>
             </li>

@@ -4,7 +4,7 @@
     <li class="collection-item avatar " *ngFor="let request of featureRequests">
       <i class="material-icons circle green lighten-2" (click)="onDetails(request.id)" *ngIf="!request.closed">info_outline</i>
       <i class="material-icons circle red lighten-2" (click)="onDetails(request.id)" *ngIf="request.closed">highlight_off</i>
-      <span class="title"><a (click)="onDetails(request.id)">{{request.title}}</a></span><br/>
+      <span class="title"><a (click)="onDetails(request.id)">{{request.title}}</a></span><br/><br/>
       <p><a [href]="request.ticket_url" target="_blank"> {{request.ticket_url}}</a></p>
       <p><i>
         <small>Opened {{getDate(request.created_at) }} by <b>{{getEmployUsername(request.employ_id)}}</b></small>

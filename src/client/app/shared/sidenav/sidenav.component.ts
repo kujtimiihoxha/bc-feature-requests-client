@@ -17,11 +17,13 @@ export class SideNavComponent {
   firstName: string
   lastName: string
   email: string
+  username: string
 
   constructor(private router: Router) {
     this.firstName = this.jwtHelper.decodeToken(localStorage.getItem('id_token')).firstname;
     this.lastName = this.jwtHelper.decodeToken(localStorage.getItem('id_token')).lastname;
     this.email = this.jwtHelper.decodeToken(localStorage.getItem('id_token')).email;
+    this.username = this.jwtHelper.decodeToken(localStorage.getItem('id_token')).username;
 
   }
 

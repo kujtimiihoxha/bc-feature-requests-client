@@ -5,8 +5,10 @@ import {TimestempHelper} from "../../shared/helpers/timestemp.helper";
 import {FeatureRequestService} from "../../shared/resource/feature_request.service";
 import {LoadingService} from "../../shared/loading/loading.service";
 import {Observable} from "rxjs/Rx";
-import {FeatureRequestUpdateDetails} from "../../shared/model/feature_request.model";
+import {FeatureRequestUpdateDetails, MODIFICATIONS} from "../../shared/model/feature_request.model";
 import {DragulaService} from "ng2-dragula/src/app/providers/dragula.provider";
+import {DateHelper} from "../../shared/helpers/date.helper";
+import {JwtHelper} from "angular2-jwt/angular2-jwt";
 declare const Materialize: any, $: any;
 /**
  * FeatureRequestDetailsComponent.
@@ -65,6 +67,10 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * Current client used for priority selection.
    */
   currentClient: Client;
+  /**
+   * New comment data
+   */
+  comment:string;
 
   /**
    * Temporary client used for drag and drop list.
@@ -215,11 +221,25 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
       this.loading.off()
       Materialize.toast(JSON.parse(error._body).message, 2000)
       return Observable.empty()
-    }).subscribe(()=> {
+    }).subscribe((updated :FeatureRequest)=> {
       this.loading.off()
       Materialize.toast('Target date updated', 2000)
       this.featureRequest.target_date = new TimestempHelper().ISODateString(date);
+      this.featureRequest.modifications = updated.modifications;
     });
+  }
+  /**
+   * Used to display the date in a more user friendly way.
+   * @param date the date to be displayed.
+   * @returns {string} the date formatted string.
+   */
+  getDate(date: string) {
+    let dt = new Date(date);
+    let month = DateHelper.MONTHS[dt.getMonth()];
+    let year = dt.getFullYear();
+    let dayDate = dt.getDate();
+    let day = DateHelper.DAYS[dt.getDay()];
+    return `${dt.getHours()}:${dt.getMinutes()} ${day} ${dayDate} ${month} ${year}`;
   }
 
   /**
@@ -228,6 +248,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    */
   openDetailsModal() {
     this.featureRequestTmp = new FeatureRequestUpdateDetails();
+    this.featureRequestTmp.modifications = [];
     this.featureRequestTmp.title = this.featureRequest.title;
     this.featureRequestTmp.description = this.featureRequest.description;
     this.featureRequestTmp.ticket_url = this.featureRequest.ticket_url;
@@ -238,6 +259,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * Sends the request to the server and updates local data on success.
    */
   updateDetails() {
+    this.findModifications();
     this.featureRequestTmp.product_area_id = this.selectedProductArea;
     this.loading.on();
     this.featureRequestService.updateDetails(this.featureRequest.id, this.featureRequestTmp).catch((error: any)=> {
@@ -252,6 +274,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
       this.featureRequest.description = updated.description;
       this.featureRequest.ticket_url = updated.ticket_url;
       this.featureRequest.product_area_id = updated.product_area_id;
+      this.featureRequest.modifications = updated.modifications;
       this.detailsModal.emit('closeModal');
     });
   }
@@ -280,6 +303,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
       this.loading.off();
       Materialize.toast('Request state updated', 2000);
       this.featureRequest.closed = updated.closed;
+      this.featureRequest.modifications = updated.modifications;
     });
   }
 
@@ -331,6 +355,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
       this.loading.off();
       Materialize.toast('Request clients updated', 2000);
       this.featureRequest.clients = updated.clients;
+      this.featureRequest.modifications = updated.modifications;
       this.addRemoveClientsModal.emit("closeModal")
     });
   }
@@ -402,5 +427,41 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    */
   descriptionChanged(a:string){
     this.featureRequestTmp.description = a
+  }
+
+  /**
+   * Finds the modifications of the update.
+   */
+  findModifications(){
+    if (this.featureRequestTmp.title !== this.featureRequest.title) {
+        this.featureRequestTmp.modifications.push(MODIFICATIONS.TITLE_UPDATE)
+    }
+    if (this.featureRequestTmp.description !== this.featureRequest.description) {
+        this.featureRequestTmp.modifications.push(MODIFICATIONS.DESCRIPTION_UPDATE)
+    }
+    if (this.selectedProductArea !== this.featureRequest.product_area_id) {
+        this.featureRequestTmp.modifications.push(MODIFICATIONS.PRODUCT_ARE_UPDATE)
+    }
+       if (this.featureRequestTmp.ticket_url !== this.featureRequest.ticket_url) {
+        this.featureRequestTmp.modifications.push(MODIFICATIONS.TICKET_URL_UPDATE)
+    }
+  }
+
+  /**
+   * Send a new comment/
+   */
+  sendComment(){
+    let id = new JwtHelper().decodeToken( localStorage.getItem('id_token')).id
+    this.loading.on();
+    this.featureRequestService.addComment(this.featureRequest.id,id, this.comment).catch((error: any)=> {
+      this.loading.off();
+      Materialize.toast(JSON.parse(error._body).message, 2000);
+      return Observable.empty()
+    }).subscribe((updated: FeatureRequest)=> {
+      this.loading.off();
+      Materialize.toast('Request clients updated', 2000);
+      this.featureRequest.comments = updated.comments;
+      this.comment = null
+    });
   }
 }

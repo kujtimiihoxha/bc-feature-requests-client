@@ -36,6 +36,13 @@ export class FeatureRequestService extends BaseResource<FeatureRequest> {
       clients_to_remove:clientsToRemove
     }, this.options).map(this.extractData);
   }
+  addComment(id:string,userId:string[],comment:string){
+    this.options.headers.set('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    return this.http.post(this.url+`/${id}/comments`,{
+      user_id:userId,
+      comment:comment
+    }, this.options).map(this.extractData);
+  }
   getWithFilter(filter: FeatureRequestFilter): Observable<FilterResponse<FeatureRequest>> {
     this.options.headers.set('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
     let params: URLSearchParams = new URLSearchParams();
