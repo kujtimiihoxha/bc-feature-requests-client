@@ -121,3 +121,7 @@
     transform: rotate(360deg);
   }
 }
+
+.side-nav {
+  z-index: 990;
+}

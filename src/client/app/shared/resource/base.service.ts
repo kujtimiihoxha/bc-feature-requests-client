@@ -29,9 +29,9 @@ export class BaseResource<Model> {
       .map(this.extractData);
   }
 
-  put(model: Model) {
+  put(id:string, model: Model) {
     this.options.headers.set('Authorization', 'Bearer ' + localStorage.getItem('id_token'))
-    return this.http.put(this.url, JSON.stringify(model), this.options)
+    return this.http.put(this.url+`/${id}`, JSON.stringify(model), this.options)
       .map(this.extractData);
   }
 

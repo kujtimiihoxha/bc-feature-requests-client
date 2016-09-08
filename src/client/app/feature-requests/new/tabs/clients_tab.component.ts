@@ -96,7 +96,7 @@ export class ClientsTabComponent implements OnInit, OnDestroy {
     this.clientsTmp = []
     this.clients.forEach((item: Client)=> {
       let pattern = '^.*' + value + '.*$'
-      if ((item.name.match(/pattern/i) || item.description.match('^.*' + value + '.*$')) && this.clientsSelected.indexOf(item) === -1) {
+      if ((item.name.match(new RegExp(pattern,"ig")) || item.description.match(new RegExp(pattern,"ig"))) && this.clientsSelected.indexOf(item) === -1) {
         this.clientsTmp.push(item);
       }
     });

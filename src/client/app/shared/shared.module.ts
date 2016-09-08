@@ -14,6 +14,7 @@ import {RESOURCE_SERVICES} from "./resource/index";
 import {DateComponent} from "./widgets/date/date.component";
 import {LoadingService} from "./loading/loading.service";
 import {LoginGuard} from "./guard/login.guard";
+import {TinyEditor} from "./widgets/editor/tinymce.component";
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -28,9 +29,10 @@ import {LoginGuard} from "./guard/login.guard";
     ActionButton,
     Dragula,
     FilterPipe,
-    DateComponent
+    DateComponent,
+    TinyEditor
   ],
-  exports: [SideNavComponent, Dragula, BreadcrumbComponent, LayoutComponent,
+  exports: [SideNavComponent, Dragula, BreadcrumbComponent, LayoutComponent,TinyEditor,
     CommonModule, FormsModule, RouterModule, MaterializeDirective, FilterPipe, DateComponent]
 })
 export class SharedModule {

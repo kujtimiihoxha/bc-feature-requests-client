@@ -16,3 +16,9 @@ export class FeatureRequest extends BaseModel {
     priority: number,
   }[]
 }
+export class FeatureRequestUpdateDetails {
+  title: string
+  description: string
+  ticket_url: string
+  product_area_id: string
+}

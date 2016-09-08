@@ -26,4 +26,8 @@ export class DetailsTabComponent {
     })
     this.onNext.emit()
   }
+
+  descriptionChanged(a:string){
+    this.details.description = a
+  }
 }

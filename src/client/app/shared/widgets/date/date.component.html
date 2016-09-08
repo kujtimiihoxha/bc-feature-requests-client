@@ -8,10 +8,46 @@
   </div>
   <div class="picker__year-display">
     <div>{{year}}</div>
-    <!--<form>-->
-      <!--<input id="date_picker" *ngIf="edit"  [attr.data-value]="getDateValue()" [(ngModel)]="update_date" name="update_data" materialize="pickadate"-->
-             <!--[materializeParams]="[{closeOnSelect: true,selectMonths: true, selectYears: 16, min:mindate}]"  type="hidden" class="waves-effect waves-light btn-floating red right" style="margin-top: -30px;margin-right: 15px"/>-->
-
-    <!--</form>-->
+    <button id="date_picker" *ngIf="edit"
+            materialize="leanModal" [materializeParams]="[{dismissible: false}]"  href="#modal1"
+            type="hidden" class="waves-effect  waves-light btn-floating red right" style="margin-top: -30px;margin-right: 15px">
+      <i class="material-icons">edit</i>
+    </button>
     </div>
 </div>
+
+
+<!--
+Edit Date Modal.s
+-->
+<div id="modal1" class="modal" materialize [materializeActions]="modalActions">
+  <div class="modal-content">
+    <h4>Edit target date</h4>
+    <p>Select the target date</p>
+    <div class="row">
+      <form class="col s12" (ngSubmit)="save()" #dateForm="ngForm">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="date"
+                   required
+                   [(ngModel)]="update_date" name="update_date"
+                   materialize="pickadate"
+                   [attr.data-value]="update_date"
+                   [materializeParams]="[{closeOnSelect: true,selectMonths: true, selectYears: 16, min:mindate, container:'body'}]"
+                   type="text"/>
+            <label for="date">Target Date</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-action modal-close waves-effect waves-green btn-flat" type="button" (click)="closeModal()">Close</button>
+          <button type="submit" [disabled]="!dateForm.form.valid"
+                  class="modal-action modal-close waves-effect waves-green btn-flat">Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--
+End edit date.
+-->

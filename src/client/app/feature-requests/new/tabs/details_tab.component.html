@@ -19,19 +19,17 @@
           </div>
         </div>
         <div class="row">
-          <div class="input-field col s12">
-                      <textarea id="description" [(ngModel)]="details.description" name="description" required
-                                class="materialize-textarea"></textarea>
-            <label for="description">Description</label>
-          </div>
-        </div>
-        <div class="row">
           <div class="input-field col s12 m6 l8">
             <input placeholder="Url" id="url" [(ngModel)]="details.ticket_url" name="url" required type="text"
                    class="validate"
                    pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)">
             <label for="url">Ticket Url</label>
           </div>
+        <div class="row" style="display:none">
+          <div class="input-field col s12 m12 l12">
+            <input id="description" [(ngModel)]="details.description" name="description" required type="text"/>
+          </div>
+        </div>
           <div class="input-field col s12 m6 l4">
             <select [(ngModel)]="selectedProductArea" name="selectedProductArea" materialize="material_select"
                     [materializeSelectOptions]="productAreas" required>
@@ -43,12 +41,24 @@
         </div>
         <div class="row">
           <div class="input-field col s12">
+          <h6>Description</h6>
+            </div>
+          <div class="input-field col s12">
+            <!--<textarea id="description" [(ngModel)]="details.description" name="description" required-->
+            <!--class="materialize-textarea"></textarea>-->
+            <bc-tinymce (contentChanged)="descriptionChanged($event)"></bc-tinymce>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
             <button type="submit" class="waves-effect waves-light blue btn-large right"
                     [disabled]="!detailsForm.form.valid"> Next <i
               class="material-icons right">arrow_forward</i></button>
           </div>
         </div>
       </form>
+
     </div>
   </div>
 </div>

@@ -33,6 +33,7 @@ export class ProjectConfig extends SeedConfig {
     this.APP_ASSETS = [
       ...this.APP_ASSETS,
       {src: `${this.APP_SRC}/assets/js/materialize-mod.js`, inject: true, vendor: false},
+      {src: `${this.APP_SRC}/assets/tinymce/tinymce.min.js`, inject: true, vendor: false},
       // {src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
       // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
     ];
