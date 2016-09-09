@@ -2,7 +2,6 @@
   <div class="center">
     <img class="responsive-img" style="width: 250px;" src="assets/images/example-logo.png"/>
     <h5 class="grey-text">BC Feature Requests</h5>
-    <div class="section"></div>
     <div class="container ">
       <div class=" card z-depth-3 grey lighten-4 row" style="display: inline-block !important;">
         <div class="card-image">
@@ -38,8 +37,7 @@
                        id='password' [(ngModel)]="model.password"/>
                 <label for='password'>Enter your password</label>
               </div>
-              <label style='float: right;'>
-                <a class='blue-text'><b>Forgot Password?</b></a>
+              <label style='float: right; min-width: 100px;'>
               </label>
             </div>
 
@@ -49,6 +47,13 @@
                 <button type='submit' name='btn_login' [disabled]="!(loginForm.form.valid && enabled)"
                         class='col s12 btn btn-large waves-effect red'>Login
                 </button>
+
+              </div>
+              <div class='row'>
+              <button type='submit' name='btn_login' [disabled]="!enabled || loginForm.form.valid " [routerLink]="['/register']"
+                      class='col s12 btn btn-large waves-effect blue'>Register
+              </button>
+
               </div>
             </div>
           </form>

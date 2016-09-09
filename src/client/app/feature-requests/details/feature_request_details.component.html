@@ -1,3 +1,30 @@
+<!--
+Copyright [2016] [Kujtim Hoxha]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!--
+ FeatureRequestDetailsComponent view.
+ Displays the content of the selected feature request.
+ Contains the feature request details, target date, ticket url, product area, clients.
+ Also has the sections for History, and Comments.
+ @author Kujtim Hoxha
+ @email kujtimii.h@gmail.com
+ @date 9/9/2016
+-->
+<!--
+Feature Request Details
+-->
 <div class="col s12">
   <div class="row">
     <div class="container">
@@ -11,15 +38,18 @@
                 <button class="btn-floating right tooltipped red"
                         materialize="tooltip" data-position="bottom" data-delay="10"
                         data-tooltip="Close the request" (click)="updateState()"
-                        style="margin-right: 15px; margin-top: -20px" *ngIf="!featureRequest.closed"><i class="material-icons left">highlight_off</i></button>
+                        style="margin-right: 15px; margin-top: -20px" *ngIf="!featureRequest.closed"><i
+                  class="material-icons left">highlight_off</i></button>
                 <button class="btn-floating tooltipped right green"
                         materialize="tooltip" data-position="bottom" data-delay="10"
                         data-tooltip="Reopen the request" (click)="updateState()"
-                        style="margin-right: 15px; margin-top: -20px" *ngIf="featureRequest.closed"><i class="material-icons left">info_outline</i></button>
+                        style="margin-right: 15px; margin-top: -20px" *ngIf="featureRequest.closed"><i
+                  class="material-icons left">info_outline</i></button>
                 <button class="btn-floating tooltipped right"
                         materialize="tooltip" data-position="left" data-delay="10"
                         data-tooltip="Edit details"
-                        style="margin-right: 15px; margin-top: -20px" *ngIf="!featureRequest.closed"(click)="openDetailsModal()"><i class="material-icons left">edit</i></button>
+                        style="margin-right: 15px; margin-top: -20px" *ngIf="!featureRequest.closed"
+                        (click)="openDetailsModal()"><i class="material-icons left">edit</i></button>
 
               </div>
               <div class="section"></div>
@@ -52,14 +82,16 @@
               </div>
               <div class="col s12 m12 l4">
                 <blockquote>
-                  <p>Ticket Url: <a [href]="featureRequest.ticket_url" target="_blank"> {{featureRequest.ticket_url}}</a></p>
+                  <p>Ticket Url: <a [href]="featureRequest.ticket_url" target="_blank">
+                    {{featureRequest.ticket_url}}</a></p>
                 </blockquote>
                 <blockquote>
                   <p>Product area: <b>{{getProductAreaName(featureRequest.product_area_id)}}</b></p>
                 </blockquote>
                 <div class="col s1"></div>
                 <div class="col s10 ">
-                  <bc-date-widget [date]="featureRequest.target_date" [edit]="true" (dateChanged)="onDateChanged($event)"></bc-date-widget>
+                  <bc-date-widget [date]="featureRequest.target_date" [edit]="true"
+                                  (dateChanged)="onDateChanged($event)"></bc-date-widget>
                 </div>
                 <div class="col s1"></div>
 
@@ -67,23 +99,34 @@
 
             </div>
             <div class="row">
-             <div class="col s12 m6 l6">
-               <h5>History</h5>
-               <p *ngIf="featureRequest.modifications == null || featureRequest.modifications.length == 0">
-                 No changes.
-               </p>
-               <blockquote *ngFor="let log of featureRequest.modifications">
-                 <i class="material-icons left">{{log.icon}}</i>
-                  <div [innerHtml]="log.description"></div> <br/>
-                 <b>{{getDate(log.created_at)}}</b>
-               </blockquote>
-             </div>
+              <!--
+               Feature request history
+              -->
+              <div class="col s12 m6 l6">
+                <h5>History</h5>
+                <p *ngIf="featureRequest.modifications == null || featureRequest.modifications.length == 0">
+                  No changes.
+                </p>
+                <blockquote *ngFor="let log of featureRequest.modifications">
+                  <i class="material-icons left">{{log.icon}}</i>
+                  <div [innerHtml]="log.description"></div>
+                  <br/>
+                  <b>{{getDate(log.created_at)}}</b>
+                </blockquote>
+              </div>
+              <!--
+                -- End of Feature request history
+              -->
+              <!--
+                Feature request Comments
+              -->
               <div class="col s12 m6 l6">
                 <h5>Comments</h5>
                 <ul class="collection" *ngIf="featureRequest.comments != null && featureRequest.comments.length != 0">
                   <li class="collection-item avatar" *ngFor="let comment of featureRequest.comments">
                     <!--<i class="material-icons circle">person</i>-->
-                    <img [src]="'assets/images/profiles/'+getEmployUsername(comment.user_id)+'.jpg'" alt="" class="circle">
+                    <img [src]="'assets/images/profiles/'+getEmployUsername(comment.user_id)+'.jpg'" alt=""
+                         class="circle">
                     <span class="title"><b>{{getEmployUsername(comment.user_id)}}</b> </span>
                     <p class="grey lighten-3" style="padding: 10px; margin-top: 10px; min-height: 80px">
                       {{comment.comment}}
@@ -91,7 +134,7 @@
                     <a class="secondary-content" style="margin-top: -5px">
                       <i style="font-size: smaller">{{getDate(comment.created_at)}}</i>
                       <!--<i class="material-icons blue-text">comment</i>-->
-                      </a>
+                    </a>
                   </li>
                 </ul>
                 <p *ngIf="featureRequest.comments == null || featureRequest.comments.length == 0">No comments yet!</p>
@@ -100,7 +143,8 @@
                     <form materialize (ngSubmit)="sendComment()">
                       <div class="row">
                         <div class="input-field col s12">
-                          <textarea id="textarea1" [(ngModel)]="comment" name="comment" class="materialize-textarea"></textarea>
+                          <textarea id="textarea1" [(ngModel)]="comment" name="comment"
+                                    class="materialize-textarea"></textarea>
                           <label for="textarea1">Write a Comment</label>
                         </div>
                       </div>
@@ -113,6 +157,9 @@
                   </div>
                 </div>
               </div>
+              <!--
+               End of Feature request Comments
+              -->
             </div>
           </div>
         </div>
@@ -120,15 +167,18 @@
     </div>
   </div>
 </div>
-
+<!--
+-- End of Feature Request Details
+-->
 <!--
 Details modal
 -->
-<div id="edit_fr" class="modal modal-fixed-footer " materialize [materializeActions]="detailsModal" [materializeParams]="[{ dismissible: false}]">
+<div id="edit_fr" class="modal modal-fixed-footer " materialize [materializeActions]="detailsModal"
+     [materializeParams]="[{ dismissible: false}]">
   <div class="modal-content">
     <h4>Edit feature request details</h4>
     <div class="row">
-      <form materialize class="col s12"  #detailsForm="ngForm">
+      <form materialize class="col s12" #detailsForm="ngForm">
         <div class="row">
           <div class="input-field col s12">
             <input placeholder="Title" id="title" [(ngModel)]="featureRequestTmp.title" name="title" required
@@ -154,7 +204,8 @@ Details modal
         </div>
         <div class="row" style="display:none">
           <div class="input-field col s12 m12 l12">
-            <input id="description" [(ngModel)]="featureRequestTmp.description" name="description" required type="text"/>
+            <input id="description" [(ngModel)]="featureRequestTmp.description" name="description" required
+                   type="text"/>
           </div>
         </div>
         <div class="row">
@@ -162,14 +213,17 @@ Details modal
           <div class="input-field col s12">
             <!--<textarea id="description" [(ngModel)]="details.description" name="description" required-->
             <!--class="materialize-textarea"></textarea>-->
-            <bc-tinymce [mceContent]="featureRequest.description" (contentChanged)="descriptionChanged($event)"></bc-tinymce>
+            <bc-tinymce [mceContent]="featureRequest.description"
+                        (contentChanged)="descriptionChanged($event)"></bc-tinymce>
           </div>
         </div>
       </form>
     </div>
   </div>
   <div class="modal-footer">
-    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="button" (click)="closeEditDetailsModal()">Close</button>
+    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="button"
+            (click)="closeEditDetailsModal()">Close
+    </button>
     <button (click)="updateDetails()" [disabled]="!detailsForm.form.valid"
             class="modal-action modal-close waves-effect waves-green btn-flat">Save
     </button>
@@ -182,7 +236,8 @@ Details modal
 <!--
 Add/Remove modal
 -->
-<div id="add_remove" class="modal modal-fixed-footer" materialize [materializeActions]="addRemoveClientsModal" [materializeParams]="[{ dismissible: false}]">
+<div id="add_remove" class="modal modal-fixed-footer" materialize [materializeActions]="addRemoveClientsModal"
+     [materializeParams]="[{ dismissible: false}]">
   <div class="modal-content">
     <h4>Add or remove clients</h4>
     <div class="row">
@@ -233,15 +288,14 @@ Add/Remove modal
     </div>
   </div>
   <div class="modal-footer">
-    <button class="modal-action waves-effect waves-green btn-flat" type="button" (click)="closeAddRemoveModal()">Close</button>
+    <button class="modal-action waves-effect waves-green btn-flat" type="button" (click)="closeAddRemoveModal()">Close
+    </button>
     <button class="modal-action waves-effect waves-green btn-flat" type="button" (click)="saveAddRemove()">Save</button>
   </div>
 </div>
-
 <!--
 -- End of add/remove modal
 -->
-
 
 <!--
 Priority modal

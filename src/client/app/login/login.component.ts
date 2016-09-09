@@ -10,6 +10,7 @@ declare const Materialize: any;
   moduleId: module.id,
   selector: 'bc-login',
   templateUrl: 'login.component.html',
+  styleUrls: ['login.component.css'],
 })
 export class LoginComponent {
   jwtHelper: JwtHelper = new JwtHelper();

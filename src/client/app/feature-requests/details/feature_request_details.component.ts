@@ -1,14 +1,36 @@
+/**
+ * Copyright [2016] [Kujtim Hoxha]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 import {Component, OnInit, Input, EventEmitter, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FeatureRequest, ProductArea, BreadcrumbService, Client, User} from '../../shared/index';
-import {TimestempHelper} from '../../shared/helpers/timestemp.helper';
-import {FeatureRequestService} from '../../shared/resource/feature_request.service';
-import {LoadingService} from '../../shared/loading/loading.service';
 import {Observable} from 'rxjs/Rx';
-import {FeatureRequestUpdateDetails, MODIFICATIONS} from '../../shared/model/feature_request.model';
 import {DragulaService} from 'ng2-dragula/src/app/providers/dragula.provider';
-import {DateHelper} from '../../shared/helpers/date.helper';
 import {JwtHelper} from 'angular2-jwt/angular2-jwt';
+import {
+  FeatureRequest,
+  ProductArea,
+  BreadcrumbService,
+  Client,
+  User,
+  TimestempHelper,
+  FeatureRequestService,
+  LoadingService,
+  FeatureRequestUpdateDetails,
+  MODIFICATIONS,
+  DateHelper
+} from '../../shared/index';
 declare const Materialize: any, $: any;
 /**
  * FeatureRequestDetailsComponent.
@@ -70,7 +92,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
   /**
    * New comment data
    */
-  comment:string;
+  comment: string;
 
   /**
    * Temporary client used for drag and drop list.
@@ -123,6 +145,15 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    */
   @Input() productAreas: ProductArea[ ];
 
+  /**
+   * Constructor that injects necessary injectable classes.
+   * Subscribes to the dropdown add event.
+   * @param dragulaService used for drag and drop component
+   * @param breadcrumb used to update header breadcrumb
+   * @param route used to get the data from resolvers.
+   * @param loading used to display loading during transaction.
+   * @param featureRequestService used to send requests to the server.
+   */
   constructor(private dragulaService: DragulaService,
               private breadcrumb: BreadcrumbService,
               private route: ActivatedRoute,
@@ -131,12 +162,15 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
     this.subscription = dragulaService.dropModel.subscribe((value: any) => {
       let fromContainer = value.splice(3);
       let ToContainer = value.splice(2);
+      //noinspection TypeScriptUnresolvedFunction
       if ($(fromContainer).attr('data-container') === 'parent'
         && $(ToContainer).attr('data-container') !== 'parent') {
         this.handleAddClient(value.slice(1));
-      } else if ($(fromContainer).attr('data-container')
-        !== 'parent' && $(ToContainer).attr('data-container') === 'parent') {
-        this.handleRemoveClient(value.slice(1));
+      } else { //noinspection TypeScriptUnresolvedFunction
+        if ($(fromContainer).attr('data-container')
+                !== 'parent' && $(ToContainer).attr('data-container') === 'parent') {
+                this.handleRemoveClient(value.slice(1));
+              }
       }
     });
   }
@@ -221,15 +255,18 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
     this.featureRequestService.updateTargetDate(
       this.featureRequest.id, new TimestempHelper().ISODateString(date)).catch((error: any)=> {
       this.loading.off();
+      //noinspection TypeScriptUnresolvedFunction,TypeScriptUnresolvedFunction,TypeScriptUnresolvedVariable
       Materialize.toast(JSON.parse(error._body).message, 2000);
       return Observable.empty();
-    }).subscribe((updated :FeatureRequest)=> {
+    }).subscribe((updated: FeatureRequest)=> {
       this.loading.off();
+      //noinspection TypeScriptUnresolvedFunction
       Materialize.toast('Target date updated', 2000);
       this.featureRequest.target_date = new TimestempHelper().ISODateString(date);
       this.featureRequest.modifications = updated.modifications;
     });
   }
+
   /**
    * Used to display the date in a more user friendly way.
    * @param date the date to be displayed.
@@ -266,11 +303,13 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
     this.loading.on();
     this.featureRequestService.updateDetails(this.featureRequest.id, this.featureRequestTmp).catch((error: any)=> {
       this.loading.off();
+      //noinspection TypeScriptUnresolvedVariable,TypeScriptUnresolvedVariable,TypeScriptUnresolvedFunction,TypeScriptUnresolvedFunction
       Materialize.toast(JSON.parse(error._body).message, 2000);
       this.detailsModal.emit('closeModal');
       return Observable.empty();
     }).subscribe((updated: FeatureRequest)=> {
       this.loading.off();
+      //noinspection TypeScriptUnresolvedFunction,TypeScriptUnresolvedFunction
       Materialize.toast('Feature request details updated', 2000);
       this.featureRequest.title = updated.title;
       this.featureRequest.description = updated.description;
@@ -299,10 +338,12 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
     this.loading.on();
     this.featureRequestService.updateState(this.featureRequest.id, state).catch((error: any)=> {
       this.loading.off();
+      //noinspection TypeScriptUnresolvedVariable,TypeScriptUnresolvedVariable,TypeScriptUnresolvedFunction,TypeScriptUnresolvedFunction
       Materialize.toast(JSON.parse(error._body).message, 2000);
       return Observable.empty();
     }).subscribe((updated: FeatureRequest)=> {
       this.loading.off();
+      //noinspection TypeScriptUnresolvedFunction,TypeScriptUnresolvedFunction
       Materialize.toast('Request state updated', 2000);
       this.featureRequest.closed = updated.closed;
       this.featureRequest.modifications = updated.modifications;
@@ -343,7 +384,8 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    *  Save add remove modal.
    */
   saveAddRemove() {
-    if(this.featureRequest.clients.length === this.clientsToRemove.length && this.clientsToAdd.length === 0) {
+    if (this.featureRequest.clients.length === this.clientsToRemove.length && this.clientsToAdd.length === 0) {
+      //noinspection TypeScriptUnresolvedFunction
       Materialize.toast('Feature request must have at least one client', 2000);
       return;
     }
@@ -354,17 +396,20 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
       this.clientsToAdd
     ).catch((error: any)=> {
       this.loading.off();
+      //noinspection TypeScriptUnresolvedVariable,TypeScriptUnresolvedVariable,TypeScriptUnresolvedFunction,TypeScriptUnresolvedFunction
       Materialize.toast(JSON.parse(error._body).message, 2000);
       this.addRemoveClientsModal.emit('closeModal');
       return Observable.empty();
     }).subscribe((updated: FeatureRequest)=> {
       this.loading.off();
+      //noinspection TypeScriptUnresolvedFunction
       Materialize.toast('Request clients updated', 2000);
       this.featureRequest.clients = updated.clients;
       this.featureRequest.modifications = updated.modifications;
       this.addRemoveClientsModal.emit('closeModal');
     });
   }
+
   /**
    * Priority modal save
    */
@@ -383,6 +428,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    */
   handleAddClient(client: any) {
     for (var i = 0; i < this.clientsSelected.length; i++) {
+      //noinspection TypeScriptUnresolvedFunction
       if (this.clientsSelected[i].id === $(client).attr('data-uuid')) {
         this.currentClient = this.clientsSelected[i];
         break;
@@ -397,6 +443,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    */
   handleRemoveClient(client: any) {
     for (var i = 0; i < this.featureRequest.clients.length; i++) {
+      //noinspection TypeScriptUnresolvedFunction
       if (this.featureRequest.clients[i].client_id === $(client).attr('data-uuid')) {
         if (this.clientsToRemove.indexOf(this.featureRequest.clients[i].client_id) === -1) {
           this.clientsToRemove.push(this.featureRequest.clients[i].client_id);
@@ -404,8 +451,9 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
         }
       }
     }
-    var clientToRemove:any = {};
+    var clientToRemove: any = {};
     for (var i = 0; i < this.clientsToAdd.length; i++) {
+      //noinspection TypeScriptUnresolvedFunction
       if (this.clientsToAdd[i].id === $(client).attr('data-uuid')) {
         clientToRemove = this.clientsToAdd[i];
       }
@@ -451,7 +499,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * On Description change
    * @param a new description
    */
-  descriptionChanged(a:string) {
+  descriptionChanged(a: string) {
     this.featureRequestTmp.description = a;
   }
 
@@ -460,16 +508,16 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    */
   findModifications() {
     if (this.featureRequestTmp.title !== this.featureRequest.title) {
-        this.featureRequestTmp.modifications.push(MODIFICATIONS.TITLE_UPDATE);
+      this.featureRequestTmp.modifications.push(MODIFICATIONS.TITLE_UPDATE);
     }
     if (this.featureRequestTmp.description !== this.featureRequest.description) {
-        this.featureRequestTmp.modifications.push(MODIFICATIONS.DESCRIPTION_UPDATE);
+      this.featureRequestTmp.modifications.push(MODIFICATIONS.DESCRIPTION_UPDATE);
     }
     if (this.selectedProductArea !== this.featureRequest.product_area_id) {
-        this.featureRequestTmp.modifications.push(MODIFICATIONS.PRODUCT_ARE_UPDATE);
+      this.featureRequestTmp.modifications.push(MODIFICATIONS.PRODUCT_ARE_UPDATE);
     }
-       if (this.featureRequestTmp.ticket_url !== this.featureRequest.ticket_url) {
-        this.featureRequestTmp.modifications.push(MODIFICATIONS.TICKET_URL_UPDATE);
+    if (this.featureRequestTmp.ticket_url !== this.featureRequest.ticket_url) {
+      this.featureRequestTmp.modifications.push(MODIFICATIONS.TICKET_URL_UPDATE);
     }
   }
 
@@ -477,14 +525,16 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * Send a new comment/
    */
   sendComment() {
-    let id = new JwtHelper().decodeToken( localStorage.getItem('id_token')).id;
+    let id = new JwtHelper().decodeToken(localStorage.getItem('id_token')).id;
     this.loading.on();
-    this.featureRequestService.addComment(this.featureRequest.id,id, this.comment).catch((error: any)=> {
+    this.featureRequestService.addComment(this.featureRequest.id, id, this.comment).catch((error: any)=> {
       this.loading.off();
+      //noinspection TypeScriptUnresolvedVariable,TypeScriptUnresolvedVariable,TypeScriptUnresolvedFunction,TypeScriptUnresolvedFunction
       Materialize.toast(JSON.parse(error._body).message, 2000);
       return Observable.empty();
     }).subscribe((updated: FeatureRequest)=> {
       this.loading.off();
+      //noinspection TypeScriptUnresolvedFunction
       Materialize.toast('Request clients updated', 2000);
       this.featureRequest.comments = updated.comments;
       this.comment = null;

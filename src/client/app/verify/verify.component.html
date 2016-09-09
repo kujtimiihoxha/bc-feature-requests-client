@@ -1,0 +1,36 @@
+
+<div class="row " *ngIf="verified">
+  <div class="section"></div>
+  <div class="section"></div>
+  <div class="section"></div>
+  <div class="col s3 "></div>
+  <div class="col s6 ">
+    <div class="card blue darken-1">
+      <div class="card-content white-text">
+        <span class="card-title">Thank you {{firstname}}.</span>
+        <p>Your account is now verified, please login to continue to your dashboard.</p>
+      </div>
+      <div class="card-action">
+        <a class="btn-large red" [routerLink]="['/login']">Login</a>
+      </div>
+    </div>
+  </div>
+  <div class="col s3"></div>
+
+</div>
+
+<div class="row " *ngIf="error">
+  <div class="section"></div>
+  <div class="section"></div>
+  <div class="section"></div>
+  <div class="col s3 "></div>
+  <div class="col s6 ">
+    <div class="card blue darken-1">
+      <div class="card-content white-text">
+        <span class="card-title">Something is wrong!</span>
+        <p>{{errorMessage}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col s3"></div>
+</div>

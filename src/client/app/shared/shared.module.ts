@@ -15,6 +15,7 @@ import {DateComponent} from './widgets/date/date.component';
 import {LoadingService} from './loading/loading.service';
 import {LoginGuard} from './guard/login.guard';
 import {TinyEditorComponent} from './widgets/editor/tinymce.component';
+import {AdminGuard} from "./guard/admin.guard";
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -39,7 +40,7 @@ export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [DragulaService, BreadcrumbService, LoadingService, AuthGuard, LoginGuard, ...RESOURCE_SERVICES]
+      providers: [DragulaService, BreadcrumbService, LoadingService, AuthGuard,AdminGuard, LoginGuard, ...RESOURCE_SERVICES]
     };
   }
 }

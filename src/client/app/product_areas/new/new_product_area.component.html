@@ -1,0 +1,22 @@
+<h4>Create Product area</h4>
+<div class="row">
+  <form materialize class="col s12"  #insertForm="ngForm" *ngIf="productArea != null">
+    <div class="row">
+      <div class="input-field col s12">
+        <input placeholder="Name" id="name" [(ngModel)]="productArea.name" name="name" required
+               type="text" class="validate">
+        <label for="name">Name</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input placeholder="Description" id="description" [(ngModel)]="productArea.description" name="description" required
+               type="text" class="validate">
+        <label for="description">Description</label>
+      </div>
+    </div>
+    <button (click)="submit()" [disabled]="!insertForm.form.valid"
+            class="waves-effect waves-green btn-large right">Submit
+    </button>
+  </form>
+</div>

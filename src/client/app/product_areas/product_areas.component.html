@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col s12">
+    <h5>Product areas list</h5>
+    <table class="striped centered responsive-table">
+      <thead>
+      <tr>
+        <th data-field="id">Name</th>
+        <th data-field="name">Description</th>
+        <th data-field="price">Edit</th>
+        <th data-field="price">Delete</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let productArea of productAreas">
+        <td>{{productArea.name}}</td>
+        <td>{{productArea.description}}</td>
+        <td><button class="btn-floating waves-light waves-effect blue" (click)="openEditModal(productArea.id)"><i class="material-icons">edit</i></button></td>
+        <td><button class="btn-floating waves-light waves-effect red" (click)="openDeleteModal(productArea.id)"><i class="material-icons">remove</i></button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="edit_productAreas" class="modal " materialize [materializeActions]="editModal" [materializeParams]="[{ dismissible: false}]">
+  <div class="modal-content">
+    <h4>Edit productArea</h4>
+    <div class="row">
+      <form materialize class="col s12"  #editForm="ngForm" *ngIf="currentProductArea != null">
+        <div class="row">
+          <div class="input-field col s12">
+            <input placeholder="Name" id="name" [(ngModel)]="currentProductArea.name" name="name" required
+                   type="text" class="validate">
+            <label for="name">Name</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input placeholder="Description" id="description" [(ngModel)]="currentProductArea.description" name="description" required
+                   type="text" class="validate">
+            <label for="description">Description</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-action modal-close waves-effect waves-green btn-flat" type="button" (click)="closeEditModal()">Close</button>
+          <button (click)="editProductArea()" [disabled]="!editForm.form.valid"
+                  class="modal-action modal-close waves-effect waves-green btn-flat">Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+<div id="delete_productAreas" class="modal " materialize [materializeActions]="deleteModal" [materializeParams]="[{ dismissible: false}]">
+  <div class="modal-content">
+    <h4>Delete productArea</h4>
+    <div class="row" *ngIf="currentProductArea != null">
+      <p>Are you sure that you want to delete {{currentProductArea.name}}</p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="button" (click)="closeDeleteModal()">Close</button>
+    <button (click)="confirmDeleteProductArea()"
+            class="modal-action modal-close waves-effect waves-green red btn-flat">Delete
+    </button>
+  </div>
+</div>

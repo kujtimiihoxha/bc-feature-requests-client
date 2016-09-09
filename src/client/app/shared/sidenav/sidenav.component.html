@@ -37,6 +37,10 @@
 
     <li><a [routerLink]="['/']" [routerLinkActive]="['active']" class="waves-effect waves-teal"
            [routerLinkActiveOptions]="{exact:true}"><i class="material-icons">description</i>Feature Requests</a></li>
+    <li><a [routerLink]="['/bc/clients']" [routerLinkActive]="['active']" class="waves-effect waves-teal" *ngIf="role === 1"
+           [routerLinkActiveOptions]="{exact:true}"><i class="material-icons">folder</i>Clients</a></li>
+    <li><a [routerLink]="['/bc/product-areas']" [routerLinkActive]="['active']" class="waves-effect waves-teal" *ngIf="role === 1"
+           [routerLinkActiveOptions]="{exact:true}"><i class="material-icons">aspect_ratio</i>Product areas</a></li>
     <li>
       <div class="divider"></div>
     </li>
