@@ -377,7 +377,10 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
     this.priorityModal.emit('closeModal');
   }
 
-
+  /**
+   * Handle the client add on the dropdown modal.
+   * @param client the client <li> element
+   */
   handleAddClient(client: any) {
     for (var i = 0; i < this.clientsSelected.length; i++) {
       if (this.clientsSelected[i].id === $(client).attr('data-uuid')) {
@@ -388,6 +391,10 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
     this.priorityModal.emit('openModal');
   }
 
+  /**
+   * Handle the client remove on the dropdown modal.
+   * @param client the client <li> element
+   */
   handleRemoveClient(client: any) {
     for (var i = 0; i < this.featureRequest.clients.length; i++) {
       if (this.featureRequest.clients[i].client_id === $(client).attr('data-uuid')) {
@@ -406,15 +413,27 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
     this.clientsToAdd.splice(this.clientsToAdd.indexOf(clientToRemove), 1);
   }
 
+  /**
+   * Used to get the {@link _nameSearch}
+   * @returns {string}
+   */
   get nameSearch() {
     return this._nameSearch;
   }
 
+  /**
+   * Used to set {@link _nameSearch} and filter the clients on change.
+   * @param value
+   */
   set nameSearch(value: string) {
     this.filterClients(value);
     this._nameSearch = value;
   }
 
+  /**
+   * Filter the clients and return the first 6 (we don't want the list to be very bih)
+   * @param value
+   */
   filterClients(value: string) {
     this.clientsTmp = [];
     this.clients.forEach((item: Client)=> {
