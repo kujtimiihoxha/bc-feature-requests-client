@@ -27,6 +27,7 @@ import {VerifyModule} from './verify/verify.module';
 import {RegisterModule} from './register/register.module';
 import {ClientModule} from './clients/clients.module';
 import {ProductAreaModule} from './product_areas/product_areas.module';
+import {UsersModule} from './users/users.module';
 /**
  * AppModule.
  *
@@ -46,6 +47,7 @@ import {ProductAreaModule} from './product_areas/product_areas.module';
     ClientModule,
     ProductAreaModule,
     RegisterModule,
+    UsersModule,
     SharedModule.forRoot()
   ],
   declarations: [AppComponent],

@@ -149,7 +149,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
   /**
    * Only for demo purpose.
    */
-  demo:DemoHelper = new DemoHelper();
+  demo: DemoHelper = new DemoHelper();
 
   /**
    * Constructor that injects necessary injectable classes.
@@ -174,9 +174,9 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
         this.handleAddClient(value.slice(1));
       } else { //noinspection TypeScriptUnresolvedFunction
         if ($(fromContainer).attr('data-container')
-                !== 'parent' && $(ToContainer).attr('data-container') === 'parent') {
-                this.handleRemoveClient(value.slice(1));
-              }
+          !== 'parent' && $(ToContainer).attr('data-container') === 'parent') {
+          this.handleRemoveClient(value.slice(1));
+        }
       }
     });
   }
@@ -304,8 +304,12 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * Sends the request to the server and updates local data on success.
    */
   updateDetails() {
-    this.findModifications();
+    this.featureRequestTmp.title = this.featureRequestTmp.title.trim();
     this.featureRequestTmp.product_area_id = this.selectedProductArea;
+    if (!this.findModifications()) {
+      this.closeEditDetailsModal();
+      return;
+    }
     this.loading.on();
     this.featureRequestService.updateDetails(this.featureRequest.id, this.featureRequestTmp).catch((error: any)=> {
       this.loading.off();
@@ -390,6 +394,10 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    *  Save add remove modal.
    */
   saveAddRemove() {
+    if (this.clientsToAdd.length === 0 && this.clientsToRemove.length === 0) {
+      this.closeAddRemoveModal();
+      return;
+    }
     if (this.featureRequest.clients.length === this.clientsToRemove.length && this.clientsToAdd.length === 0) {
       //noinspection TypeScriptUnresolvedFunction
       Materialize.toast('Feature request must have at least one client', 2000);
@@ -515,7 +523,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
   /**
    * Finds the modifications of the update.
    */
-  findModifications() {
+  findModifications(): boolean {
     if (this.featureRequestTmp.title !== this.featureRequest.title) {
       this.featureRequestTmp.modifications.push(MODIFICATIONS.TITLE_UPDATE);
     }
@@ -528,6 +536,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
     if (this.featureRequestTmp.ticket_url !== this.featureRequest.ticket_url) {
       this.featureRequestTmp.modifications.push(MODIFICATIONS.TICKET_URL_UPDATE);
     }
+    return this.featureRequestTmp.modifications.length !== 0;
   }
 
   /**
@@ -555,7 +564,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * @param username the user username
    * @returns {boolean} if it is a demo user.
    */
-  isDemoUser(username:string) {
+  isDemoUser(username: string) {
     return this.demo.isDemoUser(username);
   }
 
@@ -564,7 +573,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * @param name the client name
    * @returns {boolean} if it is a demo client.
    */
-  isDemoClient(name:string) {
+  isDemoClient(name: string) {
     return this.demo.isDemoClient(name);
   }
 }

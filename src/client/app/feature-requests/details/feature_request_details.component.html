@@ -35,21 +35,7 @@ Feature Request Details
               <div class="section">
               </div>
               <div class="section">
-                <button class="btn-floating right tooltipped red"
-                        materialize="tooltip" data-position="bottom" data-delay="10"
-                        data-tooltip="Close the request" (click)="updateState()"
-                        style="margin-right: 15px; margin-top: -20px" *ngIf="!featureRequest.closed"><i
-                  class="material-icons left">highlight_off</i></button>
-                <button class="btn-floating tooltipped right green"
-                        materialize="tooltip" data-position="bottom" data-delay="10"
-                        data-tooltip="Reopen the request" (click)="updateState()"
-                        style="margin-right: 15px; margin-top: -20px" *ngIf="featureRequest.closed"><i
-                  class="material-icons left">info_outline</i></button>
-                <button class="btn-floating tooltipped right"
-                        materialize="tooltip" data-position="left" data-delay="10"
-                        data-tooltip="Edit details"
-                        style="margin-right: 15px; margin-top: -20px" *ngIf="!featureRequest.closed"
-                        (click)="openDetailsModal()"><i class="material-icons left">edit</i></button>
+
 
               </div>
               <div class="section"></div>
@@ -61,14 +47,14 @@ Feature Request Details
           </div>
           <div class="card-content">
             <div class="row">
-              <div class="col s5">
+              <div class="col s10">
                 Clients:
                 <div class="chip" *ngFor="let cl of featureRequest.clients">
                   <div class="priority red lighten-1  center white-text">{{cl.priority}}</div>
                   {{getClientName(cl.client_id)}}
                 </div>
               </div>
-              <div class="col s5 right">
+              <div class="col s2 right">
                 <button type="button" class="waves-effect tooltiped waves-light btn-floating right blue"
                         materialize="tooltip" data-position="left" data-delay="10"
                         data-tooltip="Add/Remove Clients" (click)="addRemoveClients()">
@@ -77,8 +63,34 @@ Feature Request Details
             </div>
             <div class="row">
               <div class="col s12 m12 l8" style="height: 100%">
-                <h5>Description</h5><br/>
-                <div [innerHtml]="featureRequest.description"></div>
+                <div class="col s12">
+                  <div class="col s12 m6 l8">
+                    <h5>Description</h5>
+                  </div>
+                  <div class="col  s12 m6 l4">
+
+                    <button class="btn-floating tooltipped left"
+                            materialize="tooltip" data-position="left" data-delay="10"
+                            data-tooltip="Edit details"
+                            style="margin-right: 15px" *ngIf="!featureRequest.closed"
+                            (click)="openDetailsModal()"><i class="material-icons left">edit</i></button>
+                    <button class="btn-floating left tooltipped red"
+                            materialize="tooltip" data-position="bottom" data-delay="10"
+                            data-tooltip="Close the request" (click)="updateState()"
+                            style="margin-right: 15px" *ngIf="!featureRequest.closed"><i
+                      class="material-icons left">highlight_off</i></button>
+                    <button class="btn-floating tooltipped left green"
+                            materialize="tooltip" data-position="bottom" data-delay="10"
+                            data-tooltip="Reopen the request" (click)="updateState()"
+                            style="margin-right: 15px" *ngIf="featureRequest.closed"><i
+                      class="material-icons left">info_outline</i></button>
+                  </div>
+
+                </div>
+                <div class="col s12">
+                  <div class="section"></div>
+                  <div [innerHtml]="featureRequest.description"></div>
+                </div>
               </div>
               <div class="col s12 m12 l4">
                 <blockquote>
@@ -132,7 +144,7 @@ Feature Request Details
                     <p class="grey lighten-3" style="padding: 10px; margin-top: 10px; min-height: 80px">
                       {{comment.comment}}
                     </p>
-                    <a class="secondary-content" style="margin-top: -5px">
+                    <a class="secondary-content">
                       <i style="font-size: smaller">{{getDate(comment.created_at)}}</i>
                       <!--<i class="material-icons blue-text">comment</i>-->
                     </a>

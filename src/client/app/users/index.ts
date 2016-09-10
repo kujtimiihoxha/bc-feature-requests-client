@@ -13,44 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * Finish tab css.
+ * Users/Index.
  *
  * @author Kujtim Hoxha
  * @email kujtimii.h@gmail.com
- * @date 9/10/16
+ * @date 9/10/2016
  **/
-.chip .priority {
-  float: left;
-  margin: 0 8px 0 -12px;
-  height: 32px;
-  width: 32px;
-  border-radius: 50%;
-}
-
-@media only screen and (min-width: 993px){
-  .container {
-    width: 90%;
-  }
-}
-@media only screen and (min-width: 601px) {
-  .container {
-    width: 90%;
-  }
-}
-@media only screen and (max-width: 601px) {
-  .card-title{
-    font-size: smaller;
-  }
-  .chip text{
-    font-size: smaller;
-  }
-  .secondary-content {
-    margin-top: 10px;
-  }
-}
-@media only screen and (min-width: 600px) and (max-width: 992px) {
-  .secondary-content {
-    margin-top: 10px;
-  }
-}
+export * from './users.component'
+export * from './resolver/index'

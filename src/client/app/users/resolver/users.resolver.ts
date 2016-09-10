@@ -13,36 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Http} from '@angular/http';
 import {Injectable} from '@angular/core';
-import {BaseResource} from './base.service';
-import {User} from '../model/index';
+import {Resolve, ActivatedRouteSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
+import {User, UserService} from '../../shared/index';
 
 /**
- * User service.
+ * ProductAreasResolver.
+ * Get all product areas from the server.
  *
  * @author Kujtim Hoxha
  * @email kujtimii.h@gmail.com
  * @date 9/10/2016
  **/
 @Injectable()
-export class UserService extends BaseResource<User> {
-  /**
-   * Injects http service.
-   * @param http http service.
-   */
-  constructor(protected http: Http) {
-    super(http, 'users');
-  }
-  /**
-   * Get all employs.
-   * @returns {Observable<Model>} request observable.
-   */
-  getEmploys(): Observable<User[]> {
-    this.options.headers.set('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
-    return this.http.get(this.url+'/employs', this.options)
-      .map(this.extractData);
-  }
+export class UsersResolver implements Resolve<User[]> {
 
+  /**
+   * Constructor that injects the users(employs) service.
+   * @param userService used to get the users.
+   */
+  constructor(private userService: UserService) {}
+
+  resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
+    return this.userService.getEmploys();
+  }
 }

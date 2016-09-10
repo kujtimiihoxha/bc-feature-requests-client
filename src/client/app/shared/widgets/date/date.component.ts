@@ -92,7 +92,9 @@ export class DateComponent {
    * Save the new date.
    */
   save() {
-    this.dateChanged.emit(new Date(this.update_date));
+    if(new Date(this.update_date) !== this.theDate) {
+      this.dateChanged.emit(new Date(this.update_date));
+    }
     this.modalActions.emit('closeModal');
   }
 

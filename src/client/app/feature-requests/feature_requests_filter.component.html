@@ -42,7 +42,9 @@ limitations under the License.
   <nav [ngClass]="filterNavCls">
     <div class="blue darken-1 nav-wrapper">
       <ul id="nav-mobile-clear" class="left">
-        <li><a (click)="clearFilter()"><i class="material-icons right hide-on-small-and-down">close</i>Clear</a></li>
+        <li class="hide-on-small-and-down"><a (click)="clearFilter()"><i class="material-icons right ">close</i>Clear</a></li>
+        <li class="hide-on-med-and-up" style="width: 20px"><a (click)="clearFilter()"><i class="material-icons left ">close</i></a></li>
+
       </ul>
       <ul id="nav-mobile-filter" class="right">
         <li  *ngFor="let ft of filterOptions" ><a class='dropdown-button font-smaller' materialize="dropdown"

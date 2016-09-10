@@ -57,6 +57,7 @@ export class FinishTabComponent {
    */
   submit() {
     this.details.target_date = new TimeStampHelper().ISODateString(new Date(this.details.target_date));
+    this.details.title = this.details.title.trim();
     this.onSubmit.emit();
   }
 

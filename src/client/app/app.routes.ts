@@ -22,6 +22,7 @@ import {VerifyRoutes} from './verify/verify.routes';
 import {RegisterRoutes} from './register/register.routes';
 import {ClientsRoutes} from './clients/clients.routes';
 import {ProductAreasRoutes} from './product_areas/product_areas.routes';
+import {UsersRoutes} from './users/users.routes';
 /**
  * Main application routes.
  *     => /bc
@@ -59,6 +60,14 @@ export const routes: Routes = [
     path: 'bc/product-areas',
     children: [
       ...ProductAreasRoutes
+    ],
+    canActivate: [AuthGuard],
+    component: LayoutComponent
+  },
+  {
+    path: 'bc/users',
+    children: [
+      ...UsersRoutes
     ],
     canActivate: [AuthGuard],
     component: LayoutComponent

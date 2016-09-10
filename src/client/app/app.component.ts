@@ -16,7 +16,7 @@
 import {Component} from '@angular/core';
 import {LoadingService} from './shared/index';
 import {Router, NavigationStart, NavigationEnd} from '@angular/router';
-
+declare const $: any;
 /**
  *
  * This class represents the main application component.
@@ -30,7 +30,6 @@ import {Router, NavigationStart, NavigationEnd} from '@angular/router';
   selector: 'bc-app',
   templateUrl: 'app.component.html',
 })
-
 export class AppComponent {
   /**
    * Injects loading service and route servie.
@@ -43,6 +42,9 @@ export class AppComponent {
         loadingService.on();
       } else if(event instanceof NavigationEnd) {
         loadingService.off();
+        if(typeof $('#sidenav-overlay') !== 'undefined') {
+          $('#sidenav-overlay').remove();
+        }
       }
     });
   }

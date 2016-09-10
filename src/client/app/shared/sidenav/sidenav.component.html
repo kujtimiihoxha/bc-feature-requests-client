@@ -68,6 +68,8 @@ limitations under the License.
            [routerLinkActiveOptions]="{exact:true}"><i class="material-icons">folder</i>Clients</a></li>
     <li><a [routerLink]="['/bc/product-areas']" [routerLinkActive]="['active']" class="waves-effect waves-teal"
            [routerLinkActiveOptions]="{exact:true}"><i class="material-icons">aspect_ratio</i>Product areas</a></li>
+    <li><a [routerLink]="['/bc/users']" [routerLinkActive]="['active']" class="waves-effect waves-teal"
+           [routerLinkActiveOptions]="{exact:true}" *ngIf="role === 1"><i class="material-icons">person</i>Users</a></li>
     <li>
       <div class="divider"></div>
     </li>
