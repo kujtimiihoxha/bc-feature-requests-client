@@ -88,6 +88,7 @@ This project allows the user to filter by multiple parameters and cascade filter
 All this filters can be cascaded so _for ex. you can filter the feature request like:_
 
 Show the feature request that are submitted by **employ1** and are **open** and are in the **billing** area.
+
 This is just one example of the possible filters. The filters are very user friendly to apply and are based on drop down menus with searchable lists.
 
 Priority filter is based on the client selected.
@@ -102,7 +103,8 @@ Priority filter is based on the client selected.
  - Target Date Ascending
  - By title ascending
  - By title descending
-#### Priority
+ 
+### Priority
 Priority of the feature is stored based on the client, if many clients have the same feature request any client can have their priority for the specific feature request.
 
 Feature request priority is unique for the client, if a feature request is submitted with a priority that already exists all the other priorities are reordered, this works with a 'free slot' logic, for ex.
