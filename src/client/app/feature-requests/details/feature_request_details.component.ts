@@ -1,14 +1,14 @@
 /**
  * Copyright [2016] [Kujtim Hoxha]
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an 'AS IS' BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -490,6 +490,9 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    */
   filterClients(value: string) {
     this.clientsTmp = [];
+    if (typeof value !== 'undefined') {
+      value = value.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    }
     this.clients.forEach((item: Client)=> {
       let pattern = '^.*' + value + '.*$';
       if ((item.name.match(new RegExp(pattern, 'ig')) ||
@@ -552,7 +555,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * @param username the user username
    * @returns {boolean} if it is a demo user.
    */
-  isDemoUser(username:string){
+  isDemoUser(username:string) {
     return this.demo.isDemoUser(username);
   }
 
@@ -561,7 +564,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * @param name the client name
    * @returns {boolean} if it is a demo client.
    */
-  isDemoClient(name:string){
+  isDemoClient(name:string) {
     return this.demo.isDemoClient(name);
   }
 }

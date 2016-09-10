@@ -4,7 +4,7 @@
 import {Http} from '@angular/http';
 import {Injectable} from '@angular/core';
 import {BaseResource} from '../shared/index';
-import {User} from "../shared/model/user.model";
+import {User} from '../shared/model/user.model';
 @Injectable()
 export class VerifyService extends BaseResource<User> {
   constructor(protected http: Http) {

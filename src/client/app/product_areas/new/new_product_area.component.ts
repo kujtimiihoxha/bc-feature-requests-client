@@ -57,7 +57,7 @@ export class NewProductAreaComponent implements OnInit {
    */
   ngOnInit(): void {
     this.breadcrumb.items = ['Product areas', 'Create'];
-    this.productArea = new ProductArea()
+    this.productArea = new ProductArea();
   }
 
   /**
@@ -72,7 +72,8 @@ export class NewProductAreaComponent implements OnInit {
       return Observable.empty();
     }).subscribe(()=> {
       this.loading.off();
-      this.router.navigate(['/bc/product-areas'])
+      this.router.navigate(['/bc/product-areas']);
+      //noinspection TypeScriptUnresolvedFunction
       Materialize.toast('Create Successful', 2000);
     });
   }

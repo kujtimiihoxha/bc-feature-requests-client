@@ -16,7 +16,7 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
-import {JwtHelper} from "angular2-jwt/angular2-jwt";
+import {JwtHelper} from 'angular2-jwt/angular2-jwt';
 import {
   Client,
   ClientService,

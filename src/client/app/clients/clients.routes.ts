@@ -19,7 +19,7 @@ import {
   ClientsResolver,
   NewClientComponent
 } from './index';
-import {AdminGuard} from "../shared/index";
+import {AdminGuard} from '../shared/index';
 /**
  * ClientsRoutes.
  * The declared client routes

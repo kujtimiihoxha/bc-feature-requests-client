@@ -199,6 +199,9 @@ export class ClientsTabComponent implements OnInit, OnDestroy {
    */
   filterClients(value: string) {
     this.clientsTmp = [];
+    if (typeof value !== 'undefined') {
+      value = value.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    }
     this.clients.forEach((item: Client)=> {
       let pattern = '^.*' + value + '.*$';
       if ((item.name.match(new RegExp(pattern, 'ig'))

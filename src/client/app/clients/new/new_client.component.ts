@@ -64,7 +64,7 @@ export class NewClientComponent implements OnInit {
    */
   ngOnInit(): void {
     this.breadcrumb.items = ['Clients', 'Create'];
-    this.client = new Client()
+    this.client = new Client();
   }
 
   /**

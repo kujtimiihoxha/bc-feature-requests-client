@@ -40,23 +40,23 @@ export class ProductAreasComponent implements OnInit {
   /**
    * Table data, product areas received from the server.
    */
-  productAreas: ProductArea[]
+  productAreas: ProductArea[];
 
   /**
    * Current product area selected.
    * Used from edit,delete modal.
    */
-  currentProductArea: ProductArea
+  currentProductArea: ProductArea;
 
   /**
    * Event emitter used to show,hide edit modal
    */
-  editModal: EventEmitter<string> = new EventEmitter<string>()
+  editModal: EventEmitter<string> = new EventEmitter<string>();
 
   /**
    * Event emitter used to show,hide delete modal
    */
-  deleteModal: EventEmitter<string> = new EventEmitter<string>()
+  deleteModal: EventEmitter<string> = new EventEmitter<string>();
   /**
    * User role.
    */
@@ -103,7 +103,7 @@ export class ProductAreasComponent implements OnInit {
         break;
       }
     }
-    this.editModal.emit('openModal')
+    this.editModal.emit('openModal');
   }
 
   /**
@@ -122,21 +122,21 @@ export class ProductAreasComponent implements OnInit {
         break;
       }
     }
-    this.deleteModal.emit('openModal')
+    this.deleteModal.emit('openModal');
   }
 
   /**
    * Close delete modal without any change.
    */
   closeDeleteModal() {
-    this.deleteModal.emit('closeModal')
+    this.deleteModal.emit('closeModal');
   }
 
   /**
    * Close edit modal without any change.
    */
   closeEditModal() {
-    this.editModal.emit('closeModal')
+    this.editModal.emit('closeModal');
   }
 
   /**
@@ -153,20 +153,22 @@ export class ProductAreasComponent implements OnInit {
     this.productAreaService.delete(this.currentProductArea.id).catch((error: any)=> {
       this.loading.off();
       //noinspection TypeScriptUnresolvedFunction,TypeScriptUnresolvedVariable
-      this.deleteModal.emit('closeModal')
+      this.deleteModal.emit('closeModal');
+      //noinspection TypeScriptUnresolvedVariable,TypeScriptUnresolvedFunction
       Materialize.toast(JSON.parse(error._body).message, 2000);
       return Observable.empty();
     }).subscribe(()=> {
       for (var i = 0; i < this.productAreas.length; i++) {
-        var clientToDelete = new ProductArea()
+        var clientToDelete = new ProductArea();
         if (this.productAreas[i].id === this.currentProductArea.id) {
-          clientToDelete = this.productAreas[i]
+          clientToDelete = this.productAreas[i];
           break;
         }
       }
-      this.productAreas.splice(this.productAreas.indexOf(clientToDelete), 1)
-      this.editModal.emit('closeModal')
+      this.productAreas.splice(this.productAreas.indexOf(clientToDelete), 1);
+      this.editModal.emit('closeModal');
       this.loading.off();
+      //noinspection TypeScriptUnresolvedFunction
       Materialize.toast('Delete Successful', 2000);
     });
   }
@@ -186,7 +188,8 @@ export class ProductAreasComponent implements OnInit {
     this.productAreaService.put(this.currentProductArea.id, this.currentProductArea).catch((error: any)=> {
       this.loading.off();
       //noinspection TypeScriptUnresolvedFunction,TypeScriptUnresolvedVariable
-      this.editModal.emit('closeModal')
+      this.editModal.emit('closeModal');
+      //noinspection TypeScriptUnresolvedVariable,TypeScriptUnresolvedFunction
       Materialize.toast(JSON.parse(error._body).message, 2000);
       return Observable.empty();
     }).subscribe((response: ProductArea)=> {
@@ -198,8 +201,9 @@ export class ProductAreasComponent implements OnInit {
           break;
         }
       }
-      this.editModal.emit('closeModal')
+      this.editModal.emit('closeModal');
       this.loading.off();
+      //noinspection TypeScriptUnresolvedFunction
       Materialize.toast('Update Successful', 2000);
     });
   }
