@@ -113,6 +113,7 @@ If a client has 2 feature request  one with priority 4 the other with priority 2
 between priority 2 and 4 there was a free ``slot``(3), this shifting continues until all the ``slots``  are taken.
 
 Table:
+
 | Client 	| 2 	| X 	| 4 	|
 |--------	|---	|---	|---	|
 | Client 	| 2 (new request)	| 3 (previous 2)	| 4 	|
