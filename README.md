@@ -85,7 +85,8 @@ This project allows the user to filter by multiple parameters and cascade filter
    - Employ (who submitted the feature request)
    - Priority Ascending/Descending (If client filter is selected)
 
-All this filters can be cascaded so for ex. you can filter the feature request like:
+All this filters can be cascaded so _for ex. you can filter the feature request like:_
+
 Show the feature request that are submitted by **employ1** and are **open** and are in the **billing** area.
 This is just one example of the possible filters. The filters are very user friendly to apply and are based on drop down menus with searchable lists.
 
