@@ -24,12 +24,13 @@ import {
   BreadcrumbService,
   Client,
   User,
-  TimestempHelper,
+  TimeStampHelper,
   FeatureRequestService,
   LoadingService,
   FeatureRequestUpdateDetails,
   MODIFICATIONS,
-  DateHelper
+  DateHelper,
+  DemoHelper
 } from '../../shared/index';
 declare const Materialize: any, $: any;
 /**
@@ -146,6 +147,11 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
   @Input() productAreas: ProductArea[ ];
 
   /**
+   * Only for demo purpose.
+   */
+  demo:DemoHelper = new DemoHelper();
+
+  /**
    * Constructor that injects necessary injectable classes.
    * Subscribes to the dropdown add event.
    * @param dragulaService used for drag and drop component
@@ -253,7 +259,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
   onDateChanged(date: Date) {
     this.loading.on();
     this.featureRequestService.updateTargetDate(
-      this.featureRequest.id, new TimestempHelper().ISODateString(date)).catch((error: any)=> {
+      this.featureRequest.id, new TimeStampHelper().ISODateString(date)).catch((error: any)=> {
       this.loading.off();
       //noinspection TypeScriptUnresolvedFunction,TypeScriptUnresolvedFunction,TypeScriptUnresolvedVariable
       Materialize.toast(JSON.parse(error._body).message, 2000);
@@ -262,7 +268,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
       this.loading.off();
       //noinspection TypeScriptUnresolvedFunction
       Materialize.toast('Target date updated', 2000);
-      this.featureRequest.target_date = new TimestempHelper().ISODateString(date);
+      this.featureRequest.target_date = new TimeStampHelper().ISODateString(date);
       this.featureRequest.modifications = updated.modifications;
     });
   }
@@ -539,5 +545,23 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
       this.featureRequest.comments = updated.comments;
       this.comment = null;
     });
+  }
+
+  /**
+   * Only for demo purpose
+   * @param username the user username
+   * @returns {boolean} if it is a demo user.
+   */
+  isDemoUser(username:string){
+    return this.demo.isDemoUser(username);
+  }
+
+  /**
+   * Only for demo purpose
+   * @param name the client name
+   * @returns {boolean} if it is a demo client.
+   */
+  isDemoClient(name:string){
+    return this.demo.isDemoClient(name);
   }
 }

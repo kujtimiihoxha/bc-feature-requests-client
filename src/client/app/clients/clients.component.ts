@@ -16,6 +16,7 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
+import {JwtHelper} from "angular2-jwt/angular2-jwt";
 import {
   Client,
   ClientService,
@@ -42,7 +43,7 @@ declare const Materialize: any;
 })
 export class ClientsComponent implements OnInit {
   /**
-   * Table data, clients recieved from the server.
+   * Table data, clients received from the server.
    */
   clients: Client[];
 
@@ -51,6 +52,11 @@ export class ClientsComponent implements OnInit {
    * Used from edit,delete modal.
    */
   currentClient: Client;
+
+  /**
+   * User role.
+   */
+  role:number;
 
   /**
    * Event emitter used to show,hide edit modal
@@ -64,6 +70,7 @@ export class ClientsComponent implements OnInit {
 
   /**
    * Constructor that injects necessary injectable classes.
+   * Gets the user role.
    *
    * @param breadcrumb used to update the breadcrumb of the header.
    * @param loading used to display loading during transaction.
@@ -74,6 +81,7 @@ export class ClientsComponent implements OnInit {
               private loading: LoadingService,
               private clientService: ClientService,
               private route: ActivatedRoute) {
+    this.role = new JwtHelper().decodeToken(localStorage.getItem('id_token')).role;
   }
 
   /**
@@ -88,7 +96,7 @@ export class ClientsComponent implements OnInit {
    * Open edit modal.
    * Set the current client based on the id received,
    *  emit the openModal event.
-   * @param id
+   * @param id current client id.
    */
   openEditModal(id: string) {
     for (var i = 0; i < this.clients.length; i++) {
@@ -107,7 +115,7 @@ export class ClientsComponent implements OnInit {
    * Open delete modal.
    * Set the current client based on the id received,
    *  emit the openModal event.
-   * @param id
+   * @param id current client id
    */
   openDeleteModal(id: string) {
     for (var i = 0; i < this.clients.length; i++) {

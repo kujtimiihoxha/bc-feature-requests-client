@@ -1,8 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Client, ProductArea, FeatureRequest, BreadcrumbService, FeatureRequestService} from '../../shared/index';
-import {LoadingService} from '../../shared/loading/loading.service';
 import {Observable} from 'rxjs/Rx';
+import {
+  Client,
+  ProductArea,
+  FeatureRequest,
+  BreadcrumbService,
+  FeatureRequestService,
+  LoadingService
+} from '../../shared/index';
 declare const Materialize: any;
 /**
  *
@@ -21,21 +27,41 @@ declare const Materialize: any;
   styleUrls: ['new_feature_request.component.css']
 })
 export class NewFeatureRequestComponent implements OnInit {
+
   /**
    * Current tab.
    * Holds the current active tab.
    * @type {number}
    */
   currentTab:number = 1;
+
   /**
    * Feature request details to be sent to the server.
    * @type {FeatureRequest}
    */
   details:FeatureRequest = new FeatureRequest();
+
+  /**
+   * Available clients list.
+   */
   clients: Array<Client> = [];
+
+  /**
+   * Available product areas list.
+   */
   productAreas: Array<ProductArea> = [];
 
 
+  /**
+   * Constructor that injects necessary injectable classes.
+   * Initiate empty clients array.
+   *
+   * @param breadcrumb used to update header breadcrumb
+   * @param route used to get the data from resolvers.
+   * @param router used to navigate to the feature request list after succesfull insert.
+   * @param featureRequestService used to send requests to the server.
+   * @param loading used to display loading during transaction.
+   */
   constructor(
     private breadcrumb: BreadcrumbService,
     private route: ActivatedRoute,
@@ -55,8 +81,12 @@ export class NewFeatureRequestComponent implements OnInit {
     this.productAreas = this.route.snapshot.data['productAreas'];
   }
 
-  isMyTab(tag: number) {
-    if (this.currentTab === tag) {
+  /**
+   * Hide tab that is not active
+   * @param tab
+   */
+  isMyTab(tab: number) {
+    if (this.currentTab === tab) {
       return {
         'display': 'block'
       };
@@ -66,23 +96,34 @@ export class NewFeatureRequestComponent implements OnInit {
     };
   }
 
+  /**
+   * Increase the current tab number.
+   */
   next() {
     this.currentTab++;
   }
 
+  /**
+   * Send the new feature request to the server.
+   */
   submit() {
     this.loading.on();
     this.featureRequestService.post(this.details).catch((error: any)=> {
       this.loading.off();
+      //noinspection TypeScriptUnresolvedFunction,TypeScriptUnresolvedVariable
       Materialize.toast(JSON.parse(error._body).message, 2000);
       return Observable.empty();
-    }).subscribe((response: any)=> {
+    }).subscribe(()=> {
       this.loading.off();
+      //noinspection TypeScriptUnresolvedFunction
       Materialize.toast('Feature request added', 2000);
       this.router.navigate(['/']);
     });
   }
 
+  /**
+   * Decrease the current tab number.
+   */
   previous() {
     this.currentTab--;
   }

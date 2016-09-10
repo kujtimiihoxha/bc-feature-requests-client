@@ -42,8 +42,8 @@ limitations under the License.
           <ul data-container="parent" class="collection" style="min-height:50px" [dragula]='"first-bag"'
               [dragulaModel]="clientsTmp">
             <li class="collection-item avatar" [attr.data-uuid]="client.id" *ngFor="let client of clientsTmp">
-              <!--<i class="material-icons circle hide-on-small-and-down">folder</i>-->
-              <img [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
+              <i  *ngIf="!isDemoClient(client.name.toLowerCase())" class="material-icons circle hide-on-small-and-down">folder</i>
+              <img *ngIf="isDemoClient(client.name.toLowerCase())" [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
               <span class="title">{{client.name}}</span>
               <p class="hide-on-small-and-down">{{client.description}}</p>
             </li>
@@ -58,8 +58,8 @@ limitations under the License.
             style="min-height:50px; border: 1px dashed #0D47A1;">
           <li class="collection-item avatar" [attr.data-uuid]="client.id"
               *ngFor="let client of clientsSelected">
-            <!--<i class="material-icons circle hide-on-small-and-down">folder</i>-->
-            <img [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
+            <i  *ngIf="!isDemoClient(client.name.toLowerCase())" class="material-icons circle hide-on-small-and-down">folder</i>
+            <img *ngIf="isDemoClient(client.name.toLowerCase())" [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
             <span class="title">{{client.name}}</span>
             <p>{{client.description}}</p>
           </li>
@@ -89,7 +89,7 @@ Priority Modal
     <h4>Set priority</h4>
     <p>Set the feature request priority of {{currentClient.name}}</p>
     <div class="row">
-      <form class="col s12" (ngSubmit)="closeModel()" #priority="ngForm">
+      <form class="col s12" (ngSubmit)="savePriorityModel()" #priority="ngForm">
         <div class="row">
           <div class="input-field col s12">
             <input id="priority" type="number" name="priority" [(ngModel)]="selectedPriority" class="validate" required>

@@ -1,3 +1,26 @@
+<!--
+Copyright [2016] [Kujtim Hoxha]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!--
+ Finish tab view.
+ Displays a summary of the feature request.
+
+ @author Kujtim Hoxha
+ @email kujtimii.h@gmail.com
+ @date 9/10/2016
+-->
 <div class="col s12">
   <div class="row">
     <div class="container">
@@ -5,10 +28,8 @@
         <div class="card">
           <div class="card-image" style="border-bottom: 1px solid grey">
             <div class="blue darken-1 darken-1">
-
               <div class="section"></div>
               <div class="section">
-
               </div>
               <div class="section"></div>
             </div>
@@ -27,18 +48,16 @@
             <div class="row">
               <div class="col s12 m12 l8">
                 <h5>Description</h5><br/>
-               <div [innerHtml]="details.description"></div>
+                <div [innerHtml]="details.description"></div>
               </div>
               <div class="col s12 m12 l4">
                 <div class="row">
-
                   <blockquote>
                     <p>Ticket Url: <a [href]="details.ticket_url" target="_blank"> {{details.ticket_url}}</a></p>
                   </blockquote>
                   <blockquote>
                     <p>Product area: <b>{{details.product_area_name}}</b></p>
                   </blockquote>
-
                 </div>
                 <div class="row">
                   <div class="col s1"></div>

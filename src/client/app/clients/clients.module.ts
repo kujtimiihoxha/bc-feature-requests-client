@@ -16,9 +16,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SharedModule} from '../shared/shared.module';
-import {ClientsComponent} from './index';
-import {ClientsResolver} from "./resolver/clients.resolver";
-import {NewClientComponent} from "./new/new_client.component";
+import {
+  ClientsComponent,
+  ClientsResolver,
+  NewClientComponent
+} from './index';
 /**
  * ClientsModule.
  * Declares and Exports the ClientsComponent and NewClientComponent

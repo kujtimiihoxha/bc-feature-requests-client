@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 import {Route} from '@angular/router';
-import {ClientsComponent} from './index';
-import {ClientsResolver} from './resolver/clients.resolver';
-import {NewClientComponent} from './new/new_client.component';
+import {
+  ClientsComponent,
+  ClientsResolver,
+  NewClientComponent
+} from './index';
+import {AdminGuard} from "../shared/index";
 /**
  * ClientsRoutes.
  * The declared client routes
  * Routes:
- *   => /bc/clients
- *  new => /bc/clients/new
+ *   => /bc/clients list of clients.
+ *  new => /bc/clients/new create new client.
  *
  * @author Kujtim Hoxha
  * @email kujtimii.h@gmail.com
@@ -35,8 +38,10 @@ export const ClientsRoutes: Route[] = [
     resolve: {
       clients: ClientsResolver
     },
-  }, {
+  },
+  {
     path: 'new',
     component: NewClientComponent,
+    canActivate:[AdminGuard]
   }
 ];

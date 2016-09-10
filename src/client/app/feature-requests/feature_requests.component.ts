@@ -1,6 +1,7 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
 import {BreadcrumbService} from '../shared/index';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from 'rxjs/Rx';
 import {
   FeatureRequest,
   ProductArea,
@@ -11,7 +12,6 @@ import {
   Client,
   User,
 } from '../shared/index';
-import {Observable} from 'rxjs/Rx';
 declare const Materialize: any;
 declare const $: any;
 
@@ -22,7 +22,6 @@ declare const $: any;
   moduleId: module.id,
   selector: 'bc-feature-requests',
   templateUrl: 'feature_requests.component.html',
-  styleUrls: ['feature_requests.component.css'],
 })
 export class FeatureRequestsComponent implements OnInit {
   /**
@@ -89,6 +88,10 @@ export class FeatureRequestsComponent implements OnInit {
     private featureRequestService: FeatureRequestService,
     private route: ActivatedRoute) { }
 
+  /**
+   * Initiates the data from the resolvers data,
+   *  update the breadcrumb.
+   */
   ngOnInit() {
     this.breadcrumb.items = ['Feature Requests'];
     this.featureRequests = this.route.snapshot.data['featureRequests'].data;
@@ -102,6 +105,10 @@ export class FeatureRequestsComponent implements OnInit {
     });
   }
 
+  /**
+   * Send a request wil filter.
+   * @param keepPage if true the page will be not updated updated.
+   */
   sendFilterRequest(keepPage: boolean = false) {
     if (!keepPage) {
       this.filter.skip = 0;
@@ -120,12 +127,24 @@ export class FeatureRequestsComponent implements OnInit {
     });
   }
 
+  /**
+   * On details event go to the details route.
+   * @param id the feature request id.
+   */
   onDetails(id: string) {
     this.router.navigate([`bc/details/${id}`]);
   }
+
+  /**
+   * Get the page from the DB.
+   */
   onPageChanged() {
     this.sendFilterRequest(true);
   }
+
+  /**
+   * Change the filter.
+   */
   onFilterChanged() {
     this.sendFilterRequest(false);
   }

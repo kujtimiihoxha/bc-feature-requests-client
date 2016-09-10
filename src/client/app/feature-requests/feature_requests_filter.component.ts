@@ -1,12 +1,35 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {FeatureRequestFilter} from '../shared/model/feature_request_filter';
-import {Client} from '../shared/model/client.model';
-import {User} from '../shared/model/user.model';
-import {ProductArea} from '../shared/model/product_area.model';
-declare const $: any;
 /**
- * This class represents the lazy loaded FeatureRequestsTableComponent.
+ * Copyright [2016] [Kujtim Hoxha]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {
+  FeatureRequestFilter,
+  Client,
+  User,
+  ProductArea
+} from '../shared/index';
+declare const $: any;
+
+/**
+ * Feature request component.
+ * Used to filter feature request list.
+ *
+ * @author Kujtim Hoxha
+ * @email kujtimii.h@gmail.com
+ * @date 9/10/16
+ **/
 @Component({
   moduleId: module.id,
   selector: 'bc-feature-requests-filter',
@@ -311,6 +334,11 @@ export class FeatureRequestsFilterComponent {
     return filterString;
   }
 
+  /**
+   * Sort the feature requests.
+   * @param field the field by which to sort.
+   * @param dir the sort direction (asc,desc).
+   */
   sort(field: string, dir: string) {
     this.filter.priority_dir = null;
     this.filter.field = field;

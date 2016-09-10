@@ -1,20 +1,45 @@
+/**
+ * Copyright [2016] [Kujtim Hoxha]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SharedModule} from '../shared/shared.module';
-import {FeatureRequestsComponent} from './feature_requests.component';
-import {ClientsResolver, ProductAreasResolver, FeatureRequestsResolver, FeatureRequestResolver} from './resolver/index';
 import {
-  HeaderComponent,
-  NewFeatureRequestComponent,
+  FeatureRequestsComponent,
+  FeatureRequestDetailsComponent,
+  FeatureRequestsTableComponent,
+  FeatureRequestsFilterComponent,
   DetailsTabComponent,
   ClientsTabComponent,
-  FinishTabComponent
-} from './new/index';
-import {UsersResolver} from './resolver/users.resolver';
-import {FeatureRequestDetailsComponent} from './details/feature_request_details.component';
-import {FeatureRequestsTableComponent} from './feature_requests_table.component';
-import {FeatureRequestsFilterComponent} from './feature_requests_filter.component';
+  FinishTabComponent,
+  ClientsResolver,
+  ProductAreasResolver,
+  FeatureRequestsResolver,
+  FeatureRequestResolver,
+  UsersResolver,
+  HeaderComponent,
+  NewFeatureRequestComponent
 
+} from './index';
+/**
+ * FeatureRequestsModule.
+ *
+ * @author Kujtim Hoxha
+ * @email kujtimii.h@gmail.com
+ * @date 9/10/16
+ **/
 @NgModule({
   imports: [CommonModule, SharedModule],
   declarations: [
@@ -29,7 +54,12 @@ import {FeatureRequestsFilterComponent} from './feature_requests_filter.componen
     FinishTabComponent
   ],
   exports: [FeatureRequestsComponent, NewFeatureRequestComponent],
-  providers: [ClientsResolver, ProductAreasResolver, FeatureRequestsResolver, UsersResolver, FeatureRequestResolver]
+  providers: [
+    ClientsResolver,
+    ProductAreasResolver,
+    FeatureRequestsResolver,
+    UsersResolver,
+    FeatureRequestResolver
+  ]
 })
-export class FeatureRequestsModule {
-}
+export class FeatureRequestsModule {}

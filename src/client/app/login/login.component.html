@@ -1,3 +1,26 @@
+<!--
+Copyright [2016] [Kujtim Hoxha]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!--
+ Login component view.
+ Contains the login form.
+
+ @author Kujtim Hoxha
+ @email kujtimii.h@gmail.com
+ @date 9/10/16
+-->
 <main>
   <div class="center">
     <img class="responsive-img" style="width: 250px;" src="assets/images/example-logo.png"/>
@@ -15,14 +38,12 @@
             <div class="indeterminate red"></div>
           </div>
         </div>
-
         <div class="card-content" style="padding: 10px 48px 0px 48px; border: 1px solid #EEE;">
           <form class="col s12" (ngSubmit)="save()" #loginForm="ngForm">
             <div class='row'>
               <div class='col s12'>
               </div>
             </div>
-
             <div class='row'>
               <div class='input-field col s12'>
                 <input class='validate' type='text' required name='username_email' minlength="4"
@@ -30,7 +51,6 @@
                 <label for='username_email'>Enter your username or email</label>
               </div>
             </div>
-
             <div class='row'>
               <div class='input-field col s12'>
                 <input class='validate' type='password' required name='password' minlength="8" #username_email="ngModel"
@@ -40,20 +60,18 @@
               <label style='float: right; min-width: 100px;'>
               </label>
             </div>
-
             <br/>
             <div class="center">
               <div class='row'>
                 <button type='submit' name='btn_login' [disabled]="!(loginForm.form.valid && enabled)"
                         class='col s12 btn btn-large waves-effect red'>Login
                 </button>
-
               </div>
               <div class='row'>
-              <button type='submit' name='btn_login' [disabled]="!enabled || loginForm.form.valid " [routerLink]="['/register']"
-                      class='col s12 btn btn-large waves-effect blue'>Register
-              </button>
-
+                <button type='submit' name='btn_login' [disabled]="!enabled || loginForm.form.valid "
+                        [routerLink]="['/register']"
+                        class='col s12 btn btn-large waves-effect blue'>Register
+                </button>
               </div>
             </div>
           </form>
@@ -64,4 +82,3 @@
   <div class="section"></div>
   <div class="section"></div>
 </main>
-<!--<div materialize [materializeParams]="[toastMessage,4000]" [materializeActions]="globalActions"></div>-->

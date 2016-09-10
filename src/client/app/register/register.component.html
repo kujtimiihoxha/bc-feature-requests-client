@@ -1,3 +1,27 @@
+<!--
+Copyright [2016] [Kujtim Hoxha]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!--
+ Register component view.
+ Contains the register form.
+ @author Kujtim Hoxha
+ @email kujtimii.h@gmail.com
+ @date 9/10/16
+-->
+
 <main *ngIf="!submitted">
   <div class="center">
     <img class="responsive-img" style="width: 250px;" src="assets/images/example-logo.png"/>
@@ -16,37 +40,36 @@
             <div class="indeterminate red"></div>
           </div>
         </div>
-
         <div class="card-content" style="padding: 10px 48px 0px 48px; border: 1px solid #EEE;">
           <form class="col s12" (ngSubmit)="save()" #registerForm="ngForm">
 
             <div cass='row'>
               <div class='input-field col s12'>
                 <input class='validate' type='text' required name='first_name'
-                      id='first_name' [(ngModel)]="model.first_name"/>
+                       id='first_name' [(ngModel)]="model.first_name"/>
                 <label for='first_name'>FirstName</label>
               </div>
             </div>
             <div class='row'>
               <div class='input-field col s12'>
                 <input class='validate' type='text' required name='last_name'
-                      id='last_name' [(ngModel)]="model.last_name"/>
+                       id='last_name' [(ngModel)]="model.last_name"/>
                 <label for='last_name'>LastName</label>
               </div>
             </div>
             <div class='row'>
               <div class='input-field col s12'>
                 <input class='validate' type='text' required name='username' minlength="8"
-                      id='username' [(ngModel)]="model.username"/>
+                       id='username' [(ngModel)]="model.username"/>
                 <label for='username'>Username</label>
               </div>
             </div>
             <div class='row'>
-                <div class='input-field col s12'>
-                  <input class='validate' type='email' required name='email' minlength="4"
-                          id='email' [(ngModel)]="model.email"/>
-                  <label for='email'>Email</label>
-                </div>
+              <div class='input-field col s12'>
+                <input class='validate' type='email' required name='email' minlength="4"
+                       id='email' [(ngModel)]="model.email"/>
+                <label for='email'>Email</label>
+              </div>
             </div>
             <div class='row'>
               <div class='input-field col s12'>
@@ -57,7 +80,8 @@
             </div>
             <div class='row'>
               <div class='input-field col s12'>
-                <input class='validate' type='password' [ngClass]="{'invalid-pass':!passwordsValid}"   name='confirm_password'
+                <input class='validate' type='password' [ngClass]="{'invalid-pass':!passwordsValid}"
+                       name='confirm_password'
                        id='confirm_password' [(ngModel)]="model.confirm_password"/>
                 <label for='password'>Confirm your password</label>
               </div>
@@ -68,7 +92,8 @@
             <br/>
             <div class="center">
               <div class='row'>
-                <button type='submit' name='btn_login' [disabled]="!(registerForm.form.valid && enabled && passwordsValid)"
+                <button type='submit' name='btn_login'
+                        [disabled]="!(registerForm.form.valid && enabled && passwordsValid)"
                         class='col s12 btn btn-large waves-effect red'>Register
                 </button>
               </div>
@@ -81,7 +106,6 @@
   <div class="section"></div>
   <div class="section"></div>
 </main>
-<!--<div materialize [materializeParams]="[toastMessage,4000]" [materializeActions]="globalActions"></div>-->
 <div class="row " *ngIf="submitted">
   <div class="section"></div>
   <div class="section"></div>

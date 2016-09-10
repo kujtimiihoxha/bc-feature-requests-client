@@ -13,16 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * FilterResponse update model.
- *
+ * Product Area/Resolver/Index.
  *
  * @author Kujtim Hoxha
  * @email kujtimii.h@gmail.com
  * @date 9/10/16
  **/
-export class FilterResponse<Model> {
-  data: Model[];
-  total: number;
-}
+
+export * from './product_areas.resolver'

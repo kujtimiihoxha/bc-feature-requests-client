@@ -124,9 +124,10 @@ Feature Request Details
                 <h5>Comments</h5>
                 <ul class="collection" *ngIf="featureRequest.comments != null && featureRequest.comments.length != 0">
                   <li class="collection-item avatar" *ngFor="let comment of featureRequest.comments">
-                    <!--<i class="material-icons circle">person</i>-->
-                    <img [src]="'assets/images/profiles/'+getEmployUsername(comment.user_id)+'.jpg'" alt=""
+                    <i class="material-icons circle" *ngIf="!isDemoUser(getEmployUsername(comment.user_id))" >person</i>
+                    <img  *ngIf="isDemoUser(getEmployUsername(comment.user_id))" [src]="'assets/images/profiles/'+getEmployUsername(comment.user_id)+'.jpg'" alt=""
                          class="circle">
+
                     <span class="title"><b>{{getEmployUsername(comment.user_id)}}</b> </span>
                     <p class="grey lighten-3" style="padding: 10px; margin-top: 10px; min-height: 80px">
                       {{comment.comment}}
@@ -261,8 +262,8 @@ Add/Remove modal
             <ul data-container="parent" class="collection" style="min-height:50px" [dragula]='"first-bag"'
                 [dragulaModel]="clientsTmp">
               <li class="collection-item avatar" [attr.data-uuid]="client.id" *ngFor="let client of clientsTmp">
-                <!--<i class="material-icons circle hide-on-small-and-down">folder</i>-->
-                <img [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
+                <i  *ngIf="!isDemoClient(client.name.toLowerCase())" class="material-icons circle hide-on-small-and-down">folder</i>
+                <img *ngIf="isDemoClient(client.name.toLowerCase())" [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
                 <span class="title">{{client.name}}</span>
                 <p class="hide-on-small-and-down">{{client.description}}</p>
               </li>
@@ -277,8 +278,8 @@ Add/Remove modal
               style="min-height:50px; border: 1px dashed #0D47A1;">
             <li class="collection-item avatar" [attr.data-uuid]="client.id"
                 *ngFor="let client of clientsSelected">
-              <!--<i class="material-icons circle hide-on-small-and-down">folder</i>-->
-              <img [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
+              <i  *ngIf="!isDemoClient(client.name.toLowerCase())" class="material-icons circle hide-on-small-and-down">folder</i>
+              <img *ngIf="isDemoClient(client.name.toLowerCase())" [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
               <span class="title">{{client.name}}</span>
               <p>{{client.description}}</p>
             </li>

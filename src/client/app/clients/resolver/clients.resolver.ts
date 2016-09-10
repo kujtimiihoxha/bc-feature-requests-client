@@ -28,6 +28,7 @@ import {Client, ClientService} from '../../shared/index';
  **/
 @Injectable()
 export class ClientsResolver implements Resolve<Client[]> {
+
   /**
    * Constructor that injects the client service.
    * @param clientService used to get the clients.

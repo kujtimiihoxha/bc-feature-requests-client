@@ -1,10 +1,30 @@
+/**
+ * Copyright [2016] [Kujtim Hoxha]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 import {Component, Output, EventEmitter, Input, OnInit} from '@angular/core';
 import {Client, User, ProductArea, FeatureRequest} from '../shared/index';
 import {DateHelper} from '../shared/helpers/date.helper';
 import {FeatureRequestFilter} from '../shared/model/feature_request_filter';
 /**
- * This class represents the lazy loaded FeatureRequestsTableComponent.
- */
+ * FeatureRequestsTableComponent.
+ * Used to display the feature requests that the filter feature request returns.
+ *
+ * @author Kujtim Hoxha
+ * @email kujtimii.h@gmail.com
+ * @date 9/10/16
+ **/
 @Component({
   moduleId: module.id,
   selector: 'bc-feature-requests-table',
@@ -165,6 +185,10 @@ export class FeatureRequestsTableComponent implements OnInit {
     return `${day} ${dayDate} ${month} ${year}`;
   }
 
+  /**
+   * Get the total number of pages.
+   * @returns {number[]} array with the page number [1,2,3...]
+   */
   totalPages() {
     let pages = 0;
     let module = this.total % this.filter.get;
@@ -175,6 +199,10 @@ export class FeatureRequestsTableComponent implements OnInit {
     return Array(pages).fill(1).map((x, i)=>i);
   }
 
+  /**
+   * Go to page number.
+   * @param page page number.
+   */
   goToPage(page: number) {
     if (page > this.totalPages().length || page < 1) {
       return;
@@ -183,6 +211,10 @@ export class FeatureRequestsTableComponent implements OnInit {
     this.filter.skip = (page - 1) * this.filter.get;
     this.pageChanged.emit();
   }
+
+  /**
+   * Subscribes on the reset page event.(this event is triggered when the filter is changed)
+   */
   ngOnInit(): void {
     this.resetPage.subscribe(()=> {
       this.currentPage = 1;

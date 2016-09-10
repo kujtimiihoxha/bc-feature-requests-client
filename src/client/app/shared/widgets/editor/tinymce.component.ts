@@ -56,7 +56,7 @@ export class TinyEditorComponent implements AfterViewInit, OnDestroy {
 
   tinyMCESetup(ed:any ) {
     let that = this;
-    ed.on('keyup', this.tinyMCEOnKeyup.bind(this));
+    ed.on('change', this.tinyMCEOnKeyup.bind(this));
     ed.on('init',function(e:any ) {
       if(typeof that.htmlContent !== 'undefined') {
         e.target.setContent(that.htmlContent);

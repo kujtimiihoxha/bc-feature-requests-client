@@ -28,13 +28,13 @@ Clients Table
 <div class="row">
   <div class="col s12">
     <h5>Clients list</h5>
-    <table class="striped centered responsive-table">
+    <table class="highlight centered responsive-table">
       <thead>
       <tr>
         <th data-field="id">Name</th>
         <th data-field="name">Description</th>
-        <th data-field="price">Edit</th>
-        <th data-field="price">Delete</th>
+        <th data-field="price" *ngIf="role === 1">Edit</th>
+        <th data-field="price" *ngIf="role === 1">Delete</th>
       </tr>
       </thead>
 
@@ -42,11 +42,11 @@ Clients Table
       <tr *ngFor="let client of clients">
         <td>{{client.name}}</td>
         <td>{{client.description}}</td>
-        <td>
+        <td *ngIf="role === 1">
           <button class="btn-floating waves-light waves-effect blue" (click)="openEditModal(client.id)"><i
             class="material-icons">edit</i></button>
         </td>
-        <td>
+        <td *ngIf="role === 1">
           <button class="btn-floating waves-light waves-effect red" (click)="openDeleteModal(client.id)"><i
             class="material-icons">remove</i></button>
         </td>
@@ -62,7 +62,7 @@ Clients Table
 <!--
 Clients Edit Modal
 -->
-<div id="edit_clients" class="modal " materialize [materializeActions]="editModal"
+<div id="edit_clients" class="modal " *ngIf="role === 1" materialize [materializeActions]="editModal"
      [materializeParams]="[{ dismissible: false}]">
   <div class="modal-content">
     <h4>Edit client</h4>
@@ -102,7 +102,7 @@ Clients Edit Modal
 <!--
 Clients Delete Modal
 -->
-<div id="delete_clients" class="modal " materialize [materializeActions]="deleteModal"
+<div id="delete_clients" class="modal "  *ngIf="role === 1" materialize [materializeActions]="deleteModal"
      [materializeParams]="[{ dismissible: false}]">
   <div class="modal-content">
     <h4>Delete client</h4>

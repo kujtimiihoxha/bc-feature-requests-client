@@ -13,16 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * FilterResponse update model.
- *
+ * DemoHelper.
+ * Used only for demo pupose.
  *
  * @author Kujtim Hoxha
  * @email kujtimii.h@gmail.com
  * @date 9/10/16
  **/
-export class FilterResponse<Model> {
-  data: Model[];
-  total: number;
+export class DemoHelper {
+  demoClients:string[] = ["client a","client b","client c"]
+  demoUsers:string[] = ["admin","employ","employ1","employ2","employ3"]
+
+  isDemoUser(username: string){
+    return this.demoUsers.indexOf(username) !== -1
+  }
+  isDemoClient(name: string){
+    return this.demoClients.indexOf(name) !== -1
+  }
 }

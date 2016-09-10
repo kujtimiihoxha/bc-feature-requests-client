@@ -13,7 +13,9 @@
     <li>
       <div class="userView" style="padding: 0 !important;">
         <img class="background" src="assets/images/material_design-wallpaper-960x600.jpg">
-        <img class="circle" [src]="'assets/images/profiles/'+username+'.jpg'" style="margin-left: 20px;margin-top: 20px">
+         <img class="circle"  *ngIf="!isDemoUser(username)" src="assets/images/icon-user-default.png" style="margin-left: 20px;margin-top: 20px">
+        <img  *ngIf="isDemoUser(username)" style="margin-left: 20px;margin-top: 20px" [src]="'assets/images/profiles/'+username+'.jpg'" alt=""
+              class="circle">
         <a><span class="white-text name">{{firstName}} {{lastName}}</span></a>
         <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
           <li>
@@ -37,9 +39,9 @@
 
     <li><a [routerLink]="['/']" [routerLinkActive]="['active']" class="waves-effect waves-teal"
            [routerLinkActiveOptions]="{exact:true}"><i class="material-icons">description</i>Feature Requests</a></li>
-    <li><a [routerLink]="['/bc/clients']" [routerLinkActive]="['active']" class="waves-effect waves-teal" *ngIf="role === 1"
+    <li><a [routerLink]="['/bc/clients']" [routerLinkActive]="['active']" class="waves-effect waves-teal"
            [routerLinkActiveOptions]="{exact:true}"><i class="material-icons">folder</i>Clients</a></li>
-    <li><a [routerLink]="['/bc/product-areas']" [routerLinkActive]="['active']" class="waves-effect waves-teal" *ngIf="role === 1"
+    <li><a [routerLink]="['/bc/product-areas']" [routerLinkActive]="['active']" class="waves-effect waves-teal"
            [routerLinkActiveOptions]="{exact:true}"><i class="material-icons">aspect_ratio</i>Product areas</a></li>
     <li>
       <div class="divider"></div>
