@@ -107,10 +107,10 @@ Priority filter is based on the client selected.
 ### Priority
 Priority of the feature is stored based on the client, if many clients have the same feature request any client can have their priority for the specific feature request.
 
-Feature request priority is unique for the client, if a feature request is submitted with a priority that already exists all the other priorities are reordered, this works with a 'free slot' logic, for ex.
+Feature request priority is unique for the client, if a feature request is submitted with a priority that already exists all the other priorities are reordered, this works with a ``free slot`` logic, for ex.
 
 If a client has 2 feature request  one with priority 4 the other with priority 2 and he requests a new feature and sets the priority to 2 the feature request with priority 2 will be shifted to 3 and the new one will get the priority 2, the priority 4 is not changed because
-between priority 2 and 4 there was a free 'slot'(3), this shifting continues until all the 'slots' are taken.
+between priority 2 and 4 there was a free ``slot``(3), this shifting continues until all the ``slots``  are taken.
 
 
 ##Folder structure
