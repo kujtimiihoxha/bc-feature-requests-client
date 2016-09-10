@@ -112,6 +112,10 @@ Feature request priority is unique for the client, if a feature request is submi
 If a client has 2 feature request  one with priority 4 the other with priority 2 and he requests a new feature and sets the priority to 2 the feature request with priority 2 will be shifted to 3 and the new one will get the priority 2, the priority 4 is not changed because
 between priority 2 and 4 there was a free ``slot``(3), this shifting continues until all the ``slots``  are taken.
 
+Table:
+| Client 	| 2 	| X 	| 4 	|
+|--------	|---	|---	|---	|
+| Client 	| 2 (new request)	| 3 (previous 2)	| 4 	|
 
 ##Folder structure
  ```
