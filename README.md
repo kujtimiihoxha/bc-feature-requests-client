@@ -62,6 +62,7 @@ All the technologies used on this project are open source projects.
 - Completely decoupled from the backend. To change the api endpoint only one configuration needs to be edited.
 - Test suite and CI [TODO] (testing is configured)
 - Highly documented source code.
+
 ## App Specific Features
 - User registration with email verification. (easily configurable email service in the backend)
 - Feature requests with more than one client - this allows the company to track feature requests
@@ -72,10 +73,12 @@ that are required by multiple clients. Clients are add to the feature in the cre
 - Basic Clients CRUD
 - Basic Product Area CRUD
 - Admin/Employ role management.
+
 ### Filtering Sorting.
 - Very powerful filtering and sorting.
 This project allows the user to filter by multiple parameters and cascade filters to get the feature request you are looking fore.
-  **Filter By:**
+ 
+**Filter By:**
    - Open/Close
    - Client
    - Product area
