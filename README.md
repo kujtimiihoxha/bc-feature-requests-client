@@ -73,7 +73,8 @@ that are required by multiple clients. Clients are add to the feature in the cre
 - Basic Clients CRUD
 - Basic Product Area CRUD
 - Admin/Employ role management.
-
+- Embedded text editor to write detailed descriptions of the feature request.
+ 
 ### Filtering Sorting.
 - Very powerful filtering and sorting.
 This project allows the user to filter by multiple parameters and cascade filters to get the feature request you are looking fore.
