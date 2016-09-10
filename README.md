@@ -114,10 +114,10 @@ between priority 2 and 4 there was a free ``slot``(3), this shifting continues u
 
 Table:
 
-|          	| Priority       	| Priority      	| Priority 	|
-|----------	|----------------	|---------------	|----------	|
-| Client A 	| 2              	| X             	| 4        	|
-| Client A 	| 2(new request) 	| 3(previous 2) 	| 4        	|
+|          	| Priority       	| Priority      	| Priority 	      |
+|----------	|----------------	|---------------	|---------------	|
+| Client A 	| 2              	| X             	| 4        	      |
+| Client A 	| 2(new request) 	| 3(previous 2) 	| 4(not changed) 	|
 
 ##Folder structure
  ```
