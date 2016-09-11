@@ -15,7 +15,7 @@
  */
 import {Component, Input, EventEmitter, Output, OnInit, OnDestroy} from '@angular/core';
 import {Client, FeatureRequest, DemoHelper} from '../../../shared/index';
-import {DragulaService} from 'ng2-dragula/src/app/providers/dragula.provider';
+import {DragulaService} from 'ng2-dragula/ng2-dragula';
 declare const $: any;
 
 /**

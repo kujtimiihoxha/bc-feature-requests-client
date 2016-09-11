@@ -16,7 +16,7 @@
 import {Component, OnInit, Input, EventEmitter, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
-import {DragulaService} from 'ng2-dragula/src/app/providers/dragula.provider';
+import {DragulaService} from 'ng2-dragula/ng2-dragula';
 import {JwtHelper} from 'angular2-jwt/angular2-jwt';
 import {
   FeatureRequest,

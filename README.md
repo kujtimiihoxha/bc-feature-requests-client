@@ -13,6 +13,13 @@ All the technologies used on this project are open source projects.
  For project setup [angular2-seed](https://github.com/mgechev/angular2-seed) was used.
  
 ## Installation
+
+ Install global dependencies
+ 
+ ```
+ npm install -g typings gulp
+ ```
+  
  Clone the repository and npm install.
  ```
  git clone https://github.com/kujtimiihoxha/bc-feature-requests-client
