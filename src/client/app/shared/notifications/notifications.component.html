@@ -3,13 +3,17 @@
     materialize="dropdown"
          (click)="readNotifications()"
      data-constrainwidth="false" data-activates='notifications_dropdown'
-  ><i class="material-icons left">notifications</i> <span class="new badge" *ngIf="notifications != null && !viewed">{{notifications.length}}</span></a></li>
+         [ngClass]="{'teal-text':notifications != null && !viewed && notifications.length > 0}"
+  ><i class="material-icons left">notifications</i>
+    <span class="new badge hide-on-small-and-down hide-on-med-only"
+          *ngIf="notifications != null && !viewed && notifications.length > 0">{{notifications.length}}
+    </span></a></li>
 </ul>
-<div id='notifications_dropdown' class='dropdown-content' style="width:70%; margin-top:65px">
-  <ul class="collection with-header" *ngIf="notifications != null">
+<div id='notifications_dropdown' class=' dropdown-content' style="width:70%; margin-top:65px; max-height: 200px">
+  <ul class="collection with-header " *ngIf="notifications != null">
     <li class="collection-item" *ngFor="let n of notifications" (click)="closeDropdown()"><div>
       <a [routerLink]="['/'+n.link]">
-        <div [innerHtml]="n.details.description"></div>
+        <div [innerHtml]="n.details.description" class="black-text notification-item "></div>
       </a>
       <a class="secondary-content"><i class="material-icons" style="font-size: 24px; height:inherit ;line-height: inherit">{{n.details.icon}}</i></a></div></li>
   </ul>

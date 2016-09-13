@@ -30,3 +30,9 @@
     text-align: center;
   }
 }
+
+@media only screen and (max-width: 601px) {
+  .page-title a{
+    font-size: smaller;
+  }
+}

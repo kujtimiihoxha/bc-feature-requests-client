@@ -1,0 +1,7 @@
+.notification-item ,
+.notification-item b,
+.notification-item b i{
+  font-size: inherit!important;
+  height: 20px!important;
+  line-height: 0
+}

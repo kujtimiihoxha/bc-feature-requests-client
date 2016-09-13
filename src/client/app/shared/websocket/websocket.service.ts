@@ -8,11 +8,8 @@ export class WebSocketService {
       return;
     }
     this.socket = new WebSocket(`ws://${Config.BASE}/ws/join?uname=${username}&tkn=${localStorage.getItem("id_token")}`);
-    this.handle();
   }
-  private handle(){
-    this.socket.onmessage = (data:any)=>{
-        console.log(data);
-    }
+   handle(callback:any){
+    this.socket.onmessage =callback;
   }
 }

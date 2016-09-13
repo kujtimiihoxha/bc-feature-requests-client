@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, OnDestroy, ViewEncapsulation} from "@angular/core";
 import {NotificationsService} from "./notifications.service";
 import {AuthService} from "../auth/auth.service";
-import {Notifications} from "./notifications.model";
-declare const $:any;
+import {Notification, SocketMessage} from "./notifications.model";
+import {WebSocketService} from "../websocket/websocket.service";
+declare const $:any,Materialize:any;
 /**
  * BreadcrumbComponent.
  * Displays the current location in the header.
@@ -30,28 +31,48 @@ declare const $:any;
   {
     moduleId: module.id,
     selector: 'bc-notifications',
-    templateUrl: 'notifications.component.html'
+    templateUrl: 'notifications.component.html',
+    styleUrls:['notifications.component.css'],
+    encapsulation: ViewEncapsulation.None
   }
 )
-export class NotificationsComponent implements OnInit {
-  viewed = false;
+export class NotificationsComponent implements OnInit,OnDestroy {
 
-  constructor(private notificationsService: NotificationsService, private auth: AuthService) {
+
+  constructor(private notificationsService: NotificationsService, private auth: AuthService,private websocket:WebSocketService) {
   }
 
   get notifications() {
     return this.notificationsService.notifications;
   }
-
+   get viewed (){
+     return this.notificationsService.viewed;
+   }
   ngOnInit(): void {
-    this.notificationsService.getNotifications(this.auth.user().id).subscribe((notifications: Notifications[])=> {
-      this.notificationsService.setNotifications(notifications)
+    this.notificationsService.getNotifications(this.auth.user().id).subscribe((notifications: Notification[])=> {
+      this.notificationsService.setNotifications(notifications);
+    });
+    this.websocket.handle((message:SocketMessage)=>{
+      let notification:Notification =JSON.parse(message.data)
+      if( notification.type === 2) {
+        console.log(notification)
+        var $toastContent = $(`<div>${notification.content.details.description}</div>`);
+        //noinspection TypeScriptUnresolvedFunction
+        Materialize.toast($toastContent, 4000);
+        this.notificationsService.addNotifications(notification.content);
+      }
     })
   }
   closeDropdown(){
     $('.notification-btn').dropdown('close');
   }
   readNotifications(){
-    this.viewed = true;
+    this.notificationsService.setViewed(this.auth.user().id);
   }
+  ngOnDestroy(): void {
+    this.websocket.handle((message:SocketMessage)=>{
+
+    })
+  }
+
 }

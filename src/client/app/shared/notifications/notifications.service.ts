@@ -18,17 +18,18 @@ import {Injectable} from '@angular/core';
 import {BaseResource} from '../resource/base.service';
 import {Client} from '../model/index';
 import {Observable} from "rxjs";
-import {Notifications} from "./notifications.model";
+import {Notification} from "./notifications.model";
 /**
- * Notifications service.
+ * Notification service.
  *
  * @author Kujtim Hoxha
  * @email kujtimii.h@gmail.com
  * @date 9/10/2016
  **/
 @Injectable()
-export class NotificationsService extends BaseResource<Notifications> {
-  notifications: Notifications[];
+export class NotificationsService extends BaseResource<Notification> {
+  notifications: Notification[];
+  viewed = false;
 
   /**
    * Injects http service.
@@ -40,17 +41,40 @@ export class NotificationsService extends BaseResource<Notifications> {
   /**
    * Get notifications by user id.
    * @param id the id of the item.
-   * @returns {Observable<Model>} request observable.
+   * @returns {Observable<Notifications[]>>} request observable.
    */
-  getNotifications(id: string): Observable<Notifications[]> {
+  getNotifications(id: string): Observable<Notification[]> {
     this.options.headers.set('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
     return this.http.get(this.url + `/${id}/notifications`, this.options)
       .map(this.extractData);
   }
-
-  setNotifications(n: Notifications[]){
-    console.log(n)
-    this.notifications = n;
+  /**
+   * Get notifications by user id.
+   * @param id the id of the item.
+   * @returns {Observable<Notifications[]>>} request observable.
+   */
+  sendNotificationViewed(id: string): Observable<Notification[]> {
+    this.options.headers.set('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    return this.http.put(this.url + `/${id}/notifications/viewed`, null, this.options)
+      .map(this.extractData);
   }
 
+  setNotifications(n: Notification[]){
+    this.viewed = false;
+    this.notifications = n;
+  }
+  setViewed(id:string){
+    if (this.viewed === false ){
+      this.sendNotificationViewed(id).subscribe(()=>{});
+      this.viewed = true;
+    }
+
+  }
+  addNotifications(n : any){
+    if (typeof this.notifications === 'undefined') {
+        this.notifications = [];
+    }
+    this.notifications.unshift(n);
+    this.viewed = false;
+  }
 }
