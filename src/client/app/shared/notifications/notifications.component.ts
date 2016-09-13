@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component} from '@angular/core';
-import {BreadcrumbService} from './breadcrumb.service';
+import {Component, OnInit} from "@angular/core";
+import {NotificationsService} from "./notifications.service";
 import {AuthService} from "../auth/auth.service";
-
+import {Notifications} from "./notifications.model";
+declare const $:any;
 /**
  * BreadcrumbComponent.
  * Displays the current location in the header.
@@ -28,14 +29,29 @@ import {AuthService} from "../auth/auth.service";
 @Component(
   {
     moduleId: module.id,
-    selector: 'bc-breadcrumb',
-    templateUrl: 'breadcrumb.component.html',
-    styleUrls: ['breadcrumb.component.css'],
+    selector: 'bc-notifications',
+    templateUrl: 'notifications.component.html'
   }
 )
-export class BreadcrumbComponent {
-  displayNotifications = false
-  constructor(private breadcrumb: BreadcrumbService, auth: AuthService) {
-    this.displayNotifications = auth.user().role !== 3;
+export class NotificationsComponent implements OnInit {
+  viewed = false;
+
+  constructor(private notificationsService: NotificationsService, private auth: AuthService) {
+  }
+
+  get notifications() {
+    return this.notificationsService.notifications;
+  }
+
+  ngOnInit(): void {
+    this.notificationsService.getNotifications(this.auth.user().id).subscribe((notifications: Notifications[])=> {
+      this.notificationsService.setNotifications(notifications)
+    })
+  }
+  closeDropdown(){
+    $('.notification-btn').dropdown('close');
+  }
+  readNotifications(){
+    this.viewed = true;
   }
 }

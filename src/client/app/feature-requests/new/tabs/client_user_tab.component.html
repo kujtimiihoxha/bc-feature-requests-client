@@ -1,0 +1,23 @@
+<h1>{{user.clientname}}</h1>
+<h4>Set the feature request priority.</h4>
+<div class="row">
+  <form class="col s12" #priority="ngForm">
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="priority" type="number" name="priority" [(ngModel)]="selectedPriority" class="validate" required>
+        <label for="priority">Priority</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <button type="button" class="waves-effect waves-light btn-large  blue right"
+                [disabled]="!priority.form.valid" (click)="next()"> Next <i
+          class="material-icons right">arrow_forward</i>
+        </button>
+        <button type="button" class="waves-effect waves-light btn-large blue left" (click)="previous()"> Back <i
+          class="material-icons left">arrow_back</i></button>
+      </div>
+    </div>
+  </form>
+</div>
+

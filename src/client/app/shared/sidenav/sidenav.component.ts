@@ -15,8 +15,9 @@
  */
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {JwtHelper} from 'angular2-jwt/angular2-jwt';
 import {DemoHelper} from '../index';
+import {AuthService} from "../auth/auth.service";
+import {User} from "../auth/user.model";
 /**
  * SideNavComponent.
  *
@@ -32,35 +33,8 @@ import {DemoHelper} from '../index';
 })
 
 export class SideNavComponent {
-  /**
-   * Decodes the token.
-   */
-  jwtHelper: JwtHelper = new JwtHelper();
 
-  /**
-   * Logged in user firstName
-   */
-  firstName: string;
-
-  /**
-   * Logged in user lastName
-   */
-  lastName: string;
-
-  /**
-   * Logged in user email
-   */
-  email: string;
-
-  /**
-   * Logged in user username
-   */
-  username: string;
-
-  /**
-   * Logged in user role
-   */
-  role: number;
+  user: User
   /**
    * Only for demo purpose.
    */
@@ -71,12 +45,8 @@ export class SideNavComponent {
    * Init user data.
    * @param router used to get to login after logout click.
    */
-  constructor(private router: Router) {
-    this.firstName = this.jwtHelper.decodeToken(localStorage.getItem('id_token')).firstname;
-    this.lastName = this.jwtHelper.decodeToken(localStorage.getItem('id_token')).lastname;
-    this.email = this.jwtHelper.decodeToken(localStorage.getItem('id_token')).email;
-    this.username = this.jwtHelper.decodeToken(localStorage.getItem('id_token')).username;
-    this.role = this.jwtHelper.decodeToken(localStorage.getItem('id_token')).role;
+  constructor(private router: Router, private auth: AuthService) {
+    this.user = auth.user();
   }
 
   /**
@@ -84,6 +54,7 @@ export class SideNavComponent {
    */
   logout() {
     localStorage.removeItem('id_token');
+    this.auth.reset()
     this.router.navigate(['/login']);
   }
 

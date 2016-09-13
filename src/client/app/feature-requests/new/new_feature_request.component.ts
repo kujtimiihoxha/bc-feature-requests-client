@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
+import {JwtHelper} from "angular2-jwt/angular2-jwt";
 import {
   Client,
   ProductArea,
@@ -36,6 +37,11 @@ export class NewFeatureRequestComponent implements OnInit {
   currentTab:number = 1;
 
   /**
+   * Current user role
+   */
+  role :number;
+
+  /**
    * Feature request details to be sent to the server.
    * @type {FeatureRequest}
    */
@@ -69,6 +75,7 @@ export class NewFeatureRequestComponent implements OnInit {
     private featureRequestService: FeatureRequestService,
     private loading: LoadingService
   ) {
+    this.role = new JwtHelper().decodeToken(localStorage.getItem("id_token")).role;
     this.details.clients = [];
   }
 

@@ -204,7 +204,7 @@ export class FeatureRequestsTableComponent implements OnInit {
    * @param page page number.
    */
   goToPage(page: number) {
-    if (page > this.totalPages().length || page < 1) {
+    if (page > this.totalPages().length || page < 1 || page === this.currentPage) {
       return;
     }
     this.currentPage = page;

@@ -15,43 +15,42 @@
  */
 import {Http} from '@angular/http';
 import {Injectable} from '@angular/core';
-import {BaseResource, User} from '../shared/index';
-import {UserRegistrationModel,ClientRegistrationModel} from './index';
+import {BaseResource} from '../resource/base.service';
+import {Client} from '../model/index';
+import {Observable} from "rxjs";
+import {Notifications} from "./notifications.model";
 /**
- * RegisterService.
- * Used to send the register request.
+ * Notifications service.
  *
  * @author Kujtim Hoxha
  * @email kujtimii.h@gmail.com
- * @date 9/10/16
+ * @date 9/10/2016
  **/
 @Injectable()
-export class RegisterService extends BaseResource<User> {
+export class NotificationsService extends BaseResource<Notifications> {
+  notifications: Notifications[];
+
   /**
    * Injects http service.
    * @param http http service.
    */
   constructor(protected http: Http) {
-    super(http, 'auth/register');
+    super(http, 'users');
+  }
+  /**
+   * Get notifications by user id.
+   * @param id the id of the item.
+   * @returns {Observable<Model>} request observable.
+   */
+  getNotifications(id: string): Observable<Notifications[]> {
+    this.options.headers.set('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    return this.http.get(this.url + `/${id}/notifications`, this.options)
+      .map(this.extractData);
   }
 
-  /**
-   * Send the register request.
-   * @param model the reququest model.
-   * @returns {Observable<R>} request observable.
-   */
-  register(model: UserRegistrationModel) {
-    return this.http.post(this.url, JSON.stringify(model), this.options)
-      .map(this.extractData);
-  }
-  /**
-   * Send the register request.
-   * @param model the reququest model.
-   * @returns {Observable<R>} request observable.
-   */
-  registerClient(model: ClientRegistrationModel) {
-    return this.http.post(this.url+"/client", JSON.stringify(model), this.options)
-      .map(this.extractData);
+  setNotifications(n: Notifications[]){
+    console.log(n)
+    this.notifications = n;
   }
 
 }

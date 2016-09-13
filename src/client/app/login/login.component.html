@@ -73,6 +73,12 @@ limitations under the License.
                         class='col s12 btn btn-large waves-effect blue'>Register
                 </button>
               </div>
+              <div class='row'>
+                <button type='submit' name='btn_login' [disabled]="!enabled || loginForm.form.valid "
+                        [routerLink]="['/register-client']"
+                        class='col s12 btn btn-large waves-effect blue'>Client Register
+                </button>
+              </div>
             </div>
           </form>
         </div>

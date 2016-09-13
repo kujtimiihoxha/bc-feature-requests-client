@@ -18,8 +18,10 @@ import {
   FeatureRequestFilter,
   Client,
   User,
-  ProductArea
+  ProductArea,
+  AuthService
 } from '../shared/index';
+import {User as AuthUser} from '../shared/auth/user.model'
 declare const $: any;
 
 /**
@@ -42,6 +44,13 @@ export class FeatureRequestsFilterComponent {
    */
   _filter: FeatureRequestFilter;
 
+  user:AuthUser;
+  constructor(private auth: AuthService){
+    this.user = auth.user();
+    if( this.user.role === 3) {
+      this.filterOptions[3].cls['hide'] = false;
+    }
+  }
   /**
    * Value of filter nav bar show/hide.
    * @type {boolean}
@@ -245,17 +254,24 @@ export class FeatureRequestsFilterComponent {
    */
   clearFilter() {
     let fl = FeatureRequestFilter.getDefaultFilter();
-    this.filter.client = fl.client;
+    if (this.auth.user().role === 3){
+      this.filter.client = this.auth.user().clientId;
+      this.filter.priority_dir = "desc";
+    } else {
+      this.filter.client = fl.client;
+      this.filter.priority_dir = fl.priority_dir;
+    }
     this.filter.closed = fl.closed;
     this.filter.product_area = fl.product_area;
     this.filter.employ = fl.employ;
     this.filter.get = fl.get;
-    this.filter.priority_dir = fl.priority_dir;
     this.filter.field = fl.field;
     this.filter.skip = fl.skip;
     this.filter.get = fl.get;
     this.filter.dir = fl.dir;
-    this.filterOptions[3].cls['hide'] = true;
+    if( this.user.role !== 3){
+      this.filterOptions[3].cls['hide'] = true;
+    }
     this.showFilterNav = false;
     this.filterChanged.emit();
   }
@@ -277,7 +293,9 @@ export class FeatureRequestsFilterComponent {
    */
   filterByClient(id: string) {
     this.filter.client = id;
-    this.filterOptions[3].cls['hide'] = false;
+    if( this.user.role !== 3) {
+      this.filterOptions[3].cls['hide'] = false;
+    }
     //noinspection TypeScriptUnresolvedFunction
     $('.client-filter-btn').dropdown('close');
     this.filterChanged.emit();
@@ -322,7 +340,7 @@ export class FeatureRequestsFilterComponent {
     if (typeof this.filter.product_area !== 'undefined') {
       filterString += 'Product Area: <b>' + this.getProductAreaName(this.filter.product_area) + '</b>, ';
     }
-    if (typeof this.filter.client !== 'undefined') {
+    if (typeof this.filter.client !== 'undefined' && this.user.role !== 3) {
       filterString += 'Client: <b>' + this.getClientName(this.filter.client) + '</b>, ';
       if (typeof this.filter.priority_dir !== 'undefined') {
         filterString += ' Priority: <b>' + this.filter.priority_dir + '</b>';
@@ -346,5 +364,15 @@ export class FeatureRequestsFilterComponent {
     //noinspection TypeScriptUnresolvedFunction
     $('.sort').dropdown('close');
     this.filterChanged.emit();
+  }
+
+  canDisplay(label: string){
+    if (label === 'Client' || label === 'Employ'){
+      if (this.user.role !== 3){
+        return true;
+      }
+      return false;
+    }
+    return true
   }
 }

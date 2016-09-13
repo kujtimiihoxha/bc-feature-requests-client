@@ -21,7 +21,15 @@ limitations under the License.
  @date 9/10/16
 -->
 <div class="nav-wrapper">
-  <div class="page-title">
-    <a *ngFor="let item of breadcrumb.items " class="breadcrumb">{{item}}</a>
-  </div>
+ <div class="row">
+   <div class="col s8">
+     <div class="page-title">
+       <a *ngFor="let item of breadcrumb.items " class="breadcrumb">{{item}}</a>
+     </div>
+
+   </div>
+   <div class="col left s3">
+      <bc-notifications *ngIf="displayNotifications"></bc-notifications>
+   </div>
+ </div>
 </div>

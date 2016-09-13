@@ -23,3 +23,4 @@
 export * from './register.component'
 export * from './register.service'
 export * from './user_register.model'
+export * from './client/index'

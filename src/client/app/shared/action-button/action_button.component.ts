@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {Component} from '@angular/core';
-import {JwtHelper} from 'angular2-jwt/angular2-jwt';
+import {AuthService} from "../auth/auth.service";
 /**
  * ActionButtonComponent.
  * Used to create new feature request.
@@ -34,15 +34,11 @@ export class ActionButtonComponent {
    * User role.
    */
   role: number;
-  /**
-   * Decodes the token.
-   */
-  jwtHelper: JwtHelper = new JwtHelper();
 
   /**
    * Initialize the user role.
    */
-  constructor() {
-    this.role = this.jwtHelper.decodeToken(localStorage.getItem('id_token')).role;
+  constructor(auth: AuthService) {
+    this.role = auth.user().role;
   }
 }

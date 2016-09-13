@@ -13,23 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {SharedModule} from '../shared/shared.module';
-import {RegisterComponent, RegisterService, ClientRegisterComponent} from './index';
 
 /**
- * Register module.
+ * ClientRegistrationModel.
+ * Model of register service request.
  *
  * @author Kujtim Hoxha
  * @email kujtimii.h@gmail.com
  * @date 9/10/16
  **/
-@NgModule({
-  imports: [CommonModule, SharedModule],
-  declarations: [RegisterComponent, ClientRegisterComponent],
-  exports: [RegisterComponent, ClientRegisterComponent],
-  providers: [RegisterService]
-})
-export class RegisterModule {
+export class ClientRegistrationModel {
+  client_name:string;
+  description:string;
+  username:string;
+  email:string;
+  password:string;
+  confirm_password:string;
 }

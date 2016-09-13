@@ -118,4 +118,20 @@ export class FeatureRequestService extends BaseResource<FeatureRequest> {
     this.options.search = params;
     return this.http.get(this.url, this.options).map(this.extractData);
   }
+  /**
+   * Get feature requests with filter.
+   * @param filter the filter to apply;
+   * @returns {Observable<FilterResponse<FeatureRequest>>}
+   */
+  getWithClientFilter(filter: FeatureRequestFilter,id: string): Observable<FilterResponse<FeatureRequest>> {
+    this.options.headers.set('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    let params: URLSearchParams = new URLSearchParams();
+    for (var k in filter) {
+      if (typeof filter[k] !== 'undefined' && typeof filter[k] !== 'function') {
+        params.set(k, filter[k]);
+      }
+    }
+    this.options.search = params;
+    return this.http.get(this.url+`/client/${id}`, this.options).map(this.extractData);
+  }
 }

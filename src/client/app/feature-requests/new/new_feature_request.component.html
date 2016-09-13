@@ -16,7 +16,7 @@ limitations under the License.
 <!--
  New feature request view.
  Contains the wizard for creating a new feature request.
- 
+
  @author Kujtim Hoxha
  @email kujtimii.h@gmail.com
  @date 9/10/16
@@ -29,8 +29,11 @@ limitations under the License.
         <div class="row">
           <bc-fr-details [ngStyle]="isMyTab(1)" [(details)]="details" [productAreas]="productAreas"
                          (onNext)="next()"></bc-fr-details>
-          <bc-fr-clients [(details)]="details" [clients]="clients" (onNext)="next()" [ngStyle]="isMyTab(2)"
+          <bc-fr-clients [(details)]="details" [clients]="clients" *ngIf="role !== 3" (onNext)="next()" [ngStyle]="isMyTab(2)"
                          (onPrevious)="previous()"></bc-fr-clients>
+          <bc-fr-client-user [(details)]="details" *ngIf="role === 3" (onNext)="next()" [ngStyle]="isMyTab(2)"
+                         (onPrevious)="previous()"></bc-fr-client-user>
+
           <bc-fr-finish [(details)]="details" (onSubmit)="submit()" [ngStyle]="isMyTab(3)"
                         (onPrevious)="previous()"></bc-fr-finish>
         </div>

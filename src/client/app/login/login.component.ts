@@ -22,6 +22,8 @@ import {
   TokenResponseModel
 } from './index';
 import {LoginService} from './login.service';
+import {AuthService} from '../shared/index'
+import {WebSocketService} from "../shared/websocket/websocket.service";
 declare const Materialize: any;
 /**
  * LoginComponent.
@@ -59,8 +61,9 @@ export class LoginComponent {
    * Constructor tha injects the necessary injectable classes.
    * @param loginService used to send login request.
    * @param router used to navigate to dashboard.
+   * @param auth used to initiate the user.
    */
-  constructor(private loginService: LoginService, public router: Router) {}
+  constructor(private loginService: LoginService, private router: Router, private auth: AuthService, private webSocket: WebSocketService) {}
 
   /**
    * Send the login request.
@@ -75,10 +78,16 @@ export class LoginComponent {
     }).subscribe((response: TokenResponseModel)=> {
       localStorage.setItem('id_token', response.token);
       //noinspection TypeScriptUnresolvedVariable
-      let firstname = this.jwtHelper.decodeToken(response.token).firstname;
+      this.auth.init()
       this.router.navigate(['/bc']);
       //noinspection TypeScriptUnresolvedFunction
-      Materialize.toast(`Welcome back ${firstname}`, 3000);
+      if (this.auth.user().role !== 3){
+        this.webSocket.connect(this.auth.user().username);
+        Materialize.toast(`Welcome back ${this.auth.user().firstname}`, 3000);
+      } else {
+        console.log(this.auth.user())
+        Materialize.toast(`Welcome back ${this.auth.user().clientname}`, 3000);
+      }
       this.enabled = true;
     });
   }

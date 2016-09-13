@@ -11,6 +11,7 @@ import {
   FilterResponse,
   Client,
   User,
+  AuthService
 } from '../shared/index';
 declare const Materialize: any;
 declare const $: any;
@@ -86,7 +87,9 @@ export class FeatureRequestsComponent implements OnInit {
     private breadcrumb: BreadcrumbService,
     private loading: LoadingService,
     private featureRequestService: FeatureRequestService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private auth: AuthService
+  ) { }
 
   /**
    * Initiates the data from the resolvers data,
@@ -99,6 +102,10 @@ export class FeatureRequestsComponent implements OnInit {
     this.productAreas = this.route.snapshot.data['productAreas'];
     this.clients = this.route.snapshot.data['clients'];
     this.users = this.route.snapshot.data['users'];
+    if (this.auth.user().role === 3) {
+      this.filter.client = this.auth.user().clientId;
+      this.filter.priority_dir = "desc";
+    }
     // prevents the dropdown from closing on click.
     $('.dropdown-content').on('click touchstart', (e: any) => {
       e.stopPropagation();

@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {WebSocketService} from "../websocket/websocket.service";
+import {AuthService} from "../auth/auth.service";
 
 /**
  * Layout component.
@@ -29,4 +31,14 @@ import {Component} from '@angular/core';
   templateUrl: 'layout.component.html',
   styleUrls: ['layout.component.css']
 })
-export class LayoutComponent {}
+export class LayoutComponent implements OnInit {
+  constructor(private auth: AuthService, private webSocket: WebSocketService){
+
+  }
+  ngOnInit(): void {
+    if(this.auth.user().role !== 3) {
+      this.webSocket.connect(this.auth.user().username)
+    }
+  }
+
+}

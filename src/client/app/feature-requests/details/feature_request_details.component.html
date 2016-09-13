@@ -57,8 +57,14 @@ Feature Request Details
               <div class="col s2 right">
                 <button type="button" class="waves-effect tooltiped waves-light btn-floating right blue"
                         materialize="tooltip" data-position="left" data-delay="10"
-                        data-tooltip="Add/Remove Clients" (click)="addRemoveClients()">
-                  <i class="material-icons left">add</i></button>
+                        data-tooltip="Add/Remove Clients" (click)="addRemoveClients()" *ngIf="this.user.role !== 3 && featureRequest.employ_id === user.id">
+                  <i class="material-icons left" >add</i>
+                </button>
+                <button type="button" class="waves-effect tooltiped waves-light btn-floating right blue"
+                        materialize="tooltip" data-position="left" data-delay="10"
+                        data-tooltip="Edit priority" (click)="addRemoveClients()" *ngIf="this.user.role === 3">
+                  <i class="material-icons left" >edit</i>
+                </button>
               </div>
             </div>
             <div class="row">
@@ -72,17 +78,17 @@ Feature Request Details
                     <button class="btn-floating tooltipped left"
                             materialize="tooltip" data-position="left" data-delay="10"
                             data-tooltip="Edit details"
-                            style="margin-right: 15px" *ngIf="!featureRequest.closed"
+                            style="margin-right: 15px" *ngIf="!featureRequest.closed && featureRequest.employ_id === user.id"
                             (click)="openDetailsModal()"><i class="material-icons left">edit</i></button>
                     <button class="btn-floating left tooltipped red"
                             materialize="tooltip" data-position="bottom" data-delay="10"
                             data-tooltip="Close the request" (click)="updateState()"
-                            style="margin-right: 15px" *ngIf="!featureRequest.closed"><i
+                            style="margin-right: 15px" *ngIf="!featureRequest.closed && featureRequest.employ_id === user.id"><i
                       class="material-icons left">highlight_off</i></button>
                     <button class="btn-floating tooltipped left green"
                             materialize="tooltip" data-position="bottom" data-delay="10"
                             data-tooltip="Reopen the request" (click)="updateState()"
-                            style="margin-right: 15px" *ngIf="featureRequest.closed"><i
+                            style="margin-right: 15px" *ngIf="featureRequest.closed && featureRequest.employ_id === user.id"><i
                       class="material-icons left">info_outline</i></button>
                   </div>
 
@@ -102,7 +108,7 @@ Feature Request Details
                 </blockquote>
                 <div class="col s1"></div>
                 <div class="col s10 ">
-                  <bc-date-widget [date]="featureRequest.target_date" [edit]="true"
+                  <bc-date-widget [date]="featureRequest.target_date" [edit]="featureRequest.employ_id === user.id"
                                   (dateChanged)="onDateChanged($event)"></bc-date-widget>
                 </div>
                 <div class="col s1"></div>
@@ -249,58 +255,79 @@ Details modal
 <!--
 Add/Remove modal
 -->
-<div id="add_remove" class="modal modal-fixed-footer" materialize [materializeActions]="addRemoveClientsModal"
+<div id="add_remove" class="modal" materialize [materializeActions]="addRemoveClientsModal"
      [materializeParams]="[{ dismissible: false}]">
   <div class="modal-content">
-    <h4>Add or remove clients</h4>
-    <div class="row">
-      <div class="col s12 m12 l12">
+   <div *ngIf="user.role !== 3">
+     <h4>Add or remove clients</h4>
+     <div class="row">
+       <div class="col s12 m12 l12">
 
-        <div class='col s6' *ngIf="clientsTmp">
-          <nav>
-            <div class="nav-wrapper blue">
-              <form materialize>
-                <div class="input-field">
-                  <input id="search" type="search" name="search" placeholder="Search all clients"
-                         [(ngModel)]="nameSearch">
-                  <label for="search"><i class="material-icons">search</i></label>
-                  <i class="material-icons">close</i>
-                </div>
-              </form>
+         <div class='col s6' *ngIf="clientsTmp">
+           <nav>
+             <div class="nav-wrapper blue">
+               <form materialize>
+                 <div class="input-field">
+                   <input id="search" type="search" name="search" placeholder="Search all clients"
+                          [(ngModel)]="nameSearch">
+                   <label for="search"><i class="material-icons">search</i></label>
+                   <i class="material-icons">close</i>
+                 </div>
+               </form>
+             </div>
+           </nav>
+
+           <div class="card" *ngIf="clients">
+             <ul data-container="parent" class="collection" style="min-height:50px" [dragula]='"first-bag"'
+                 [dragulaModel]="clientsTmp">
+               <li class="collection-item avatar" [attr.data-uuid]="client.id" *ngFor="let client of clientsTmp">
+                 <i  *ngIf="!isDemoClient(client.name.toLowerCase())" class="material-icons circle hide-on-small-and-down">folder</i>
+                 <img *ngIf="isDemoClient(client.name.toLowerCase())" [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
+                 <span class="title">{{client.name}}</span>
+                 <p class="hide-on-small-and-down">{{client.description}}</p>
+               </li>
+             </ul>
+             <div class="row center"><a
+               class="bue-text text-lighten-2">{{clientsTmp.length}}/{{clients.length}}</a></div>
+
+           </div>
+         </div>
+         <div class='col s6'>
+           <ul class="collection" [dragula]='"first-bag"' [dragulaModel]="clientsSelected"
+               style="min-height:50px; border: 1px dashed #0D47A1;">
+             <li class="collection-item avatar" [attr.data-uuid]="client.id"
+                 *ngFor="let client of clientsSelected">
+               <i  *ngIf="!isDemoClient(client.name.toLowerCase())" class="material-icons circle hide-on-small-and-down">folder</i>
+               <img *ngIf="isDemoClient(client.name.toLowerCase())" [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
+               <span class="title">{{client.name}}</span>
+               <p>{{client.description}}</p>
+             </li>
+           </ul>
+         </div>
+       </div>
+     </div>
+   </div>
+    <div *ngIf="user.role  === 3">
+      <h4>Edit priority</h4>
+      <div class="row">
+        <form class="col s12" #priority="ngForm">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="pr" type="number" name="priority" [(ngModel)]="selectedPriority" class="validate" required>
+              <label for="pr">Priority</label>
             </div>
-          </nav>
-
-          <div class="card" *ngIf="clients">
-            <ul data-container="parent" class="collection" style="min-height:50px" [dragula]='"first-bag"'
-                [dragulaModel]="clientsTmp">
-              <li class="collection-item avatar" [attr.data-uuid]="client.id" *ngFor="let client of clientsTmp">
-                <i  *ngIf="!isDemoClient(client.name.toLowerCase())" class="material-icons circle hide-on-small-and-down">folder</i>
-                <img *ngIf="isDemoClient(client.name.toLowerCase())" [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
-                <span class="title">{{client.name}}</span>
-                <p class="hide-on-small-and-down">{{client.description}}</p>
-              </li>
-            </ul>
-            <div class="row center"><a
-              class="bue-text text-lighten-2">{{clientsTmp.length}}/{{clients.length}}</a></div>
-
           </div>
-        </div>
-        <div class='col s6'>
-          <ul class="collection" [dragula]='"first-bag"' [dragulaModel]="clientsSelected"
-              style="min-height:50px; border: 1px dashed #0D47A1;">
-            <li class="collection-item avatar" [attr.data-uuid]="client.id"
-                *ngFor="let client of clientsSelected">
-              <i  *ngIf="!isDemoClient(client.name.toLowerCase())" class="material-icons circle hide-on-small-and-down">folder</i>
-              <img *ngIf="isDemoClient(client.name.toLowerCase())" [src]="'assets/images/clients/'+client.name.toLowerCase()+'.jpg'" alt="" class="circle">
-              <span class="title">{{client.name}}</span>
-              <p>{{client.description}}</p>
-            </li>
-          </ul>
-        </div>
+          <div class="modal-footer">
+            <button class="modal-action waves-effect waves-green btn-flat" type="button" (click)="closeAddRemoveModal()">Close
+            </button>
+            <button class="modal-action waves-effect waves-green btn-flat" type="button" [disabled]="!priority.form.valid" (click)="saveAddRemove()"  *ngIf="user.role === 3">Save</button>
+          </div>
+        </form>
+
       </div>
     </div>
   </div>
-  <div class="modal-footer">
+  <div class="modal-footer"  *ngIf="user.role !== 3">
     <button class="modal-action waves-effect waves-green btn-flat" type="button" (click)="closeAddRemoveModal()">Close
     </button>
     <button class="modal-action waves-effect waves-green btn-flat" type="button" (click)="saveAddRemove()">Save</button>

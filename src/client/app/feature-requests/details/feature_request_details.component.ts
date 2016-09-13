@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnInit, Input, EventEmitter, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs/Rx';
-import {DragulaService} from 'ng2-dragula/ng2-dragula';
-import {JwtHelper} from 'angular2-jwt/angular2-jwt';
+import {Component, OnInit, Input, EventEmitter, OnDestroy} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
+import {Observable} from "rxjs/Rx";
+import {DragulaService} from "ng2-dragula/ng2-dragula";
+import {JwtHelper} from "angular2-jwt/angular2-jwt";
 import {
   FeatureRequest,
   ProductArea,
@@ -30,8 +30,10 @@ import {
   FeatureRequestUpdateDetails,
   MODIFICATIONS,
   DateHelper,
-  DemoHelper
-} from '../../shared/index';
+  DemoHelper,
+  AuthService
+} from "../../shared/index";
+import {User as AuthUser} from "../../shared/auth/user.model";
 declare const Materialize: any, $: any;
 /**
  * FeatureRequestDetailsComponent.
@@ -68,6 +70,7 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    */
   clientsToAdd: {id: string,priority: number}[] = [];
 
+  user: AuthUser;
   /**
    * The selected product area.
    * Used by the edit details modal.
@@ -164,21 +167,25 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
               private breadcrumb: BreadcrumbService,
               private route: ActivatedRoute,
               private loading: LoadingService,
-              private featureRequestService: FeatureRequestService) {
-    this.subscription = dragulaService.dropModel.subscribe((value: any) => {
-      let fromContainer = value.splice(3);
-      let ToContainer = value.splice(2);
-      //noinspection TypeScriptUnresolvedFunction
-      if ($(fromContainer).attr('data-container') === 'parent'
-        && $(ToContainer).attr('data-container') !== 'parent') {
-        this.handleAddClient(value.slice(1));
-      } else { //noinspection TypeScriptUnresolvedFunction
-        if ($(fromContainer).attr('data-container')
-          !== 'parent' && $(ToContainer).attr('data-container') === 'parent') {
-          this.handleRemoveClient(value.slice(1));
+              private featureRequestService: FeatureRequestService,
+              private auth: AuthService) {
+    this.user = auth.user();
+    if (this.user.role !== 3) {
+      this.subscription = dragulaService.dropModel.subscribe((value: any) => {
+        let fromContainer = value.splice(3);
+        let ToContainer = value.splice(2);
+        //noinspection TypeScriptUnresolvedFunction
+        if ($(fromContainer).attr('data-container') === 'parent'
+          && $(ToContainer).attr('data-container') !== 'parent') {
+          this.handleAddClient(value.slice(1));
+        } else { //noinspection TypeScriptUnresolvedFunction
+          if ($(fromContainer).attr('data-container')
+            !== 'parent' && $(ToContainer).attr('data-container') === 'parent') {
+            this.handleRemoveClient(value.slice(1));
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   /**
@@ -249,7 +256,9 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * Remove subscriptions.
    */
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+   if(this.user.role !== 3){
+     this.subscription.unsubscribe();
+   }
   }
 
   /**
@@ -364,21 +373,25 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * Add or remove clients
    */
   addRemoveClients() {
-    this.clientsTmp = [];
-    this.clientsSelected = [];
     this.clientsToRemove = [];
     this.clientsToAdd = [];
-    this.featureRequest.clients.forEach((client: any)=> {
-      for (var i = 0; i < this.clients.length; i++) {
-        if (this.clients[i].id === client.client_id) {
-          this.clientsSelected.push(this.clients[i]);
-          break;
+    if (this.user.role !== 3) {
+      this.clientsTmp = [];
+      this.clientsSelected = [];
+      this.clientsToRemove = [];
+      this.clientsToAdd = [];
+      this.featureRequest.clients.forEach((client: any)=> {
+        for (var i = 0; i < this.clients.length; i++) {
+          if (this.clients[i].id === client.client_id) {
+            this.clientsSelected.push(this.clients[i]);
+            break;
+          }
         }
-      }
-    });
-    // automatically filters the client list to default
-    this.nameSearch = '';
-    //
+      });
+      // automatically filters the client list to default
+      this.nameSearch = '';
+      //
+    }
 
     this.addRemoveClientsModal.emit('openModal');
   }
@@ -394,6 +407,13 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    *  Save add remove modal.
    */
   saveAddRemove() {
+    if (this.user.role === 3) {
+      this.clientsToRemove.push(this.user.clientId)
+      this.clientsToAdd.push({
+        id: this.user.clientId,
+        priority: this.selectedPriority
+      });
+    }
     if (this.clientsToAdd.length === 0 && this.clientsToRemove.length === 0) {
       this.closeAddRemoveModal();
       return;

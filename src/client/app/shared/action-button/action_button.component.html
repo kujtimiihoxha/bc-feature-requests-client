@@ -45,7 +45,7 @@ limitations under the License.
     </li>
   </ul>
 </div>
-<div class="fixed-action-btn" style="bottom: 45px; right: 24px;" *ngIf="role == 2">
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;" *ngIf="role === 2 || role === 3">
   <a [routerLink]="['/bc/new']" materialize="tooltip" data-position="left" data-delay="10"
      data-tooltip="New Feature Request" class=" tooltipped btn-floating btn-large red">
     <i class="large material-icons">description</i>

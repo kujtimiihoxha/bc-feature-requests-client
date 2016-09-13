@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 import {Injectable} from '@angular/core';
-import {Resolve, ActivatedRouteSnapshot} from '@angular/router';
+import {Resolve, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
-import {Client, ClientService} from '../../shared/index';
+import {Client, ClientService, AuthService} from '../../shared/index';
 
 /**
  *
@@ -34,9 +34,13 @@ export class ClientsResolver implements Resolve<Client[]> {
    * Constructor that injects the client service.
    * @param clientService used to get the clients.
    */
-  constructor(private clientService: ClientService) {}
+  constructor(private clientService: ClientService,private auth: AuthService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<Client[]> {
+  resolve(route: ActivatedRouteSnapshot): Observable<Client[]>|Observable<any> {
+    if(!this.auth.isNotExpired()) {
+      this.router.navigate(['/login'])
+      return Observable.empty();
+    }
     return this.clientService.get();
   }
 }

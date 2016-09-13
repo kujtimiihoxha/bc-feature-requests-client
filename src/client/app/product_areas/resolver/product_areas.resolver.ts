@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 import {Injectable} from '@angular/core';
-import {Resolve, ActivatedRouteSnapshot} from '@angular/router';
+import {Resolve, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
-import {ProductArea, ProductAreaService} from '../../shared/index';
+import {ProductArea, ProductAreaService, AuthService} from '../../shared/index';
 
 
 /**
@@ -34,9 +34,13 @@ export class ProductAreasResolver implements Resolve<ProductArea[]> {
    * Constructor that injects the product area service.
    * @param productAreaService used to get the product areas.
    */
-  constructor(private productAreaService: ProductAreaService) {}
+  constructor(private productAreaService: ProductAreaService, private auth: AuthService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<ProductArea[]> {
+  resolve(route: ActivatedRouteSnapshot): Observable<ProductArea[]>|Observable<any> {
+    if(!this.auth.isNotExpired()) {
+      this.router.navigate(['/login']);
+      return Observable.empty();
+    }
     return this.productAreaService.get();
   }
 }

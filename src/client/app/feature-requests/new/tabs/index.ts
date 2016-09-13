@@ -23,3 +23,4 @@
 export * from './clients_tab.component'
 export * from './details_tab.component'
 export * from './finish_tab.component'
+export * from './clinet_user_tab.component'

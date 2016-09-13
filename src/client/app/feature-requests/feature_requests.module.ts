@@ -16,6 +16,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SharedModule} from '../shared/shared.module';
+import {DragulaModule} from 'ng2-dragula/ng2-dragula';
 import {
   FeatureRequestsComponent,
   FeatureRequestDetailsComponent,
@@ -30,7 +31,8 @@ import {
   FeatureRequestResolver,
   UsersResolver,
   HeaderComponent,
-  NewFeatureRequestComponent
+  NewFeatureRequestComponent,
+  ClientUserTabComponent,
 
 } from './index';
 /**
@@ -41,7 +43,7 @@ import {
  * @date 9/10/16
  **/
 @NgModule({
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, DragulaModule],
   declarations: [
     FeatureRequestsComponent,
     FeatureRequestsTableComponent,
@@ -51,6 +53,7 @@ import {
     HeaderComponent,
     DetailsTabComponent,
     ClientsTabComponent,
+    ClientUserTabComponent,
     FinishTabComponent
   ],
   exports: [FeatureRequestsComponent, NewFeatureRequestComponent],

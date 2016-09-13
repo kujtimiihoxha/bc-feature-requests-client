@@ -28,6 +28,7 @@ export class FeatureRequest extends BaseModel {
   description: string;
   target_date: string;
   ticket_url: string;
+  employ_id: string;
   closed: boolean;
   product_area_id: string;
   product_area_name: string;

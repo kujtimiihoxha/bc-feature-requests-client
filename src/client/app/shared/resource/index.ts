@@ -31,7 +31,7 @@ export * from './feature_request.service'
 export * from './user.service'
 /**
  * Resources to provide to the app.
- * @type {(ClientService|ProductAreaService|FeatureRequestService|UserService)[]}
+ * @type {(ClientService|ProductAreaService|FeatureRequestService|AuthService)[]}
  */
 export const RESOURCE_SERVICES = [
   ClientService,

@@ -15,7 +15,7 @@
  */
 import {Injectable} from '@angular/core';
 import {Router, CanActivate} from '@angular/router';
-import {tokenNotExpired, JwtHelper} from 'angular2-jwt/angular2-jwt';
+import {AuthService} from "../auth/auth.service";
 declare const Materialize: any;
 /**
  * AdminGuard.
@@ -27,12 +27,11 @@ declare const Materialize: any;
  **/
 @Injectable()
 export class AdminGuard implements CanActivate {
-  constructor(private router: Router) {}
+  constructor(private router: Router,private auth: AuthService) {}
   canActivate() {
-
-    if (tokenNotExpired()) {
-      let role = new JwtHelper().decodeToken(localStorage.getItem('id_token')).role;
-      if (role === 1) {
+    this.auth.init()
+    if (this.auth.isNotExpired()) {
+      if (this.auth.user().role === 1) {
         return true;
       }
     }

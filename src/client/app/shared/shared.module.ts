@@ -21,16 +21,18 @@ import {SideNavComponent} from './sidenav/index';
 import {MaterializeDirective} from 'angular2-materialize';
 import {BreadcrumbComponent, BreadcrumbService} from './breadcrumb/index';
 import {LayoutComponent} from './layout/index';
-import {AuthGuard} from './guard/index';
+import {AuthGuard, AdminGuard} from './guard/index';
 import {ActionButtonComponent} from './action-button/index';
-import {DragulaDirective, DragulaService} from 'ng2-dragula/ng2-dragula';
 import {FilterPipe} from './pipes/filter.pipe';
 import {RESOURCE_SERVICES} from './resource/index';
 import {DateComponent} from './widgets/date/date.component';
 import {LoadingService} from './loading/loading.service';
 import {LoginGuard} from './guard/login.guard';
 import {TinyEditorComponent} from './widgets/editor/tinymce.component';
-import {AdminGuard} from './guard/admin.guard';
+import {AuthService} from './auth/index';
+import {WebSocketService} from "./websocket/websocket.service";
+import {NotificationsService} from "./notifications/notifications.service";
+import {NotificationsComponent} from "./notifications/notifications.component";
 
 /**
  * Shared module.
@@ -43,18 +45,17 @@ import {AdminGuard} from './guard/admin.guard';
   imports: [CommonModule, RouterModule, FormsModule],
   declarations: [
     MaterializeDirective,
+    NotificationsComponent,
     SideNavComponent,
     BreadcrumbComponent,
     LayoutComponent,
     ActionButtonComponent,
-    DragulaDirective,
     FilterPipe,
     DateComponent,
     TinyEditorComponent
   ],
   exports: [
     SideNavComponent,
-    DragulaDirective,
     BreadcrumbComponent,
     LayoutComponent,
     TinyEditorComponent,
@@ -63,6 +64,7 @@ import {AdminGuard} from './guard/admin.guard';
     RouterModule,
     MaterializeDirective,
     FilterPipe,
+    NotificationsComponent,
     DateComponent
   ]
 })
@@ -71,12 +73,14 @@ export class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [
-        DragulaService,
         BreadcrumbService,
         LoadingService,
         AuthGuard,
         AdminGuard,
         LoginGuard,
+        AuthService,
+        WebSocketService,
+        NotificationsService,
         ...RESOURCE_SERVICES
       ]
     };

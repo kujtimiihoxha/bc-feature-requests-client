@@ -24,6 +24,7 @@
  **/
 export interface EnvConfig {
   API?: string;
+  BASE?: string;
   ENV?: string;
 }
 

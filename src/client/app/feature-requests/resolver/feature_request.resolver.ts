@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 import {Injectable} from '@angular/core';
-import {Resolve, ActivatedRouteSnapshot} from '@angular/router';
+import {Resolve, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
-import {FeatureRequest, FeatureRequestService} from '../../shared/index';
+import {FeatureRequest, FeatureRequestService, AuthService} from '../../shared/index';
 
 /**
  * FeatureRequestResolver.
@@ -33,9 +33,13 @@ export class FeatureRequestResolver implements Resolve<FeatureRequest> {
    * Constructor that injects the feature request service.
    * @param featureRequestService used to get the feature request.
    */
-  constructor(private featureRequestService: FeatureRequestService) {}
+  constructor(private featureRequestService: FeatureRequestService, private auth:AuthService,private router:Router) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<FeatureRequest> {
+  resolve(route: ActivatedRouteSnapshot): Observable<FeatureRequest>|Observable<any> {
+    if(!this.auth.isNotExpired()) {
+      this.router.navigate(['/login'])
+      return Observable.empty()
+    }
     return this.featureRequestService.getById(route.params['id']);
   }
 }

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 import {Injectable} from '@angular/core';
-import {Resolve, ActivatedRouteSnapshot} from '@angular/router';
+import {Resolve, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
-import {User, UserService} from '../../shared/index';
+import {User, UserService, AuthService} from '../../shared/index';
 
 /**
  * ProductAreasResolver.
@@ -33,9 +33,13 @@ export class UsersResolver implements Resolve<User[]> {
    * Constructor that injects the users(employs) service.
    * @param userService used to get the users.
    */
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private auth: AuthService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
+  resolve(route: ActivatedRouteSnapshot): Observable<User[]>|Observable<any> {
+    if(!this.auth.isNotExpired()) {
+      this.router.navigate(['/login']);
+      return Observable.empty();
+    }
     return this.userService.getEmploys();
   }
 }

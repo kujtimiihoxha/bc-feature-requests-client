@@ -48,7 +48,7 @@ limitations under the License.
       </ul>
       <ul id="nav-mobile-filter" class="right">
         <li  *ngFor="let ft of filterOptions" ><a class='dropdown-button font-smaller' materialize="dropdown"
-               data-beloworigin="true" data-constrainwidth="false" [attr.data-activates]='ft.activates' [ngClass]="ft.cls"><i
+               data-beloworigin="true" data-constrainwidth="false" [attr.data-activates]='ft.activates' [ngClass]="ft.cls" *ngIf="canDisplay(ft.label)"><i
           class="material-icons right hide-on-small-and-down">arrow_drop_down</i>{{ft.label}}</a></li>
       </ul>
     </div>
@@ -104,7 +104,7 @@ limitations under the License.
   </div>
 
 </div>
-<div id='client_dropdown' class='dropdown-content' >
+<div id='client_dropdown' class='dropdown-content' *ngIf="user.role !== 3">
   <nav>
     <div class="white black-text nav-wrapper">
       <form>
