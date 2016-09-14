@@ -36,7 +36,6 @@ Feature Request Details
               </div>
               <div class="section">
 
-
               </div>
               <div class="section"></div>
             </div>
@@ -99,6 +98,17 @@ Feature Request Details
                 </div>
               </div>
               <div class="col s12 m12 l4">
+                <blockquote *ngIf="user.role !== 3">
+                  <div class="chip">
+                    <div class="priority center red lighten-1  white-text">{{featureRequest.global_priority}}</div>
+                    Global Priority
+                  </div>
+                  <button class="btn-floating tooltipped right blue"
+                          materialize="tooltip" data-position="bottom" data-delay="10"
+                          data-tooltip="Change priority" (click)="updateGlobalPriority()"
+                          style="margin-right: 15px" *ngIf="featureRequest.employ_id === user.id || user.role ===1"><i
+                    class="material-icons left">edit</i></button>
+                </blockquote>
                 <blockquote>
                   <p>Ticket Url: <a [href]="featureRequest.ticket_url" target="_blank">
                     {{featureRequest.ticket_url}}</a></p>
@@ -106,6 +116,7 @@ Feature Request Details
                 <blockquote>
                   <p>Product area: <b>{{getProductAreaName(featureRequest.product_area_id)}}</b></p>
                 </blockquote>
+
                 <div class="col s1"></div>
                 <div class="col s10 ">
                   <bc-date-widget [date]="featureRequest.target_date" [edit]="featureRequest.employ_id === user.id"
@@ -353,6 +364,38 @@ Priority modal
           </div>
         </div>
         <div class="modal-footer">
+          <button type="submit" [disabled]="!priority.form.valid"
+                  class="modal-action modal-close waves-effect waves-green btn-flat">Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+<!--
+-- End of priority modal
+-->
+<!--
+Priority modal
+-->
+<div class="modal" materialize [materializeParams]="[{ dismissible: false}]" [materializeActions]="globalPriorityModal">
+  <div class="modal-content">
+    <h4>Set Global priority</h4>
+    <p>Set the feature request global priority</p>
+    <div class="row">
+      <form class="col s12" (ngSubmit)="globalPriorityModalSave()" #priority="ngForm">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="global_priority" type="number" name="global_priority" [(ngModel)]="selectedGlobalPriority" class="validate" required>
+            <label for="global_priority">Priority</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+
+          <button type="submit"
+                  class="modal-action modal-close waves-effect waves-green btn-flat">Close
+          </button>
           <button type="submit" [disabled]="!priority.form.valid"
                   class="modal-action modal-close waves-effect waves-green btn-flat">Save
           </button>

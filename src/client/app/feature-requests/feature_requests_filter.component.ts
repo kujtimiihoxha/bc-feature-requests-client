@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import {
   FeatureRequestFilter,
   Client,
@@ -38,7 +38,8 @@ declare const $: any;
   templateUrl: 'feature_requests_filter.component.html',
   styleUrls: ['feature_requests_filter.component.css'],
 })
-export class FeatureRequestsFilterComponent {
+export class FeatureRequestsFilterComponent implements OnInit{
+
   /**
    * The local feature request filter.
    */
@@ -358,6 +359,18 @@ export class FeatureRequestsFilterComponent {
    * @param dir the sort direction (asc,desc).
    */
   sort(field: string, dir: string) {
+    if (this.user.role === 3 && field === 'global_priority'){
+      if (dir === "asc") {
+        this.filterByClientPriority("desc")
+      }
+      else if (dir === "desc") {
+        this.filterByClientPriority("asc")
+      }
+      this.filter.field = field;
+      this.filter.dir = dir;
+      $('.sort').dropdown('close');
+      return;
+    }
     this.filter.priority_dir = null;
     this.filter.field = field;
     this.filter.dir = dir;
@@ -367,12 +380,18 @@ export class FeatureRequestsFilterComponent {
   }
 
   canDisplay(label: string){
-    if (label === 'Client' || label === 'Employ'){
+    if (label === 'Client' || label === 'Employ' ||  label === 'Priority'){
       if (this.user.role !== 3){
         return true;
       }
       return false;
     }
     return true
+  }
+  ngOnInit(): void {
+    if (this.user.role === 3) {
+      this.filter.field = "global_priority";
+      this.filter.dir = "desc";
+    }
   }
 }

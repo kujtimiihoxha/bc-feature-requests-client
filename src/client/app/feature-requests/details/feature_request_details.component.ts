@@ -130,11 +130,13 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    * Event emitter used to open and close the add/remove modal.
    */
   priorityModal: EventEmitter<string> = new EventEmitter<string>();
+  globalPriorityModal: EventEmitter<string> = new EventEmitter<string>();
 
   /**
    * Temporary priority storage.
    */
   selectedPriority: number;
+  selectedGlobalPriority: number;
 
   /**
    * Drag and drop subscription.
@@ -595,5 +597,27 @@ export class FeatureRequestDetailsComponent implements OnInit, OnDestroy {
    */
   isDemoClient(name: string) {
     return this.demo.isDemoClient(name);
+  }
+
+  updateGlobalPriority(){
+    this.globalPriorityModal.emit('openModal');
+  }
+  globalPriorityModalSave(){
+    this.loading.on();
+    this.featureRequestService.updatePriority(this.featureRequest.id, this.selectedGlobalPriority).catch((error: any)=> {
+      this.loading.off();
+      //noinspection TypeScriptUnresolvedVariable,TypeScriptUnresolvedVariable,TypeScriptUnresolvedFunction,TypeScriptUnresolvedFunction
+      Materialize.toast(JSON.parse(error._body).message, 2000);
+      this.globalPriorityModal.emit('closeModal');
+      return Observable.empty();
+    }).subscribe((updated : FeatureRequest)=> {
+      this.loading.off();
+      //noinspection TypeScriptUnresolvedFunction,TypeScriptUnresolvedFunction
+      Materialize.toast('Request state updated', 2000);
+      this.featureRequest.global_priority = this.selectedGlobalPriority;
+      this.selectedGlobalPriority = null;
+      this.globalPriorityModal.emit('closeModal');
+    });
+
   }
 }

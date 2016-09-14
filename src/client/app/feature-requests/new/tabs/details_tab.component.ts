@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 import {Component, Input, EventEmitter, Output} from '@angular/core';
-import {FeatureRequest, ProductArea} from '../../../shared/index';
+import {FeatureRequest, ProductArea, AuthService} from '../../../shared/index';
+import {User} from '../../../shared/auth/user.model'
 /**
  * DetailsTabComponent.
  * Used by new feature request component.
@@ -36,6 +37,7 @@ export class DetailsTabComponent {
    */
   @Input() details: FeatureRequest;
 
+  user:User
   /**
    * The details changed event emitter, used for bidirectional binding.
    */
@@ -62,6 +64,9 @@ export class DetailsTabComponent {
    */
   selectedProductArea: string;
 
+  constructor(auth: AuthService){
+    this.user = auth.user();
+  }
   /**
    * Go to next page.
    */
@@ -72,6 +77,9 @@ export class DetailsTabComponent {
         this.details.product_area_name = p.name;
       }
     });
+    if (this.user.role === 3) {
+      this.details.global_priority = -1;
+    }
     this.onNext.emit();
   }
 

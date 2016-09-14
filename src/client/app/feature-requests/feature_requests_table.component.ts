@@ -17,6 +17,8 @@ import {Component, Output, EventEmitter, Input, OnInit} from '@angular/core';
 import {Client, User, ProductArea, FeatureRequest} from '../shared/index';
 import {DateHelper} from '../shared/helpers/date.helper';
 import {FeatureRequestFilter} from '../shared/model/feature_request_filter';
+import {User as AuthUser} from "../shared/auth/user.model";
+import {AuthService} from "../shared/auth/auth.service";
 /**
  * FeatureRequestsTableComponent.
  * Used to display the feature requests that the filter feature request returns.
@@ -111,7 +113,11 @@ export class FeatureRequestsTableComponent implements OnInit {
    *  Is Emitted when the page of the table is changed.
    */
   @Output() pageChanged: EventEmitter<void> = new EventEmitter<void>();
+  user:AuthUser
 
+  constructor(auth: AuthService){
+    this.user = auth.user();
+  }
   /**
    * This function is called when one list member is selected.
    * @param id the feature request id.

@@ -52,6 +52,12 @@ limitations under the License.
               </div>
               <div class="col s12 m12 l4">
                 <div class="row">
+                  <blockquote *ngIf="user.role !== 3">
+                    <div class="chip">
+                      <div class="priority center red lighten-1  white-text">{{details.global_priority}}</div>
+                      Global Priority
+                    </div>
+                  </blockquote>
                   <blockquote>
                     <p>Ticket Url: <a [href]="details.ticket_url" target="_blank"> {{details.ticket_url}}</a></p>
                   </blockquote>

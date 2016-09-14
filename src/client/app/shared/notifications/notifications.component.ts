@@ -55,11 +55,12 @@ export class NotificationsComponent implements OnInit,OnDestroy {
     this.websocket.handle((message:SocketMessage)=>{
       let notification:Notification =JSON.parse(message.data)
       if( notification.type === 2) {
-        console.log(notification)
-        var $toastContent = $(`<div>${notification.content.details.description}</div>`);
-        //noinspection TypeScriptUnresolvedFunction
-        Materialize.toast($toastContent, 4000);
-        this.notificationsService.addNotifications(notification.content);
+        if(notification.user !== this.auth.user().id){
+          var $toastContent = $(`<div>${notification.content.details.description}</div>`);
+          //noinspection TypeScriptUnresolvedFunction
+          Materialize.toast($toastContent, 4000);
+          this.notificationsService.addNotifications(notification.content);
+        }
       }
     })
   }

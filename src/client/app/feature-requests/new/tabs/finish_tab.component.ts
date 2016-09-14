@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 import {Component, Input, EventEmitter, Output} from '@angular/core';
-import {FeatureRequest,TimeStampHelper} from '../../../shared/index';
-
+import {FeatureRequest,TimeStampHelper, AuthService} from '../../../shared/index';
+import {User} from '../../../shared/auth/user.model'
 /**
  * FinishTabComponent.
  * Used by new feature request component.
@@ -51,7 +51,10 @@ export class FinishTabComponent {
    * On previous event emitter, is emitted when the previous button is clicked.
    */
   @Output() onPrevious: EventEmitter<void> = new EventEmitter<void>();
-
+  user:User
+  constructor(auth: AuthService){
+    this.user = auth.user();
+  }
   /**
    * Submit the new feature request.
    */

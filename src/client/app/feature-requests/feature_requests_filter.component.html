@@ -143,6 +143,14 @@ limitations under the License.
 <div id='sort_dropdown' class='dropdown-content'>
   <div class="row">
     <ul class="collection with-header">
+      <li class="collection-item" (click)="sort('global_priority','asc')"
+          [ngClass]="{'active':(filter.field === 'global_priority' && filter.dir === 'asc')}">
+        <div>Highest Priority</div>
+      </li>
+      <li class="collection-item" (click)="sort('global_priority','desc')"
+          [ngClass]="{'active':(filter.field === 'global_priority' && filter.dir === 'desc')}">
+        <div>Lowest Priority</div>
+      </li>
       <li class="collection-item" (click)="sort('updated_at','desc')"
           [ngClass]="{'active':(filter.field === 'updated_at' && filter.dir === 'desc')}">
         <div>Recently updated</div>

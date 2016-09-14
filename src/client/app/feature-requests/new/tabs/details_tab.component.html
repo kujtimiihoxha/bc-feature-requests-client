@@ -65,6 +65,15 @@ limitations under the License.
             <label>Product Area</label>
           </div>
         </div>
+        <div class="row" *ngIf="user.role !== 3">
+          <div class="input-field col s12">
+            <input placeholder="Priority" id="priority" [(ngModel)]="details.global_priority" name="priority" required type="text"
+                 class="validate"
+                 type="number">
+          <label for="priority">Priority</label>
+            </div>
+        </div>
+
         <div class="row">
           <div class="input-field col s12">
             <h6>Description</h6>

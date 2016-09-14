@@ -30,6 +30,7 @@ export class FeatureRequest extends BaseModel {
   ticket_url: string;
   employ_id: string;
   closed: boolean;
+  global_priority: number;
   product_area_id: string;
   product_area_name: string;
   clients: {

@@ -25,7 +25,8 @@ limitations under the License.
   <h6 *ngIf="featureRequests.length === 0">No feature requests</h6>
   <ul class="collection">
     <li class="collection-item avatar " *ngFor="let request of featureRequests">
-      <i class="material-icons circle green lighten-2" (click)="onDetails(request.id)" *ngIf="!request.closed">info_outline</i>
+      <div class="center white-text circle green lighten-2" style="line-height: 40px" (click)="onDetails(request.id)" *ngIf="!request.closed && user.role !== 3">{{request.global_priority}}</div>
+      <i  class="material-icons circle green lighten-2" (click)="onDetails(request.id)" *ngIf="!request.closed && user.role === 3">info_outline</i>
       <i class="material-icons circle red lighten-2" (click)="onDetails(request.id)" *ngIf="request.closed">highlight_off</i>
       <span class="title"><a (click)="onDetails(request.id)">{{request.title}}</a></span><br/><br/>
       <p><a [href]="request.ticket_url" target="_blank"> {{request.ticket_url}}</a></p>
@@ -48,8 +49,6 @@ limitations under the License.
         <div class="section hide-on-med-and-up"></div>
         <b class="right hide-on-small-and-down">{{getProductAreaName(request.product_area_id)}}</b>
       </div>
-      <!--<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>-->
-      <!--todo add coments here-->
     </li>
   </ul>
   <ul class="pagination" *ngIf="featureRequests.length !== 0">

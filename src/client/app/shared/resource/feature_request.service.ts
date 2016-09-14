@@ -71,6 +71,16 @@ export class FeatureRequestService extends BaseResource<FeatureRequest> {
     this.options.headers.set('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
     return this.http.put(this.url + `/${id}/state/${state}`, {}, this.options).map(this.extractData);
   }
+  /**
+   * Update global priority.
+   * @param id of feature request to update.
+   * @param priority new priority.
+   * @returns {Observable<FeatureRequest>}
+   */
+  updatePriority(id:string,priority:number) {
+    this.options.headers.set('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    return this.http.put(this.url + `/${id}/priority/${priority}`, {}, this.options).map(this.extractData);
+  }
 
   /**
    * Add or remove client.
